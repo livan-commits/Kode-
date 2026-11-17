@@ -12,3 +12,11 @@
 - Treat provider API capabilities as unverified until documented and tested.
 
 This is a design baseline, not a claim that a production security audit has been completed.
+## Connected-account data lifecycle
+
+- Every newly ingested integration snapshot stores its `connected_account_id`, not only a provider slug and user ID.
+- Disconnect marks the account revoked, revokes its recorded scopes, removes account sync cursors and encrypted credentials, and deletes snapshots linked to that account.
+- Older snapshots created before account-level linkage are deleted only when the user has no other active account for that provider; this avoids deleting data belonging to a second linked account.
+- Historical audit records are retained to document the revocation action. They must not contain provider tokens or raw credentials.
+- The account-scoped event index supports bounded dashboard reads and targeted cleanup.
+- This lifecycle has been implemented in the database function and migrations; a real-account deletion test remains part of end-to-end acceptance.
