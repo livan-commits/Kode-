@@ -92,6 +92,8 @@ jobs:
           grep -q 'id="dashboard-content"' index.html
           grep -q 'id="recovery-form"' index.html
           grep -q 'id="connect-steam"' index.html
+          grep -q 'id="connect-google"' index.html
+          grep -q 'id="connect-discord"' index.html
           grep -q 'steam-openid-start' app.js
           grep -q 'steamcommunity.com/openid/login' supabase/functions/steam-openid-start/index.ts
           grep -q 'check_authentication' supabase/functions/steam-openid-callback/index.ts
