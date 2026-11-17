@@ -48,7 +48,7 @@ Deno.serve(async(req:Request)=>{
  const gameList=Array.isArray(games?.games)?games.games:[];
  const libraryPayload={total_count:Number(games?.game_count??gameList.length),returned_count:Math.min(gameList.length,500),games:gameList.slice(0,500).map((g:any)=>({appid:g.appid,name:g.name,playtime_forever:g.playtime_forever,playtime_2weeks:g.playtime_2weeks,img_icon_url:g.img_icon_url,img_logo_url:g.img_logo_url}))};
  const rows=[
-  {user_id:authData.user.id,provider_slug:"steam",event_type:"steam.profile.snapshot",payload:profilePayload,source_timestamp:retrievedAt,retrieved_at:retrievedAt},
+  {user_id:authData.user.id,connected_account_id:account.id,provider_slug:"steam",event_type:"steam.profile.snapshot",payload:profilePayload,source_timestamp:retrievedAt,retrieved_at:retrievedAt},
   {user_id:authData.user.id,provider_slug:"steam",event_type:"steam.library.snapshot",payload:libraryPayload,source_timestamp:retrievedAt,retrieved_at:retrievedAt}
  ];
  const {error:insertError}=await admin.from("integration_events").insert(rows);
