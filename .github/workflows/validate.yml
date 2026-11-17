@@ -36,4 +36,4 @@ jobs:
           test -f docs/architecture.md
           test -f docs/security-review.md
           test -f connectors/README.md
-          test -f supabase/migrations/20261117194500_auth_lifecycle_and_initial_catalog.sql
+          test -f supabase/migrations/20261117192540_auth_lifecycle_and_initial_catalog.sql
