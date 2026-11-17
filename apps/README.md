@@ -29,6 +29,6 @@ GitHub Actions builds all three projects from clean checkouts. A green build pro
 | Habit Tracker | `habit-tracker/` | TOP checks/unchecks; UP/DOWN selects; LEFT resets; BOT home | Yes, session only |
 
 | Alarm | `alarm/` | TOP start/pause; UP/DOWN adjusts one minute; LEFT resets; BOT home | Yes, foreground countdown only |
-| Reminders | `reminders/` | TOP marks/unmarks; UP/DOWN selects; LEFT resets; BOT home | Yes, predefined list; checks are session-only |
+| Reminders | `reminders/` | TOP marks/unmarks; UP/DOWN selects; LEFT resets; BOT home | Yes, predefined list; completion saved in Kode settings |
 
-**Alarm limitation:** this app is a foreground countdown. It does not register an operating-system alarm and cannot wake the Dot after the app exits. **Reminders limitation:** the current list is built in and completion state is not persisted across app restarts.
+**Alarm limitation:** this app is a foreground countdown. It does not register an operating-system alarm and cannot wake the Dot after the app exits. **Reminders limitation:** the current list is built in; completion state persists in the app settings, but users cannot yet create or edit reminder text or schedule background notifications.
