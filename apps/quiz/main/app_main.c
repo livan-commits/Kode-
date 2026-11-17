@@ -26,15 +26,15 @@ void app_main(void){
    if(finished){index=0;score=0;choice=0;answered=false;finished=false;}
    else if(answered){index++;choice=0;answered=false;}
    if(index>=N)finished=true;
-   if(finished){(void)kode_widget_set_text(prompt,"Quiz complete");(void)kode_widget_set_text(answers,"");(void)kode_widget_set_text(status,"Score: %u / %u",score,(unsigned)N);}
-   else{(void)kode_widget_set_text(prompt,"%s",qs[index].q);(void)kode_widget_set_text(answers,"UP:%s\nRIGHT:%s\nDOWN:%s",qs[index].a[0],qs[index].a[1],qs[index].a[2]);(void)kode_widget_set_text(status,"Question %u/%u | TOP confirm",(unsigned)index+1U,(unsigned)N);}
+   if(finished){(void)kode_widget_set_text(prompt,"Quiz complete");(void)kode_widget_set_text(answers," ");(void)kode_widget_set_text(status,"Score: %u / %u",score,(unsigned)N);}
+   else{(void)kode_widget_set_text(prompt,"%s",qs[index].q);(void)kode_widget_set_text(answers,"UP:%s\\nRIGHT:%s\\nDOWN:%s",qs[index].a[0],qs[index].a[1],qs[index].a[2]);(void)kode_widget_set_text(status,"Question %u/%u | TOP confirm",(unsigned)index+1U,(unsigned)N);}
   }
   if(!finished&&!answered){
    if(kode_button_was_pressed("up"))choice=0;
    if(kode_button_was_pressed("right"))choice=1;
    if(kode_button_was_pressed("down"))choice=2;
    if(kode_button_was_pressed("top")){answered=true;if(choice==qs[index].correct){score++;(void)kode_widget_set_text(status,"Correct! Score %u",score);(void)kode_haptic_play("success");}else (void)kode_widget_set_text(status,"Incorrect. Next question");}
-   (void)kode_widget_set_text(answers,"UP:%s\nRIGHT:%s\nDOWN:%s\nSelected: %s",qs[index].a[0],qs[index].a[1],qs[index].a[2],qs[index].a[choice]);
+   (void)kode_widget_set_text(answers,"UP:%s\\nRIGHT:%s\\nDOWN:%s\\nSelected: %s",qs[index].a[0],qs[index].a[1],qs[index].a[2],qs[index].a[choice]);
   }
   kode_delay(40U);
  }
