@@ -51,6 +51,7 @@ jobs:
           test -f docs/portal-authentication.md
           test -f supabase/migrations/20261117194058_connector_auth_state_store.sql
           test -f supabase/migrations/20261117194131_connector_auth_state_rpc.sql
+          test -f supabase/migrations/20261117194800_revoke_connected_account.sql
           test -f supabase/functions/steam-openid-start/index.ts
           test -f supabase/functions/steam-openid-callback/index.ts
           test -f supabase/functions/connector-disconnect/index.ts
@@ -77,7 +78,8 @@ jobs:
           grep -q 'check_authentication' supabase/functions/steam-openid-callback/index.ts
           grep -q 'consume_connector_auth_state' supabase/functions/steam-openid-callback/index.ts
           grep -q 'connector-disconnect' app.js
-          grep -q 'connection_status:"revoked"' supabase/functions/connector-disconnect/index.ts
+          grep -q 'revoke_connected_account' supabase/functions/connector-disconnect/index.ts
+          grep -q 'revoke_connected_account' supabase/migrations/20261117194800_revoke_connected_account.sql
       - name: Type-check Steam Edge Functions
         run: |
           deno check --config supabase/functions/steam-openid-start/deno.json supabase/functions/steam-openid-start/index.ts
