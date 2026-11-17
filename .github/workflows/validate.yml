@@ -29,6 +29,8 @@ jobs:
           assert all(a["lifecycle"] == "planned" for a in apps)
           assert all(p["status"] == "planned" for p in providers)
           assert len({p["slug"] for p in providers}) == len(providers)
+          assert all(p["capability_manifest"]["state"] == "planned" for p in providers)
+          assert all(p["capability_manifest"]["limitations"] for p in providers)
           print(f"Validated {len(apps)} applications and {len(providers)} planned providers")
           PY
       - name: Check required project files
@@ -47,6 +49,7 @@ jobs:
       - name: Check connector review documentation
         run: |
           test -f docs/connector-capability-review.md
+          test -f docs/security-review.md
           test -f docs/account-dashboard-api.md
           test -f docs/portal-authentication.md
           test -f supabase/migrations/20261117194058_connector_auth_state_store.sql
