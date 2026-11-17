@@ -700,12 +700,13 @@
       "slug": "sensor-studio",
       "name": "Sensor Studio",
       "category": "maker",
-      "description": "Application Kode Ecosystem : Sensor Studio. Implémentation planifiée; fonctions non disponibles avant validation.",
-      "lifecycle": "planned",
-      "implementation_status": "not_implemented",
-      "capability_state": "planned",
-      "offline_support": "to_be_assessed",
-      "required_permissions": []
+      "description": "Moniteur natif hors ligne des mesures accéléromètre, gyroscope, température IMU et magnétomètre. Dépend des capteurs matériels.",
+      "lifecycle": "in_development",
+      "implementation_status": "source_added",
+      "capability_state": "build_pending",
+      "offline_support": "yes",
+      "required_permissions": [],
+      "source_path": "apps/sensor-studio/"
     },
     {
       "code": "M002",
@@ -737,12 +738,13 @@
       "slug": "level",
       "name": "Level",
       "category": "maker",
-      "description": "Application Kode Ecosystem : Level. Implémentation planifiée; fonctions non disponibles avant validation.",
-      "lifecycle": "planned",
-      "implementation_status": "not_implemented",
-      "capability_state": "planned",
-      "offline_support": "to_be_assessed",
-      "required_permissions": []
+      "description": "Niveau à bulle numérique natif basé sur les mesures d'accélération de l'IMU. Affichage en temps réel; dépend du capteur matériel.",
+      "lifecycle": "in_development",
+      "implementation_status": "source_added",
+      "capability_state": "build_pending",
+      "offline_support": "yes",
+      "required_permissions": [],
+      "source_path": "apps/level/"
     },
     {
       "code": "M005",
@@ -881,12 +883,13 @@
       "slug": "data-logger",
       "name": "Data Logger",
       "category": "maker",
-      "description": "Application Kode Ecosystem : Data Logger. Implémentation planifiée; fonctions non disponibles avant validation.",
-      "lifecycle": "planned",
-      "implementation_status": "not_implemented",
-      "capability_state": "planned",
-      "offline_support": "to_be_assessed",
-      "required_permissions": []
+      "description": "Enregistreur CSV natif des mesures IMU dans le stockage flash Kode. Démarrage/arrêt manuel; dépend des capteurs et du stockage.",
+      "lifecycle": "in_development",
+      "implementation_status": "source_added",
+      "capability_state": "build_pending",
+      "offline_support": "yes",
+      "required_permissions": [],
+      "source_path": "apps/data-logger/"
     },
     {
       "code": "A001",

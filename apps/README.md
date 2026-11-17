@@ -36,3 +36,7 @@ GitHub Actions builds all three projects from clean checkouts. A green build pro
 | Calendar | `calendar/` | LEFT/RIGHT previous/next month; TOP today; BOT home | Yes, requires KodeOS clock |
 
 | Compass | `compass/` | TOP calibrates; LEFT clears calibration; BOT home | Yes, needs magnetometer and accelerometer |
+
+| Level | `level/` | Live pitch/roll; BOT home | Yes, requires IMU |
+| Sensor Studio | `sensor-studio/` | Live IMU and magnetometer readings; BOT home | Yes, requires sensors |
+| Data Logger | `data-logger/` | TOP starts/stops CSV logging to `flash/sensor-log.csv`; BOT home | Yes, requires IMU and flash storage |
