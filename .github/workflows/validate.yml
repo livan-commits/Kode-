@@ -12,6 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - uses: denoland/setup-deno@v2
       - name: Validate catalog JSON
         run: |
           python -m json.tool applications/catalog.json >/dev/null
@@ -48,8 +49,8 @@ jobs:
           test -f docs/connector-capability-review.md
           test -f docs/account-dashboard-api.md
           test -f docs/portal-authentication.md
-          test -f supabase/migrations/20261117194000_connector_auth_state_store.sql
-          test -f supabase/migrations/20261117194010_connector_auth_state_rpc.sql
+          test -f supabase/migrations/20261117194058_connector_auth_state_store.sql
+          test -f supabase/migrations/20261117194131_connector_auth_state_rpc.sql
           test -f supabase/functions/steam-openid-start/index.ts
           test -f supabase/functions/steam-openid-callback/index.ts
       - name: Validate portal JavaScript
@@ -74,3 +75,7 @@ jobs:
           grep -q 'steamcommunity.com/openid/login' supabase/functions/steam-openid-start/index.ts
           grep -q 'check_authentication' supabase/functions/steam-openid-callback/index.ts
           grep -q 'consume_connector_auth_state' supabase/functions/steam-openid-callback/index.ts
+      - name: Type-check Steam Edge Functions
+        run: |
+          deno check --config supabase/functions/steam-openid-start/deno.json supabase/functions/steam-openid-start/index.ts
+          deno check --config supabase/functions/steam-openid-callback/deno.json supabase/functions/steam-openid-callback/index.ts
