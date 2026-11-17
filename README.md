@@ -22,6 +22,10 @@ This repository is the dedicated home for Kode Ecosystem. It is intentionally se
 - Record source and retrieval time for external data.
 - Never claim a provider capability unless its API and required permissions have been verified.
 
+## Web portal
+
+The portal is deployed at https://kode-ecosystem.vercel.app. Its account area supports email/password sign-up, sign-in, password reset and a JWT-protected account dashboard. See [portal authentication setup and remaining checks](docs/portal-authentication.md). External provider connections remain planned until each provider has credentials, approved scopes and end-to-end tests.
+
 ## Next steps
 
 See the `docs/` directory for architecture, data model, security review and roadmap. Database migrations are kept in `supabase/migrations/` and must be applied only to a dedicated Kode Ecosystem Supabase project.
