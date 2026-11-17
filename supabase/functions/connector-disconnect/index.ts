@@ -19,8 +19,8 @@ Deno.serve(async(req:Request)=>{
  const {data:account,error:accountError}=await admin.from("connected_accounts").select("id").eq("user_id",userData.user.id).eq("provider_id",provider.id).maybeSingle();
  if(accountError)return json({error:"account_lookup_failed"},503);
  if(!account)return json({error:"account_not_connected"},404);
- const {error:deleteError}=await admin.from("connected_accounts").delete().eq("id",account.id).eq("user_id",userData.user.id);
- if(deleteError){console.error("connector disconnect failed",deleteError.message);return json({error:"disconnect_failed"},503);}
+ const {error:updateError}=await admin.from("connected_accounts").update({connection_status:"revoked"}).eq("id",account.id).eq("user_id",userData.user.id);
+ if(updateError){console.error("connector disconnect failed",updateError.message);return json({error:"disconnect_failed"},503);}
  await admin.from("audit_log").insert({user_id:userData.user.id,actor_type:"user",action:"connector.disconnected",resource_type:"connector_provider",resource_id:slug,metadata:{connected_account_id:account.id}});
  return json({disconnected:true,provider_slug:slug});
 });
