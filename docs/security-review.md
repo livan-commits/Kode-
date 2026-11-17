@@ -20,3 +20,7 @@ This is a design baseline, not a claim that a production security audit has been
 - Historical audit records are retained to document the revocation action. They must not contain provider tokens or raw credentials.
 - The account-scoped event index supports bounded dashboard reads and targeted cleanup.
 - This lifecycle has been implemented in the database function and migrations; a real-account deletion test remains part of end-to-end acceptance.
+
+## OAuth state retention
+
+OAuth state values are stored only as SHA-256 hashes, expire after ten minutes, and are consumed atomically once. State creation now opportunistically deletes expired or consumed rows older than one day so abandoned attempts do not accumulate indefinitely. The raw state is returned only to the browser for the provider redirect and is never stored in plaintext.
