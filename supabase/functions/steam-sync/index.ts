@@ -53,6 +53,7 @@ Deno.serve(async(req:Request)=>{
  ];
  const {error:insertError}=await admin.from("integration_events").insert(rows);
  if(insertError){console.error("Steam snapshot persistence failed",insertError.message);return json({error:"snapshot_persistence_failed"},503);}
- await admin.from("connected_accounts").update({last_sync_at:retrievedAt}).eq("id",account.id).eq("user_id",authData.user.id);
+ const {error:syncUpdateError}=await admin.from("connected_accounts").update({last_sync_at:retrievedAt}).eq("id",account.id).eq("user_id",authData.user.id);
+ if(syncUpdateError){console.error("Steam last-sync timestamp update failed",syncUpdateError.message);return json({error:"sync_metadata_persistence_failed"},503);}
  return json({synced:true,retrieved_at:retrievedAt,profile:{name:profilePayload.personaname,avatar:profilePayload.avatarfull,profile_url:profilePayload.profileurl},library:{total_count:libraryPayload.total_count,stored_count:libraryPayload.returned_count,visibility_limited:libraryPayload.total_count===0}});
 });
