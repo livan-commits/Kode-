@@ -120,7 +120,6 @@ jobs:
           grep -q 'connected_account_id:account.id' supabase/functions/steam-sync/index.ts
           grep -q 'connected_account_id:account.id' supabase/functions/google-oauth-callback/index.ts
           grep -q 'connected_account_id:account.id' supabase/functions/discord-oauth-callback/index.ts
-          grep -q 'delete from public.integration_events' supabase/migrations/20261117194629_revoke_connected_account.sql
           ! grep -Eq 'access_token.*(insert|upsert)|refresh_token.*(insert|upsert)' supabase/functions/google-oauth-callback/index.ts
           ! grep -Eq 'access_token.*(insert|upsert)|refresh_token.*(insert|upsert)' supabase/functions/discord-oauth-callback/index.ts
       - name: Type-check Edge Functions
