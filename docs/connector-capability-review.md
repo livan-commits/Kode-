@@ -70,6 +70,20 @@ A provider may move from `planned` to `limited` or `available` only after:
 6. Every synced record stores source, retrieval timestamp and provider event timestamp where available.
 7. No undocumented endpoint, credential scraping or account-password collection is used.
 
+
+## Steam identity-linking implementation
+
+The project now contains a first server-side Steam account-linking path using the official Steamworks-documented OpenID 2.0 browser flow:
+
+- `steam-openid-start` requires a valid Kode Ecosystem user JWT and creates a random, short-lived, hashed state.
+- `steam-openid-callback` verifies the OpenID response with Steam's `check_authentication` endpoint, validates the claimed SteamID and nonce, and consumes the state atomically before linking the account.
+- The state table is private; only the server-side service role can call narrowly scoped state RPC functions.
+- The browser receives only an authorization URL; Steam identity and state verification happen server-side.
+
+**Current capability boundary:** this links a Steam identity / SteamID only. It does not yet fetch games, achievements, playtime, presence or ownership. Those require separate Steam Web API methods, user privacy settings and a server-side Steam Web API key. The provider remains `planned` until the full callback is exercised with a real Steam account and the deployed integration passes end-to-end security tests.
+
+Official reference: https://partner.steamgames.com/doc/features/auth
+
 ## Current implementation state
 
 - Supabase provider rows: `planned`.
