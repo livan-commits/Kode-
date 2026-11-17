@@ -47,6 +47,7 @@ jobs:
         run: |
           test -f docs/connector-capability-review.md
           test -f docs/account-dashboard-api.md
+          test -f docs/portal-authentication.md
       - name: Validate portal JavaScript
         run: |
           node --input-type=module --check < app.js
