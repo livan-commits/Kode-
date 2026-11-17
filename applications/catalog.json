@@ -55,12 +55,13 @@
       "slug": "files",
       "name": "Files",
       "category": "core",
-      "description": "Application Kode Ecosystem : Files. Implémentation planifiée; fonctions non disponibles avant validation.",
-      "lifecycle": "planned",
-      "implementation_status": "not_implemented",
-      "capability_state": "planned",
-      "offline_support": "to_be_assessed",
-      "required_permissions": []
+      "description": "Explorateur natif en lecture seule des fichiers et dossiers des volumes flash et SD. Dépend des volumes montés.",
+      "lifecycle": "in_development",
+      "implementation_status": "source_added",
+      "capability_state": "build_pending",
+      "offline_support": "yes",
+      "required_permissions": [],
+      "source_path": "apps/files/"
     },
     {
       "code": "K006",
@@ -802,12 +803,13 @@
       "slug": "led-studio",
       "name": "LED Studio",
       "category": "maker",
-      "description": "Application Kode Ecosystem : LED Studio. Implémentation planifiée; fonctions non disponibles avant validation.",
-      "lifecycle": "planned",
-      "implementation_status": "not_implemented",
-      "capability_state": "planned",
-      "offline_support": "to_be_assessed",
-      "required_permissions": []
+      "description": "Contrôle natif de la LED RGB intégrée avec couleurs prédéfinies et extinction. Dépend du contrôleur LED matériel.",
+      "lifecycle": "in_development",
+      "implementation_status": "source_added",
+      "capability_state": "build_pending",
+      "offline_support": "yes",
+      "required_permissions": [],
+      "source_path": "apps/led-studio/"
     },
     {
       "code": "M010",
@@ -1241,12 +1243,13 @@
       "slug": "music-studio",
       "name": "Music Studio",
       "category": "play",
-      "description": "Application Kode Ecosystem : Music Studio. Implémentation planifiée; fonctions non disponibles avant validation.",
-      "lifecycle": "planned",
-      "implementation_status": "not_implemented",
-      "capability_state": "planned",
-      "offline_support": "to_be_assessed",
-      "required_permissions": []
+      "description": "Générateur de tonalités natives sur le haut-parleur, avec fréquence et durée prédéfinies. Dépend du codec audio matériel.",
+      "lifecycle": "in_development",
+      "implementation_status": "source_added",
+      "capability_state": "build_pending",
+      "offline_support": "yes",
+      "required_permissions": [],
+      "source_path": "apps/music-studio/"
     },
     {
       "code": "P010",
@@ -1313,12 +1316,13 @@
       "slug": "battery-monitor",
       "name": "Battery Monitor",
       "category": "security",
-      "description": "Application Kode Ecosystem : Battery Monitor. Implémentation planifiée; fonctions non disponibles avant validation.",
-      "lifecycle": "planned",
-      "implementation_status": "not_implemented",
-      "capability_state": "planned",
-      "offline_support": "to_be_assessed",
-      "required_permissions": []
+      "description": "Moniteur natif de batterie : niveau, tension, charge et alimentation USB. Dépend du fuel gauge pour un pourcentage fiable.",
+      "lifecycle": "in_development",
+      "implementation_status": "source_added",
+      "capability_state": "build_pending",
+      "offline_support": "yes",
+      "required_permissions": [],
+      "source_path": "apps/battery-monitor/"
     },
     {
       "code": "D006",

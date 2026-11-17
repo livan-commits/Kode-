@@ -44,3 +44,8 @@ GitHub Actions builds all three projects from clean checkouts. A green build pro
 | NFC Studio | `nfc-studio/` | Reads NFC UID and tag type; BOT home | Yes, requires NFC hardware |
 | RFID Studio | `rfid-studio/` | Reads EM4100 IDs only; BOT home | Yes, requires RFID hardware |
 | IR Studio | `ir-studio/` | Receives decoded IR protocol/address/command; BOT home | Yes, requires IR receiver |
+
+| Battery Monitor | `battery-monitor/` | Live charge, voltage and charging status; BOT home | Yes, requires fuel gauge |
+| LED Studio | `led-studio/` | Select/apply RGB LED presets; BOT home | Yes, requires RGB LED |
+| Music Studio | `music-studio/` | Play selectable speaker tones; BOT home | Yes, requires audio codec |
+| Files | `files/` | Read-only flash/SD file listing; BOT home | Yes, requires mounted storage |
