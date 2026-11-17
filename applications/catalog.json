@@ -403,12 +403,13 @@
       "slug": "tasks",
       "name": "Tasks",
       "category": "life",
-      "description": "Application Kode Ecosystem : Tasks. Implémentation planifiée; fonctions non disponibles avant validation.",
-      "lifecycle": "planned",
-      "implementation_status": "not_implemented",
-      "capability_state": "planned",
-      "offline_support": "to_be_assessed",
-      "required_permissions": []
+      "description": "Application native Kode Dot Tasks : checklist hors-ligne de cinq entrées, sélection, validation et progression. Source ajoutée; compilation CI et validation matérielle en attente.",
+      "lifecycle": "in_development",
+      "implementation_status": "source_added",
+      "capability_state": "build_pending",
+      "offline_support": "yes",
+      "required_permissions": [],
+      "source_path": "apps/tasks/"
     },
     {
       "code": "L005",
@@ -439,12 +440,13 @@
       "slug": "shopping-list",
       "name": "Shopping List",
       "category": "life",
-      "description": "Application Kode Ecosystem : Shopping List. Implémentation planifiée; fonctions non disponibles avant validation.",
-      "lifecycle": "planned",
-      "implementation_status": "not_implemented",
-      "capability_state": "planned",
-      "offline_support": "to_be_assessed",
-      "required_permissions": []
+      "description": "Application native Kode Dot Shopping List : liste de courses hors-ligne de six entrées avec cases à cocher et compteur. Source ajoutée; compilation CI et validation matérielle en attente.",
+      "lifecycle": "in_development",
+      "implementation_status": "source_added",
+      "capability_state": "build_pending",
+      "offline_support": "yes",
+      "required_permissions": [],
+      "source_path": "apps/shopping-list/"
     },
     {
       "code": "L008",
@@ -489,12 +491,13 @@
       "slug": "habit-tracker",
       "name": "Habit Tracker",
       "category": "life",
-      "description": "Application Kode Ecosystem : Habit Tracker. Implémentation planifiée; fonctions non disponibles avant validation.",
-      "lifecycle": "planned",
-      "implementation_status": "not_implemented",
-      "capability_state": "planned",
-      "offline_support": "to_be_assessed",
-      "required_permissions": []
+      "description": "Application native Kode Dot Habit Tracker : suivi quotidien hors-ligne de cinq habitudes et progression. Source ajoutée; compilation CI et validation matérielle en attente.",
+      "lifecycle": "in_development",
+      "implementation_status": "source_added",
+      "capability_state": "build_pending",
+      "offline_support": "yes",
+      "required_permissions": [],
+      "source_path": "apps/habit-tracker/"
     },
     {
       "code": "L012",
