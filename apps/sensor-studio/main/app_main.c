@@ -1,5 +1,6 @@
 /* SPDX-License-Identifier: GPL-3.0-or-later */
 #include <math.h>
+#include <stdio.h>
 #include "kode.h"
 KODE_APP_MANIFEST("Sensor Studio","maker");
 void app_main(void){

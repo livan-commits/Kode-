@@ -1,9 +1,8 @@
 /* SPDX-License-Identifier: GPL-3.0-or-later */
-#include <stdio.h>
 #include "kode.h"
 KODE_APP_MANIFEST("Device Diagnostics","security");
 void app_main(void){
- char line[128];kode_time_t now;kode_widget_t identity,system,clockw,radio;
+ kode_time_t now;kode_widget_t identity,system,clockw,radio;
  kode_init();
  if(!kode_screen_new("Device Diagnostics")){kode_print("screen failed: %s",kode_error());kode_exit();}
  identity=kode_screen_add_text("Reading device identity...");
@@ -25,7 +24,6 @@ void app_main(void){
   (void)kode_widget_set_text(radio,"Wi-Fi %s\nUSB %s",
    kode_wifi_is_connected()?"connected":"disconnected",
    kode_power_is_usb_connected()?"connected":"disconnected");
-  (void)snprintf(line,sizeof(line),"Diagnostic refresh %lu",(unsigned long)kode_uptime_ms());
   kode_delay(2000U);
  }
 }

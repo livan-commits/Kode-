@@ -22,7 +22,8 @@ void app_main(void){
      int wrote=snprintf(text+used,sizeof(text)-used,"%s%.20s %d dBm ch%u %s",
        i?"\n":"",nets[i].ssid[0]?nets[i].ssid:"(hidden)",(int)nets[i].rssi,
        (unsigned)nets[i].channel,nets[i].open?"open":"secured");
-     if(wrote<0||(size_t)wrote>=sizeof(text)-used)break;used+=(size_t)wrote;
+     if(wrote<0||(size_t)wrote>=sizeof(text)-used)break;
+     used+=(size_t)wrote;
     }
     if(n==0)snprintf(text,sizeof(text),"No networks found");
     (void)kode_widget_set_text(results,"%s",text);

@@ -22,7 +22,8 @@ void app_main(void){
      int wrote=snprintf(text+used,sizeof(text)-used,"%s%.18s\n%.17s %d dBm",
        i?"\n":"",devices[i].name[0]?devices[i].name:"(unnamed)",
        devices[i].address,(int)devices[i].rssi);
-     if(wrote<0||(size_t)wrote>=sizeof(text)-used)break;used+=(size_t)wrote;
+     if(wrote<0||(size_t)wrote>=sizeof(text)-used)break;
+     used+=(size_t)wrote;
     }
     if(n==0)snprintf(text,sizeof(text),"No devices found");
     (void)kode_widget_set_text(results,"%s",text);
