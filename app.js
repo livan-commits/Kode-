@@ -19,6 +19,9 @@ $("#recovery-form").addEventListener("submit",async e=>{e.preventDefault();const
 const callbackUrl=new URL(location.href),steamResult=callbackUrl.searchParams.get("steam");
 if(steamResult==="connected"){dashMsg("Compte Steam lié. Seule l'identité Steam est confirmée pour le moment.");history.replaceState(null,"",location.pathname);}
 else if(steamResult==="error"){dashMsg("La liaison Steam n'a pas abouti. Vérifiez votre compte et réessayez.",true);history.replaceState(null,"",location.pathname);}
+const googleResult=callbackUrl.searchParams.get("google");
+if(googleResult==="connected"){dashMsg("Compte Google lié. Seule l'identité et le profil de base sont enregistrés.");history.replaceState(null,"",location.pathname);}
+else if(googleResult==="error"){dashMsg("La liaison Google n'a pas abouti. Vérifiez la configuration OAuth et réessayez.",true);history.replaceState(null,"",location.pathname);}
 }catch(error){$("#recovery-message").textContent=error.message||"Modification impossible. Demandez un nouveau lien."; }finally{button.disabled=false;}});
 $("#auth-form").addEventListener("submit",async e=>{e.preventDefault();if(busy)return;busy=true;$("#auth-submit").disabled=true;try{const {data,error}=await db.auth.signInWithPassword({email:$("#auth-email").value.trim(),password:$("#auth-password").value});if(error)throw error;await showDashboard(data.session);msg("Connexion réussie.");}catch(e){msg(e.message||"Connexion impossible.",true);}finally{busy=false;$("#auth-submit").disabled=false;}});
 $("#auth-signup").addEventListener("click",async()=>{if(busy)return;const email=$("#auth-email").value.trim(),password=$("#auth-password").value;if(!email||password.length<8){msg("Saisissez un e-mail et un mot de passe de 8 caractères minimum.",true);return;}busy=true;$("#auth-signup").disabled=true;try{const {data,error}=await db.auth.signUp({email,password,options:{emailRedirectTo:location.origin+"/"}});if(error)throw error;if(data.session){await showDashboard(data.session);msg("Compte créé et connecté.");}else msg("Inscription enregistrée. Vérifiez votre e-mail pour confirmer votre adresse avant de vous connecter.");}catch(e){msg(e.message||"Création du compte impossible.",true);}finally{busy=false;$("#auth-signup").disabled=false;}});
@@ -44,6 +47,17 @@ $("#dashboard-content").addEventListener("click",async event=>{
  const result=await response.json().catch(()=>({}));if(!response.ok)throw Error("Impossible de dissocier ce service.");
  await showDashboard(session);dashMsg("Service dissocié.");
  }catch(error){dashMsg(error.message||"Erreur lors de la dissociation.",true);button.disabled=false;}
+});
+$("#connect-google").addEventListener("click",async()=>{
+ const button=$("#connect-google");button.disabled=true;
+ try{
+  const {data:{session}}=await db.auth.getSession();if(!session)throw Error("Reconnectez-vous avant de lier Google.");
+  const response=await fetch(URL+"/functions/v1/google-oauth-start",{method:"POST",headers:{Authorization:"Bearer "+session.access_token,apikey:KEY,"Content-Type":"application/json"},body:"{}"});
+  const result=await response.json().catch(()=>({}));
+  if(!response.ok||typeof result.authorization_url!=="string")throw Error(result.error==="google_oauth_not_configured"?"La connexion Google attend encore la configuration des identifiants OAuth côté serveur.":"La liaison Google n'est pas disponible pour le moment.");
+  const target=new URL(result.authorization_url);if(target.origin!=="https://accounts.google.com"||target.pathname!=="/o/oauth2/v2/auth")throw Error("Adresse d'autorisation Google invalide.");
+  location.assign(target.href);
+ }catch(error){dashMsg(error.message||"Impossible de démarrer la liaison Google.",true);button.disabled=false;}
 });
 $("#connect-steam").addEventListener("click",async()=>{
  const button=$("#connect-steam");button.disabled=true;
