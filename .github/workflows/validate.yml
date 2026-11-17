@@ -55,6 +55,8 @@ jobs:
           test -f supabase/functions/steam-openid-start/index.ts
           test -f supabase/functions/steam-openid-callback/index.ts
           test -f supabase/functions/connector-disconnect/index.ts
+          test -f supabase/functions/steam-sync/index.ts
+          test -f supabase/functions/steam-sync/deno.json
       - name: Validate portal JavaScript
         run: |
           node --input-type=module --check < app.js
@@ -80,8 +82,12 @@ jobs:
           grep -q 'connector-disconnect' app.js
           grep -q 'revoke_connected_account' supabase/functions/connector-disconnect/index.ts
           grep -q 'revoke_connected_account' supabase/migrations/20261117194800_revoke_connected_account.sql
+          grep -q 'STEAM_WEB_API_KEY' supabase/functions/steam-sync/index.ts
+          grep -q 'steam.library.snapshot' supabase/functions/steam-sync/index.ts
+          grep -q 'steam-sync' app.js
       - name: Type-check Steam Edge Functions
         run: |
           deno check --config supabase/functions/steam-openid-start/deno.json supabase/functions/steam-openid-start/index.ts
           deno check --config supabase/functions/steam-openid-callback/deno.json supabase/functions/steam-openid-callback/index.ts
           deno check --config supabase/functions/connector-disconnect/deno.json supabase/functions/connector-disconnect/index.ts
+          deno check --config supabase/functions/steam-sync/deno.json supabase/functions/steam-sync/index.ts
