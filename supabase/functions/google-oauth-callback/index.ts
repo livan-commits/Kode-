@@ -33,8 +33,10 @@ Deno.serve(async(req:Request)=>{
  if(upsertError||!account){console.error("Google account link failed",upsertError?.message);return fail("account_link_failed",503);}
  const scopes=(tokens.scope||"openid email profile").split(" ").filter(Boolean);
  const {error:permissionError}=await admin.from("connector_permissions").insert({connected_account_id:account.id,user_id:userId,scopes,consented_at:new Date().toISOString()});
- if(permissionError)console.error("Google permission audit insert failed",permissionError.message);
- await admin.from("integration_events").insert({user_id:userId,provider_slug:"google",event_type:"google.profile.snapshot",payload:{sub:profile.sub,name:profile.name||null,email:profile.email||null,email_verified:profile.email_verified===true,picture:profile.picture||null,scopes},source_timestamp:new Date().toISOString()});
+ if(permissionError){console.error("Google permission record failed",permissionError.message);return fail("permission_record_failed",503);}
+ const retrievedAt=new Date().toISOString();
+ const {error:eventError}=await admin.from("integration_events").insert({user_id:userId,provider_slug:"google",event_type:"google.profile.snapshot",payload:{sub:profile.sub,name:profile.name||null,email:profile.email||null,email_verified:profile.email_verified===true,picture:profile.picture||null,scopes},source_timestamp:retrievedAt,retrieved_at:retrievedAt});
+ if(eventError){console.error("Google profile snapshot persistence failed",eventError.message);return fail("snapshot_persistence_failed",503);}
  // Access tokens are intentionally discarded: this first phase links identity only and requests no offline access.
  return Response.redirect(APP+"?google=connected",302);
 });
