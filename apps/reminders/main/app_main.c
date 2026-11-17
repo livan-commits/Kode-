@@ -27,7 +27,7 @@ void app_main(void)
     }
     if (!kode_screen_new("Reminders")) { kode_print("screen failed: %s", kode_error()); kode_exit(); }
     current = kode_screen_add_value(items[0], "Selected reminder");
-    progress = kode_screen_add_text("0 / 5 completed - session only");
+    progress = kode_screen_add_text("Saved reminders");
     previous = kode_screen_add_button("Previous");
     toggle = kode_screen_add_button("Done / Undo");
     next = kode_screen_add_button("Next");
@@ -35,6 +35,13 @@ void app_main(void)
     if (!current || !progress || !previous || !toggle || !next || !reset) {
         kode_print("widget creation failed: %s", kode_error()); kode_exit();
     }
+
+    count = 0U;
+    for (i = 0U; i < ITEM_COUNT; ++i) if (done[i]) ++count;
+    (void)snprintf(line, sizeof(line), "%s %s", done[selected] ? "[x]" : "[ ]", items[selected]);
+    (void)kode_widget_set_text(current, "%s", line);
+    (void)snprintf(line, sizeof(line), "%lu / %u completed - saved", (unsigned long)count, (unsigned int)ITEM_COUNT);
+    (void)kode_widget_set_text(progress, "%s", line);
 
     for (;;) {
         bool changed = false;
@@ -56,7 +63,7 @@ void app_main(void)
             for (i = 0U; i < ITEM_COUNT; ++i) if (done[i]) ++count;
             (void)snprintf(line, sizeof(line), "%s %s", done[selected] ? "[x]" : "[ ]", items[selected]);
             (void)kode_widget_set_text(current, "%s", line);
-            (void)snprintf(line, sizeof(line), "%lu / %u completed - session only", (unsigned long)count, (unsigned int)ITEM_COUNT);
+            (void)snprintf(line, sizeof(line), "%lu / %u completed - saved", (unsigned long)count, (unsigned int)ITEM_COUNT);
             (void)kode_widget_set_text(progress, "%s", line);
         }
         kode_delay(50U);
