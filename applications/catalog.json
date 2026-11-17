@@ -1388,6 +1388,19 @@
       "capability_state": "planned",
       "offline_support": "to_be_assessed",
       "required_permissions": []
+    },
+    {
+      "code": "G021",
+      "slug": "tower-stack",
+      "name": "Tower Stack",
+      "category": "gaming",
+      "description": "Jeu natif d'empilement de blocs : déplacer le bloc horizontalement et le lâcher au bon moment pour construire la tour. Score, combo de poses parfaites et redémarrage.",
+      "lifecycle": "in_development",
+      "implementation_status": "source_added",
+      "capability_state": "build_pending",
+      "offline_support": "yes",
+      "required_permissions": [],
+      "source_path": "apps/tower-stack/"
     }
   ]
 }
