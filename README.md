@@ -28,4 +28,4 @@ The portal is deployed at https://kode-ecosystem.vercel.app. Its account area su
 
 ## Next steps
 
-See the `docs/` directory for architecture, data model, security review and roadmap. Database migrations are kept in `supabase/migrations/` and must be applied only to a dedicated Kode Ecosystem Supabase project.
+See the [connector capability review](docs/connector-capability-review.md) for provider-specific API boundaries and activation criteria, plus the [security review](docs/security-review.md) for connected-account data retention and revocation. The `docs/` directory contains the architecture, data model and roadmap. Database migrations are kept in `supabase/migrations/` and must be applied only to a dedicated Kode Ecosystem Supabase project.
