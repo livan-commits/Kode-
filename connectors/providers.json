@@ -1,0 +1,231 @@
+{
+  "version": 1,
+  "status": "planned_catalog",
+  "providers": [
+    {
+      "slug": "steam",
+      "display_name": "Steam",
+      "category": "gaming",
+      "documentation_url": "https://partner.steamgames.com/doc/webapi",
+      "status": "planned",
+      "capability_manifest": {
+        "state": "planned",
+        "authentication": "to_be_assessed",
+        "capabilities": [],
+        "limitations": [
+          "API, permissions, quotas and terms must be verified before activation"
+        ]
+      }
+    },
+    {
+      "slug": "xbox",
+      "display_name": "Xbox",
+      "category": "gaming",
+      "documentation_url": "https://learn.microsoft.com/gaming/",
+      "status": "planned",
+      "capability_manifest": {
+        "state": "planned",
+        "authentication": "to_be_assessed",
+        "capabilities": [],
+        "limitations": [
+          "API, permissions, quotas and terms must be verified before activation"
+        ]
+      }
+    },
+    {
+      "slug": "playstation",
+      "display_name": "PlayStation Network",
+      "category": "gaming",
+      "documentation_url": "https://developer.sony.com/",
+      "status": "planned",
+      "capability_manifest": {
+        "state": "planned",
+        "authentication": "to_be_assessed",
+        "capabilities": [],
+        "limitations": [
+          "API, permissions, quotas and terms must be verified before activation"
+        ]
+      }
+    },
+    {
+      "slug": "epic-games",
+      "display_name": "Epic Games",
+      "category": "gaming",
+      "documentation_url": "https://dev.epicgames.com/docs",
+      "status": "planned",
+      "capability_manifest": {
+        "state": "planned",
+        "authentication": "to_be_assessed",
+        "capabilities": [],
+        "limitations": [
+          "API, permissions, quotas and terms must be verified before activation"
+        ]
+      }
+    },
+    {
+      "slug": "discord",
+      "display_name": "Discord",
+      "category": "social",
+      "documentation_url": "https://discord.com/developers/docs/intro",
+      "status": "planned",
+      "capability_manifest": {
+        "state": "planned",
+        "authentication": "to_be_assessed",
+        "capabilities": [],
+        "limitations": [
+          "API, permissions, quotas and terms must be verified before activation"
+        ]
+      }
+    },
+    {
+      "slug": "google",
+      "display_name": "Google",
+      "category": "identity",
+      "documentation_url": "https://developers.google.com/identity/protocols/oauth2",
+      "status": "planned",
+      "capability_manifest": {
+        "state": "planned",
+        "authentication": "to_be_assessed",
+        "capabilities": [],
+        "limitations": [
+          "API, permissions, quotas and terms must be verified before activation"
+        ]
+      }
+    },
+    {
+      "slug": "home-assistant",
+      "display_name": "Home Assistant",
+      "category": "smart_home",
+      "documentation_url": "https://developers.home-assistant.io/docs/",
+      "status": "planned",
+      "capability_manifest": {
+        "state": "planned",
+        "authentication": "to_be_assessed",
+        "capabilities": [],
+        "limitations": [
+          "API, permissions, quotas and terms must be verified before activation"
+        ]
+      }
+    },
+    {
+      "slug": "spotify",
+      "display_name": "Spotify",
+      "category": "media",
+      "documentation_url": "https://developer.spotify.com/documentation/web-api",
+      "status": "planned",
+      "capability_manifest": {
+        "state": "planned",
+        "authentication": "to_be_assessed",
+        "capabilities": [],
+        "limitations": [
+          "API, permissions, quotas and terms must be verified before activation"
+        ]
+      }
+    },
+    {
+      "slug": "github",
+      "display_name": "GitHub",
+      "category": "developer",
+      "documentation_url": "https://docs.github.com/en/rest",
+      "status": "planned",
+      "capability_manifest": {
+        "state": "planned",
+        "authentication": "to_be_assessed",
+        "capabilities": [],
+        "limitations": [
+          "API, permissions, quotas and terms must be verified before activation"
+        ]
+      }
+    },
+    {
+      "slug": "openweather",
+      "display_name": "OpenWeather",
+      "category": "weather",
+      "documentation_url": "https://openweathermap.org/api",
+      "status": "planned",
+      "capability_manifest": {
+        "state": "planned",
+        "authentication": "to_be_assessed",
+        "capabilities": [],
+        "limitations": [
+          "API, permissions, quotas and terms must be verified before activation"
+        ]
+      }
+    },
+    {
+      "slug": "twitch",
+      "display_name": "Twitch",
+      "category": "streaming",
+      "documentation_url": "https://dev.twitch.tv/docs/",
+      "status": "planned",
+      "capability_manifest": {
+        "state": "planned",
+        "authentication": "to_be_assessed",
+        "capabilities": [],
+        "limitations": [
+          "API, permissions, quotas and terms must be verified before activation"
+        ]
+      }
+    },
+    {
+      "slug": "mqtt",
+      "display_name": "MQTT",
+      "category": "iot",
+      "documentation_url": "https://mqtt.org/",
+      "status": "planned",
+      "capability_manifest": {
+        "state": "planned",
+        "authentication": "to_be_assessed",
+        "capabilities": [],
+        "limitations": [
+          "API, permissions, quotas and terms must be verified before activation"
+        ]
+      }
+    },
+    {
+      "slug": "windows-companion",
+      "display_name": "Windows Companion",
+      "category": "device",
+      "documentation_url": "https://learn.microsoft.com/windows/",
+      "status": "planned",
+      "capability_manifest": {
+        "state": "planned",
+        "authentication": "to_be_assessed",
+        "capabilities": [],
+        "limitations": [
+          "API, permissions, quotas and terms must be verified before activation"
+        ]
+      }
+    },
+    {
+      "slug": "linux-companion",
+      "display_name": "Linux Companion",
+      "category": "device",
+      "documentation_url": "https://www.freedesktop.org/wiki/Software/",
+      "status": "planned",
+      "capability_manifest": {
+        "state": "planned",
+        "authentication": "to_be_assessed",
+        "capabilities": [],
+        "limitations": [
+          "API, permissions, quotas and terms must be verified before activation"
+        ]
+      }
+    },
+    {
+      "slug": "nas-s3",
+      "display_name": "NAS / S3-compatible storage",
+      "category": "storage",
+      "documentation_url": "https://docs.aws.amazon.com/AmazonS3/latest/API/",
+      "status": "planned",
+      "capability_manifest": {
+        "state": "planned",
+        "authentication": "to_be_assessed",
+        "capabilities": [],
+        "limitations": [
+          "API, permissions, quotas and terms must be verified before activation"
+        ]
+      }
+    }
+  ]
+}
