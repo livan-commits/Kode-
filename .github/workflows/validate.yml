@@ -1,0 +1,25 @@
+name: Validate Kode Ecosystem
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate JSON contracts
+        run: |
+          find packages applications -name '*.json' -print0 | while IFS= read -r -d '' file; do
+            python -m json.tool "$file" >/dev/null
+          done
+      - name: Check required project files
+        run: |
+          test -f README.md
+          test -f docs/architecture.md
+          test -f docs/security-review.md
+          test -f connectors/README.md
