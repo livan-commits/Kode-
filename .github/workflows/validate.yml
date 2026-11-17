@@ -108,6 +108,7 @@ jobs:
             grep -q 'permission_record_failed' "supabase/functions/${provider}-oauth-callback/index.ts"
             grep -q 'snapshot_persistence_failed' "supabase/functions/${provider}-oauth-callback/index.ts"
             grep -q 'retrieved_at' "supabase/functions/${provider}-oauth-callback/index.ts"
+          grep -q 'onConflict:"connected_account_id"' "supabase/functions/${provider}-oauth-callback/index.ts"
           done
           grep -q 'steam_account_not_connected' supabase/functions/steam-sync/index.ts
           grep -q 'snapshot_persistence_failed' supabase/functions/steam-sync/index.ts
