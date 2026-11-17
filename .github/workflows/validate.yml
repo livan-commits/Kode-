@@ -1,4 +1,8 @@
 name: Validate Kode Ecosystem
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 on:
   push:
     branches: [main]
@@ -45,6 +49,9 @@ jobs:
           test -f apps/stopwatch/main/app_main.c
           test -f apps/pomodoro/main/app_main.c
           test -f apps/calculator/main/app_main.c
+          test -f apps/dice/main/app_main.c
+          test -f apps/reaction-test/main/app_main.c
+          test -f apps/memory/main/app_main.c
           test -f README.md
           test -f docs/architecture.md
           test -f docs/security-review.md
