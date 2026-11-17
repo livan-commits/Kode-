@@ -86,11 +86,13 @@ Official reference: https://partner.steamgames.com/doc/features/auth
 
 ## Current implementation state
 
-- Supabase provider rows: `planned`.
-- OAuth client credentials: not configured.
-- Provider-specific OAuth handlers: not deployed.
-- Account dashboard API: deployed with JWT verification; read-only and scoped by the caller's JWT/RLS.
-- No external player or smart-home data has been retrieved.
+- Supabase provider rows remain `planned` until each provider has completed a real-account end-to-end test.
+- Steam OpenID start/callback and the Steam profile/library sync function are deployed. The Web API key is still a required server-side secret before library sync can run.
+- Google and Discord authorization start/callback functions are deployed. Their client credentials are not configured; tokens are deliberately discarded, so these first phases link identity and store timestamped snapshots only.
+- The account dashboard API is deployed with JWT verification and caller-scoped reads. It never returns OAuth tokens or private connector credentials.
+- The generic disconnect path is deployed. It revokes the account and permissions, removes sync cursors and encrypted credentials, and now deletes snapshots linked to that exact connected account. Legacy unlinked snapshots are removed only when the user has no other active account for that provider.
+- Integration events now carry `connected_account_id` and an index supports account-scoped cleanup.
+- No live external player or smart-home data is claimed until a real provider account has been connected and tested.
 
 
 ## Steam profile and library sync
@@ -156,3 +158,61 @@ This does **not** provide Discord friends, messages, live presence, or activity 
 Official references:
 - https://discord.com/developers/docs/topics/oauth2
 - https://discord.com/developers/docs/resources/user#get-current-user-connections
+
+
+## Spotify
+
+Spotify's Web API is a viable candidate for account identity and user-authorized media features, but it must not be presented as an unrestricted integration. Development Mode requires the app owner to have Spotify Premium and is limited to five allowlisted authenticated users. Extended Quota Mode requires a separate review/approval process. Spotify also distinguishes quota exhaustion from ordinary rate limiting; both need explicit handling.
+
+The initial design should request only the scopes needed for a selected feature, for example basic profile or read-only playback/library data where the current app mode permits the endpoint. Do not promise playback control, full listening history, or unrestricted library access before checking the current endpoint eligibility and quota mode. Keep client secrets and refresh tokens server-side and provide revocation.
+
+Official references:
+- https://developer.spotify.com/documentation/web-api/concepts/quota-modes
+- https://developer.spotify.com/documentation/web-api/concepts/rate-limits
+- https://developer.spotify.com/blog/2026-02-06-update-on-developer-access-and-platform-security
+- https://developer.spotify.com/documentation/web-api/tutorials/february-2026-migration-guide
+
+## Twitch
+
+Twitch is a viable OAuth/EventSub candidate. Its APIs distinguish app access tokens from user access tokens; individual endpoints declare which token type and scopes they require. A user profile may be read with limited permissions, while email, chat, moderation, channel analytics and other actions require separate scopes. The implementation must request only the scopes needed for a chosen feature and validate user tokens using Twitch's documented validation endpoint.
+
+Potential first phase: public channel/stream metadata and a basic user identity snapshot. EventSub can later deliver supported channel events without polling. Do not infer a user's played games or full activity from stream metadata.
+
+Official references:
+- https://dev.twitch.tv/docs/authentication/
+- https://dev.twitch.tv/docs/authentication/scopes/
+- https://dev.twitch.tv/docs/eventsub/
+
+## GitHub
+
+For a user-facing GitHub integration, prefer a GitHub App over a broad OAuth App when repository-level access is required. Request metadata-only or read-only repository permissions by default; allow users to select repositories during installation. A later phase can expose issues, pull requests, releases, workflow status and notifications within granted permissions. Webhooks must be signature-verified and replay-protected. Never request access to every private repository by default.
+
+Official references:
+- https://docs.github.com/en/apps/overview
+- https://docs.github.com/en/apps/creating-github-apps/setting-up-a-github-app/about-creating-github-apps
+- https://docs.github.com/en/rest
+
+## Home Assistant, MQTT and local companions
+
+Home Assistant's REST API supports state reads and service calls; its WebSocket API is better for live updates. A long-lived access token is a sensitive bearer credential, not a normal OAuth login. Since the cloud backend cannot directly reach a user's private LAN, the supported architecture should be either:
+1. a user-configured HTTPS-reachable Home Assistant endpoint, or
+2. a local Kode companion/relay that opens an outbound authenticated connection to the cloud.
+
+Never solve LAN reachability by accepting arbitrary URLs or proxying arbitrary requests. The relay must use an explicit host allowlist, device-bound pairing, TLS, short-lived pairing codes, revocation and strict command allowlists. MQTT should use TLS, unique broker credentials/certificates and topic ACLs. Windows/Linux companions must not expose arbitrary shell execution.
+
+Official references:
+- https://developers.home-assistant.io/docs/api/rest/
+- https://developers.home-assistant.io/docs/api/websocket/
+- https://www.home-assistant.io/docs/authentication/
+- https://mqtt.org/
+
+## Connector activation states
+
+The registry uses these meanings:
+- `planned`: documented candidate; not ready for user connection.
+- `limited`: implemented, but capability or access is constrained and disclosed.
+- `available`: real-account tests passed and the full security/revocation checklist is satisfied.
+- `unsupported`: no acceptable official interface or access route is available.
+- `degraded`: an operational connector is currently impaired.
+
+A catalog entry or an OAuth button is not evidence of a working provider integration. Do not change provider status based only on code being deployed.
