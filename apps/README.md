@@ -27,3 +27,8 @@ GitHub Actions builds all three projects from clean checkouts. A green build pro
 | Tasks | `tasks/` | TOP marks/unmarks; UP/DOWN selects; LEFT resets; BOT home | Yes, session only |
 | Shopping List | `shopping-list/` | TOP toggles item; UP/DOWN selects; LEFT resets; BOT home | Yes, session only |
 | Habit Tracker | `habit-tracker/` | TOP checks/unchecks; UP/DOWN selects; LEFT resets; BOT home | Yes, session only |
+
+| Alarm | `alarm/` | TOP start/pause; UP/DOWN adjusts one minute; LEFT resets; BOT home | Yes, foreground countdown only |
+| Reminders | `reminders/` | TOP marks/unmarks; UP/DOWN selects; LEFT resets; BOT home | Yes, predefined list; checks are session-only |
+
+**Alarm limitation:** this app is a foreground countdown. It does not register an operating-system alarm and cannot wake the Dot after the app exits. **Reminders limitation:** the current list is built in and completion state is not persisted across app restarts.
