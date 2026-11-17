@@ -35,7 +35,7 @@ Deno.serve(async(req:Request)=>{
  const {data:account,error:upsertError}=await admin.from("connected_accounts").upsert({user_id:userId,provider_id:provider.id,external_account_id:user.id,display_name:displayName,connection_status:"connected",connected_at:new Date().toISOString()},{onConflict:"user_id,provider_id,external_account_id"}).select("id").single();
  if(upsertError||!account){console.error("Discord account link failed",upsertError?.message);return fail("account_link_failed",503);}
  const scopes=(tokens.scope||"identify connections").split(" ").filter(Boolean);
- const {error:permissionError}=await admin.from("connector_permissions").insert({connected_account_id:account.id,user_id:userId,scopes,consented_at:new Date().toISOString()});
+ const {error:permissionError}=await admin.from("connector_permissions").upsert({connected_account_id:account.id,user_id:userId,scopes,consented_at:new Date().toISOString(),revoked_at:null},{onConflict:"connected_account_id"});
  if(permissionError){console.error("Discord permission record failed",permissionError.message);return fail("permission_record_failed",503);}
  const retrievedAt=new Date().toISOString();
  const safeConnections=connections.slice(0,100).map((c:any)=>({id:typeof c.id==="string"?c.id:null,type:typeof c.type==="string"?c.type:null,name:typeof c.name==="string"?c.name:null,verified:c.verified===true,visibility:typeof c.visibility==="number"?c.visibility:null,friend_sync:c.friend_sync===true,show_activity:c.show_activity===true,two_way_link:c.two_way_link===true}));
