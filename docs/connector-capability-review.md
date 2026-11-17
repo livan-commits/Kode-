@@ -89,6 +89,7 @@ Official reference: https://partner.steamgames.com/doc/features/auth
 - Supabase provider rows remain `planned` until each provider has completed a real-account end-to-end test.
 - Steam OpenID start/callback and the Steam profile/library sync function are deployed. The Web API key is still a required server-side secret before library sync can run.
 - Google and Discord authorization start/callback functions are deployed. Their client credentials are not configured; tokens are deliberately discarded, so these first phases link identity and store timestamped snapshots only.
+- Twitch authorization start/callback functions are deployed. Its client credentials are not configured; the first phase validates the Twitch user token, links public identity and discards both access and refresh tokens.
 - The account dashboard API is deployed with JWT verification and caller-scoped reads. It never returns OAuth tokens or private connector credentials.
 - The generic disconnect path is deployed. It revokes the account and permissions, removes sync cursors and encrypted credentials, and now deletes snapshots linked to that exact connected account. Legacy unlinked snapshots are removed only when the user has no other active account for that provider.
 - Integration events now carry `connected_account_id` and an index supports account-scoped cleanup.
@@ -182,6 +183,28 @@ Official references:
 - https://dev.twitch.tv/docs/authentication/
 - https://dev.twitch.tv/docs/authentication/scopes/
 - https://dev.twitch.tv/docs/eventsub/
+
+## Twitch identity connector
+
+A first server-side Twitch identity-linking flow is implemented and deployed:
+- authenticated start endpoint creates a random, hashed, one-time state with a ten-minute expiry;
+- callback consumes the state once, exchanges the authorization code server-to-server, validates the user token against Twitch's validation endpoint and checks that the token belongs to this Twitch application;
+- the callback retrieves the public user profile from Helix, links the Twitch user ID to the Kode account, and stores a timestamped profile snapshot;
+- access and refresh tokens are deliberately discarded; this first phase does not request chat, moderation, email, or channel-management permissions.
+
+Required Supabase Edge Function secrets:
+- `TWITCH_CLIENT_ID`
+- `TWITCH_CLIENT_SECRET`
+
+Required Twitch Developer Console redirect URI:
+`https://jcfhmqpuuiscnvzmzlie.supabase.co/functions/v1/twitch-oauth-callback`
+
+The portal includes a Twitch connection action. Until the app credentials are configured and a real account completes the flow, the provider remains `planned`. Stream discovery, EventSub, chat and analytics are not included in this identity-only phase.
+
+Official references:
+- https://dev.twitch.tv/docs/authentication/
+- https://dev.twitch.tv/docs/authentication/getting-tokens-oauth/
+- https://dev.twitch.tv/docs/api/reference/#get-users
 
 ## GitHub
 
