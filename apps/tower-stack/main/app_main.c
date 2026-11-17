@@ -36,7 +36,7 @@ void app_main(void){
     int left[MAX_LEVELS],width[MAX_LEVELS],levels=1;
     int moving_x=0,direction=1,moving_w=BASE_WIDTH;
     unsigned perfect=0U;
-    bool game_over=false;
+    bool game_over=false,won=false;
     uint32_t last=0U,now=0U;
     char view[(FIELD_W+1)*(MAX_LEVELS+1)+1];
     kode_init();
@@ -52,13 +52,13 @@ void app_main(void){
         if(game_over&&(kode_button_was_pressed("left")||kode_widget_was_pressed(drop))){
             levels=1;left[0]=BASE_LEFT;width[0]=BASE_WIDTH;
             moving_w=BASE_WIDTH;moving_x=0;direction=1;perfect=0U;
-            game_over=false;last=now;
+            game_over=false;won=false;last=now;
         }else if(!game_over&&(kode_button_was_pressed("top")||kode_widget_was_pressed(drop))){
             int old_left=left[levels-1],old_right=old_left+width[levels-1];
             int new_left=moving_x>old_left?moving_x:old_left;
             int new_right=(moving_x+moving_w)<old_right?(moving_x+moving_w):old_right;
             int overlap=new_right-new_left;
-            if(overlap<=0){game_over=true;(void)kode_haptic_play("failure");}
+            if(overlap<=0){game_over=true;won=false;}
             else{
                 if(overlap==moving_w&&new_left==moving_x)++perfect;else perfect=0U;
                 left[levels]=new_left;width[levels]=overlap;++levels;
@@ -68,7 +68,7 @@ void app_main(void){
             }
             last=now;
         }
-        if(!game_over&&(uint32_t)(now-last)>=
+        if(!game_over&&kode_button_was_pressed("left"))direction=-1;\n        if(!game_over&&kode_button_was_pressed("right"))direction=1;\n        if(!game_over&&(uint32_t)(now-last)>=
            (uint32_t)clamp(105-(levels*5),48,105)){
             int max_x=FIELD_W-moving_w;
             moving_x+=direction;
@@ -78,7 +78,7 @@ void app_main(void){
         }
         render(view,sizeof(view),left,width,levels,moving_x,moving_w,game_over);
         (void)kode_widget_set_text(board,"%s",view);
-        if(game_over)(void)kode_widget_set_text(status,"Tower fell! Score %d | LEFT restart",levels-1);
+        if(game_over)(void)kode_widget_set_text(status,"%s Score %d | LEFT restart",won?"Tower complete!":"Tower fell!",levels-1);
         else (void)kode_widget_set_text(status,"Height %d | Perfect %u | TOP drop",levels-1,perfect);
         kode_delay(25U);
     }
