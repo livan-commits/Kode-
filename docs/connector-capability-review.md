@@ -91,3 +91,22 @@ Official reference: https://partner.steamgames.com/doc/features/auth
 - Provider-specific OAuth handlers: not deployed.
 - Account dashboard API: deployed with JWT verification; read-only and scoped by the caller's JWT/RLS.
 - No external player or smart-home data has been retrieved.
+
+
+## Steam profile and library sync
+
+A user-authenticated `steam-sync` Edge Function is now deployed. It:
+- verifies the Kode account JWT and the linked Steam account ownership;
+- requires the server-side `STEAM_WEB_API_KEY` secret (never sent to the browser);
+- retrieves the Steam player summary and owned-games library through Steam Web API;
+- stores timestamped snapshots in `integration_events`, capped at 500 game records per snapshot while retaining the reported total;
+- updates the account's last-sync timestamp.
+
+The account dashboard exposes a manual “Synchroniser Steam” action and summarizes the latest profile/library snapshots. A missing API key returns an explicit configuration error; it does not fabricate data. Private Steam profiles or hidden libraries may yield limited/empty results. Achievements and per-game statistics are not included yet.
+
+**Activation requirement:** set the Supabase Edge Function secret `STEAM_WEB_API_KEY` for project `jcfhmqpuuiscnvzmzlie` using Supabase Dashboard → Edge Functions → Secrets. The key must be kept server-side. Then the user can link Steam and trigger synchronization. Until the secret is configured and a real account is tested, Steam data sync remains limited/unverified.
+
+Official API references:
+- https://partner.steamgames.com/doc/webapi_overview
+- https://partner.steamgames.com/doc/webapi/isteamuser
+- https://partner.steamgames.com/doc/webapi/iplayerservice
