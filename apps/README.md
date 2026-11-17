@@ -40,3 +40,7 @@ GitHub Actions builds all three projects from clean checkouts. A green build pro
 | Level | `level/` | Live pitch/roll; BOT home | Yes, requires IMU |
 | Sensor Studio | `sensor-studio/` | Live IMU and magnetometer readings; BOT home | Yes, requires sensors |
 | Data Logger | `data-logger/` | TOP starts/stops CSV logging to `flash/sensor-log.csv`; BOT home | Yes, requires IMU and flash storage |
+
+| NFC Studio | `nfc-studio/` | Reads NFC UID and tag type; BOT home | Yes, requires NFC hardware |
+| RFID Studio | `rfid-studio/` | Reads EM4100 IDs only; BOT home | Yes, requires RFID hardware |
+| IR Studio | `ir-studio/` | Receives decoded IR protocol/address/command; BOT home | Yes, requires IR receiver |
