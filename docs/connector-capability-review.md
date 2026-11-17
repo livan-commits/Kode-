@@ -110,3 +110,26 @@ Official API references:
 - https://partner.steamgames.com/doc/webapi_overview
 - https://partner.steamgames.com/doc/webapi/isteamuser
 - https://partner.steamgames.com/doc/webapi/iplayerservice
+
+
+## Google identity connector
+
+A server-side Google OAuth authorization-code flow is implemented and deployed:
+- authenticated start endpoint creates a random, hashed, one-time state with a 10-minute expiry;
+- callback consumes the state once, exchanges the authorization code server-to-server, and retrieves the OpenID Connect user profile;
+- only `openid email profile` are requested; access is not requested to Gmail, Drive, Calendar, or other Google APIs;
+- Google subject, basic display identity, approved scopes, and a timestamped profile snapshot are associated with the user's Kode account;
+- Google access tokens are deliberately discarded and are not persisted.
+
+Required Supabase Edge Function secrets:
+- `GOOGLE_OAUTH_CLIENT_ID`
+- `GOOGLE_OAUTH_CLIENT_SECRET`
+
+Required Google Cloud OAuth client redirect URI (must match exactly):
+`https://jcfhmqpuuiscnvzmzlie.supabase.co/functions/v1/google-oauth-callback`
+
+The Google OAuth consent screen and OAuth web client must be configured by the project owner. Until those secrets and the exact redirect URI are configured and an end-to-end account test succeeds, the Google connector remains **limited / not verified**. No Gmail, Drive, Calendar or background synchronization is claimed.
+
+Official references:
+- https://developers.google.com/identity/protocols/oauth2/web-server
+- https://developers.google.com/identity/openid-connect/openid-connect
