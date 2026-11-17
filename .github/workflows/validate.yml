@@ -43,3 +43,7 @@ jobs:
           test -f supabase/functions/account-dashboard/deno.json
           grep -q 'supabase.auth.getUser' supabase/functions/account-dashboard/index.ts
           grep -q 'oauth_tokens_never_returned' supabase/functions/account-dashboard/index.ts
+      - name: Check connector review documentation
+        run: |
+          test -f docs/connector-capability-review.md
+          test -f docs/account-dashboard-api.md
