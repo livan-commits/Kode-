@@ -27,13 +27,13 @@ jobs:
           assert len({a["code"] for a in apps}) == 113, "Duplicate app codes"
           assert len({a["slug"] for a in apps}) == 113, "Duplicate app slugs"
           for app in apps:
-    if app["implementation_status"] == "source_added":
-        assert app["lifecycle"] == "in_development"
-        assert app["capability_state"] == "build_pending"
-        assert app["source_path"].startswith("apps/")
-    else:
-        assert app["lifecycle"] == "planned"
-        assert app["implementation_status"] == "not_implemented"
+              if app["implementation_status"] == "source_added":
+                  assert app["lifecycle"] == "in_development"
+                  assert app["capability_state"] == "build_pending"
+                  assert app["source_path"].startswith("apps/")
+              else:
+                  assert app["lifecycle"] == "planned"
+                  assert app["implementation_status"] == "not_implemented"
           assert all(p["status"] == "planned" for p in providers)
           assert len({p["slug"] for p in providers}) == len(providers)
           assert all(p["capability_manifest"]["state"] == "planned" for p in providers)
