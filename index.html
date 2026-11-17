@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#10131b">
+  <meta name="description" content="Kode Ecosystem — catalogue des applications et services connectés pour Kode Dot.">
+  <title>Kode Ecosystem</title>
+  <link rel="stylesheet" href="/styles.css">
+  <script type="module" src="/app.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="/" aria-label="Kode Ecosystem accueil"><span class="brand-mark">K</span><span>Kode <b>Ecosystem</b></span></a>
+    <span class="top-status"><i></i> Catalogue central</span>
+  </header>
+  <main>
+    <section class="hero">
+      <div class="eyebrow">UN ÉCOSYSTÈME MODULAIRE</div>
+      <h1>Tout votre univers,<br><span>réuni au même endroit.</span></h1>
+      <p>Applications Kode Dot, services connectés et outils du quotidien. Un catalogue unique, conçu pour évoluer avec vos appareils.</p>
+      <div class="hero-meta"><span id="app-total">Chargement…</span><span id="provider-total">Services connectables…</span></div>
+    </section>
+    <section class="section">
+      <div class="section-heading"><div><div class="eyebrow">EXPLORER</div><h2>Applications</h2></div><span class="subtle" id="shown-count"></span></div>
+      <div class="toolbar">
+        <label class="search"><span>⌕</span><input id="search" type="search" placeholder="Rechercher une application…" autocomplete="off"></label>
+        <select id="category" aria-label="Filtrer par catégorie"><option value="">Toutes les catégories</option></select>
+      </div>
+      <div id="categories" class="category-pills"></div>
+      <div id="apps" class="app-grid" aria-live="polite"><div class="loading">Chargement du catalogue…</div></div>
+    </section>
+    <section class="section providers-section">
+      <div class="section-heading"><div><div class="eyebrow">CONNEXIONS EXTERNES</div><h2>Services et plateformes</h2></div><span class="subtle">15 fournisseurs référencés</span></div>
+      <p class="section-intro">Les services sont recensés pour préparer leur intégration. Une connexion ne sera activée qu'après vérification des API, autorisations et conditions de chaque fournisseur.</p>
+      <div id="providers" class="provider-grid"><div class="loading">Chargement des services…</div></div>
+    </section>
+    <section class="notice"><span class="notice-icon">i</span><div><b>État du projet</b><p>Ce portail présente le catalogue et les intégrations planifiées. Les applications et connecteurs ne sont pas encore déclarés opérationnels. Leur état sera mis à jour après implémentation et tests.</p></div></section>
+  </main>
+  <footer><span>Kode Ecosystem</span><span>Projet indépendant · Non affilié officiellement à KodeDIY</span></footer>
+</body>
+</html>
