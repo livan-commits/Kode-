@@ -1203,12 +1203,13 @@
       "slug": "quiz",
       "name": "Quiz",
       "category": "play",
-      "description": "Application Kode Ecosystem : Quiz. Implémentation planifiée; fonctions non disponibles avant validation.",
-      "lifecycle": "planned",
-      "implementation_status": "not_implemented",
-      "capability_state": "planned",
-      "offline_support": "to_be_assessed",
-      "required_permissions": []
+      "description": "Application native Kode Dot Quiz. Source ESP-IDF ajoutée; compilation CI et validation matérielle en attente.",
+      "lifecycle": "in_development",
+      "implementation_status": "source_added",
+      "capability_state": "build_pending",
+      "offline_support": "yes",
+      "required_permissions": [],
+      "source_path": "apps/quiz/"
     },
     {
       "code": "P008",

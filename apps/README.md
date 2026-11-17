@@ -22,3 +22,4 @@ GitHub Actions builds all three projects from clean checkouts. A green build pro
 | Memory | `memory/` | Memorize and repeat the D-pad sequence | Yes |
 | Snake | `snake/` | D-pad steers, TOP pauses, Restart resets | Yes |
 | Pong | `pong/` | UP/DOWN moves paddle, TOP pauses, Serve starts | Yes |
+| Quiz | `quiz/` | D-pad selects answers, TOP confirms | Yes |
