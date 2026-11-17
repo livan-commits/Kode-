@@ -48,6 +48,10 @@ jobs:
           test -f docs/connector-capability-review.md
           test -f docs/account-dashboard-api.md
           test -f docs/portal-authentication.md
+          test -f supabase/migrations/20261117194000_connector_auth_state_store.sql
+          test -f supabase/migrations/20261117194010_connector_auth_state_rpc.sql
+          test -f supabase/functions/steam-openid-start/index.ts
+          test -f supabase/functions/steam-openid-callback/index.ts
       - name: Validate portal JavaScript
         run: |
           node --input-type=module --check < app.js
@@ -65,3 +69,8 @@ jobs:
           grep -q 'id="user-panel"' index.html
           grep -q 'id="dashboard-content"' index.html
           grep -q 'id="recovery-form"' index.html
+          grep -q 'id="connect-steam"' index.html
+          grep -q 'steam-openid-start' app.js
+          grep -q 'steamcommunity.com/openid/login' supabase/functions/steam-openid-start/index.ts
+          grep -q 'check_authentication' supabase/functions/steam-openid-callback/index.ts
+          grep -q 'consume_connector_auth_state' supabase/functions/steam-openid-callback/index.ts
