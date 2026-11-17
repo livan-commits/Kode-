@@ -20,3 +20,5 @@ GitHub Actions builds all three projects from clean checkouts. A green build pro
 | Dice | `dice/` | Roll button or TOP | Yes |
 | Reaction Test | `reaction-test/` | Start, then press a direction after GO | Yes |
 | Memory | `memory/` | Memorize and repeat the D-pad sequence | Yes |
+| Snake | `snake/` | D-pad steers, TOP pauses, Restart resets | Yes |
+| Pong | `pong/` | UP/DOWN moves paddle, TOP pauses, Serve starts | Yes |
