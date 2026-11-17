@@ -49,3 +49,13 @@ GitHub Actions builds all three projects from clean checkouts. A green build pro
 | LED Studio | `led-studio/` | Select/apply RGB LED presets; BOT home | Yes, requires RGB LED |
 | Music Studio | `music-studio/` | Play selectable speaker tones; BOT home | Yes, requires audio codec |
 | Files | `files/` | Read-only flash/SD file listing; BOT home | Yes, requires mounted storage |
+
+| Device Diagnostics | `device-diagnostics/` | Device ID, uptime, battery, local clock and Wi-Fi/USB status; BOT home | Yes, clock may be unset |
+| Network Monitor | `network-monitor/` | Wi-Fi state; TOP runs two ICMP probes to 1.1.1.1 | No, requires Wi-Fi and radio |
+| Wi-Fi Analyzer | `wi-fi-analyzer/` | TOP scans nearby access points; about 38 seconds; BOT home | No, requires radio; scan may interrupt another Wi-Fi scan |
+| Bluetooth Scanner | `bluetooth-scanner/` | TOP listens for BLE devices for 3 seconds; BOT home | No, requires Bluetooth/radio enabled |
+| Settings | `settings/` | UP/DOWN brightness; LEFT/RIGHT volume; TOP mute; BOT home | Brightness preference saved; volume and mute are boot-session settings |
+
+**Hardware and radio notes:** Wi-Fi and Bluetooth scans use the shared radio and can be refused while it is busy or disabled in KodeOS. A successful compile does not prove radio hardware availability. Device Diagnostics is read-only. Settings restores the display's previous brightness when it exits, as defined by the SDK; it stores its preferred level separately. Volume and mute last only for the current boot.
+
+**Audio note:** Music Studio is a tone test tool, not a music player. Its selectable frequencies stay within the SDK's documented 400–3400 Hz range.

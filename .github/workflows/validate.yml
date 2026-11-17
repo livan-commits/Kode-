@@ -189,7 +189,7 @@ jobs:
 
       - name: Check all native app projects
         run: |
-          for app in stopwatch pomodoro calculator dice reaction-test memory snake pong quiz tasks shopping-list habit-tracker alarm reminders calendar compass level sensor-studio data-logger nfc-studio rfid-studio ir-studio battery-monitor led-studio music-studio files; do
+          for app in stopwatch pomodoro calculator dice reaction-test memory snake pong quiz tasks shopping-list habit-tracker alarm reminders calendar compass level sensor-studio data-logger nfc-studio rfid-studio ir-studio battery-monitor led-studio music-studio files settings device-diagnostics network-monitor wi-fi-analyzer bluetooth-scanner; do
             test -f "apps/$app/CMakeLists.txt"
             test -f "apps/$app/main/app_main.c"
             test -f "apps/$app/main/CMakeLists.txt"
@@ -197,4 +197,4 @@ jobs:
             test -f "apps/$app/sdkconfig.defaults"
           done
           grep -q 'matrix:' .github/workflows/build-native-apps.yml
-          grep -q 'stopwatch, pomodoro, calculator, dice, reaction-test, memory, snake, pong, quiz, tasks, shopping-list, habit-tracker, alarm, reminders, calendar, compass, level, sensor-studio, data-logger, nfc-studio, rfid-studio, ir-studio, battery-monitor, led-studio, music-studio, files' .github/workflows/build-native-apps.yml
+          grep -q 'stopwatch, pomodoro, calculator, dice, reaction-test, memory, snake, pong, quiz, tasks, shopping-list, habit-tracker, alarm, reminders, calendar, compass, level, sensor-studio, data-logger, nfc-studio, rfid-studio, ir-studio, battery-monitor, led-studio, music-studio, files, settings, device-diagnostics, network-monitor, wi-fi-analyzer, bluetooth-scanner' .github/workflows/build-native-apps.yml

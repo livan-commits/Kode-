@@ -26,12 +26,12 @@ void app_main(void){
    }else{recording=false;(void)kode_widget_set_text(state,"Stopped");}
   }
   if(recording){
-   kode_imu_t imu=kode_imu_read();
-   if(isfinite(imu.accel_x)&&isfinite(imu.gyro_x)){
+   kode_imu_t imu=kode_imu_read();char sensor_error[64];(void)snprintf(sensor_error,sizeof(sensor_error),"%.62s",kode_error());
+   if(isfinite(imu.accel_x)&&isfinite(imu.gyro_x)&&sensor_error[0]=='\\0'){
     (void)snprintf(line,sizeof(line),"%lu,%.4f,%.4f,%.4f,%.3f,%.3f,%.3f,%.2f\n",(unsigned long)kode_uptime_ms(),imu.accel_x,imu.accel_y,imu.accel_z,imu.gyro_x,imu.gyro_y,imu.gyro_z,imu.temp);
     if(kode_file_append(LOG_PATH,line)){++samples;(void)kode_widget_set_text(count,"%lu",(unsigned long)samples);}
     else{recording=false;(void)kode_widget_set_text(state,"Write failed: %.20s",kode_error());}
-   }else{recording=false;(void)kode_widget_set_text(state,"Sensor error: %.20s",kode_error());}
+   }else{recording=false;(void)kode_widget_set_text(state,"Sensor error: %.20s",sensor_error[0]?sensor_error:"invalid reading");}
   }
   kode_delay(1000U);
  }

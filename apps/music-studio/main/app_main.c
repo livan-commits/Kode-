@@ -1,7 +1,7 @@
 /* SPDX-License-Identifier: GPL-3.0-or-later */
 #include "kode.h"
 KODE_APP_MANIFEST("Music Studio","play");
-static const uint16_t hz[]={220,330,440,523,659,784,880};
+static const uint16_t hz[]={440,523,659,784,880,1000,1200};
 void app_main(void){
  unsigned selected=3;kode_widget_t tone,state,play;kode_init();
  if(!kode_screen_new("Music Studio")){kode_print("screen failed: %s",kode_error());kode_exit();}
