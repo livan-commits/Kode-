@@ -133,3 +133,26 @@ The Google OAuth consent screen and OAuth web client must be configured by the p
 Official references:
 - https://developers.google.com/identity/protocols/oauth2/web-server
 - https://developers.google.com/identity/openid-connect/openid-connect
+
+
+## Discord identity and linked-account connector
+
+A Discord OAuth2 authorization-code flow is implemented and deployed:
+- one-time hashed state with a 10-minute expiry and authenticated flow initiation;
+- OAuth scopes requested: `identify connections`;
+- callback retrieves the Discord user profile and the user's linked third-party accounts through `GET /users/@me/connections`;
+- profile and a bounded snapshot of up to 100 linked connections are stored with retrieval timestamps;
+- access and refresh tokens are discarded and are not stored.
+
+Required Supabase Edge Function secrets:
+- `DISCORD_CLIENT_ID`
+- `DISCORD_CLIENT_SECRET`
+
+Required Discord Developer Portal redirect URI:
+`https://jcfhmqpuuiscnvzmzlie.supabase.co/functions/v1/discord-oauth-callback`
+
+This does **not** provide Discord friends, messages, live presence, or activity tracking. Those are separate scopes/features, and some require Discord approval. The connector remains unverified until application credentials are configured and a real account completes the flow.
+
+Official references:
+- https://discord.com/developers/docs/topics/oauth2
+- https://discord.com/developers/docs/resources/user#get-current-user-connections
