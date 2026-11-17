@@ -8,7 +8,7 @@
 #include <stdio.h>
 #include "kode.h"
 
-KODE_APP_MANIFEST("Pomodoro", "productivity");
+KODE_APP_MANIFEST("Pomodoro", "tools");
 
 #define WORK_MS  (25U * 60U * 1000U)
 #define BREAK_MS (5U * 60U * 1000U)

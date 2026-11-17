@@ -29,3 +29,8 @@ The portal is deployed at https://kode-ecosystem.vercel.app. Its account area su
 ## Next steps
 
 See the [connector capability review](docs/connector-capability-review.md) for provider-specific API boundaries and activation criteria, plus the [security review](docs/security-review.md) for connected-account data retention and revocation. The `docs/` directory contains the architecture, data model and roadmap. Database migrations are kept in `supabase/migrations/` and must be applied only to a dedicated Kode Ecosystem Supabase project.
+
+
+## Native Kode Dot applications
+
+The first three native ESP32-P4 applications are in `apps/`: Stopwatch, Pomodoro and Calculator. They use the official Kode SDK v0.1.2 and the `kode_screen` UI API. Their source is committed; they remain `in_development` until the ESP-IDF CI build passes, and remain unverified on physical hardware until tested on a Dot. See [apps/README.md](apps/README.md).

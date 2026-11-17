@@ -451,24 +451,26 @@
       "slug": "pomodoro",
       "name": "Pomodoro",
       "category": "life",
-      "description": "Application Kode Ecosystem : Pomodoro. Implémentation planifiée; fonctions non disponibles avant validation.",
-      "lifecycle": "planned",
-      "implementation_status": "not_implemented",
-      "capability_state": "planned",
-      "offline_support": "to_be_assessed",
-      "required_permissions": []
+      "description": "Application native Kode Dot Pomodoro. Source ESP-IDF ajoutée; compilation CI et validation matérielle en attente.",
+      "lifecycle": "in_development",
+      "implementation_status": "source_added",
+      "capability_state": "build_pending",
+      "offline_support": "yes",
+      "required_permissions": [],
+      "source_path": "apps/pomodoro/"
     },
     {
       "code": "L009",
       "slug": "stopwatch",
       "name": "Stopwatch",
       "category": "life",
-      "description": "Application Kode Ecosystem : Stopwatch. Implémentation planifiée; fonctions non disponibles avant validation.",
-      "lifecycle": "planned",
-      "implementation_status": "not_implemented",
-      "capability_state": "planned",
-      "offline_support": "to_be_assessed",
-      "required_permissions": []
+      "description": "Application native Kode Dot Stopwatch. Source ESP-IDF ajoutée; compilation CI et validation matérielle en attente.",
+      "lifecycle": "in_development",
+      "implementation_status": "source_added",
+      "capability_state": "build_pending",
+      "offline_support": "yes",
+      "required_permissions": [],
+      "source_path": "apps/stopwatch/"
     },
     {
       "code": "L010",
@@ -523,12 +525,13 @@
       "slug": "calculator",
       "name": "Calculator",
       "category": "life",
-      "description": "Application Kode Ecosystem : Calculator. Implémentation planifiée; fonctions non disponibles avant validation.",
-      "lifecycle": "planned",
-      "implementation_status": "not_implemented",
-      "capability_state": "planned",
-      "offline_support": "to_be_assessed",
-      "required_permissions": []
+      "description": "Application native Kode Dot Calculator. Source ESP-IDF ajoutée; compilation CI et validation matérielle en attente.",
+      "lifecycle": "in_development",
+      "implementation_status": "source_added",
+      "capability_state": "build_pending",
+      "offline_support": "yes",
+      "required_permissions": [],
+      "source_path": "apps/calculator/"
     },
     {
       "code": "L015",

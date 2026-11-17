@@ -1,0 +1,39 @@
+name: Build native Kode Dot apps
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "apps/**"
+      - ".github/workflows/build-native-apps.yml"
+  pull_request:
+    paths:
+      - "apps/**"
+      - ".github/workflows/build-native-apps.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container: espressif/idf:v6.1
+    strategy:
+      fail-fast: false
+      matrix:
+        app: [stopwatch, pomodoro, calculator]
+    defaults:
+      run:
+        shell: bash
+        working-directory: apps/${{ matrix.app }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build ESP32-P4 app image
+        run: |
+          . "$IDF_PATH/export.sh"
+          idf.py build
+      - uses: actions/upload-artifact@v4
+        with:
+          name: kode-${{ matrix.app }}-firmware
+          path: apps/${{ matrix.app }}/build/*.bin
+          if-no-files-found: error

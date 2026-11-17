@@ -61,7 +61,7 @@ void app_main(void)
 
     for (;;) {
         if (kode_button_was_pressed("bottom")) { kode_exit(); }
-        if (kode_button_was_pressed("up") && (999 == a ? false : true)) { ++a; }
+        if (kode_button_was_pressed("up") && (999 > a)) { ++a; }
         if (kode_button_was_pressed("down") && (0 < a)) { --a; }
         if (kode_button_was_pressed("right") && (999 > b)) { ++b; }
         if (kode_button_was_pressed("left") && (0 < b)) { --b; }

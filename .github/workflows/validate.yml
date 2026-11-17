@@ -26,7 +26,14 @@ jobs:
           assert len(apps) == 113, f"Expected 113 apps, got {len(apps)}"
           assert len({a["code"] for a in apps}) == 113, "Duplicate app codes"
           assert len({a["slug"] for a in apps}) == 113, "Duplicate app slugs"
-          assert all(a["lifecycle"] == "planned" for a in apps)
+          for app in apps:
+    if app["implementation_status"] == "source_added":
+        assert app["lifecycle"] == "in_development"
+        assert app["capability_state"] == "build_pending"
+        assert app["source_path"].startswith("apps/")
+    else:
+        assert app["lifecycle"] == "planned"
+        assert app["implementation_status"] == "not_implemented"
           assert all(p["status"] == "planned" for p in providers)
           assert len({p["slug"] for p in providers}) == len(providers)
           assert all(p["capability_manifest"]["state"] == "planned" for p in providers)
@@ -35,6 +42,9 @@ jobs:
           PY
       - name: Check required project files
         run: |
+          test -f apps/stopwatch/main/app_main.c
+          test -f apps/pomodoro/main/app_main.c
+          test -f apps/calculator/main/app_main.c
           test -f README.md
           test -f docs/architecture.md
           test -f docs/security-review.md
