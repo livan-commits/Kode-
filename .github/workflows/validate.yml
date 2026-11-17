@@ -169,3 +169,15 @@ jobs:
           deno check --config supabase/functions/discord-oauth-callback/deno.json supabase/functions/discord-oauth-callback/index.ts
           deno check --config supabase/functions/twitch-oauth-start/deno.json supabase/functions/twitch-oauth-start/index.ts
           deno check --config supabase/functions/twitch-oauth-callback/deno.json supabase/functions/twitch-oauth-callback/index.ts
+
+      - name: Check all native app projects
+        run: |
+          for app in stopwatch pomodoro calculator dice reaction-test memory snake pong quiz; do
+            test -f "apps/$app/CMakeLists.txt"
+            test -f "apps/$app/main/app_main.c"
+            test -f "apps/$app/main/CMakeLists.txt"
+            test -f "apps/$app/main/idf_component.yml"
+            test -f "apps/$app/sdkconfig.defaults"
+          done
+          grep -q 'matrix:' .github/workflows/build-native-apps.yml
+          grep -q 'stopwatch, pomodoro, calculator, dice, reaction-test, memory, snake, pong, quiz' .github/workflows/build-native-apps.yml
