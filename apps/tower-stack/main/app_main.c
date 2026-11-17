@@ -63,8 +63,8 @@ void app_main(void){
                 if(overlap==moving_w&&new_left==moving_x)++perfect;else perfect=0U;
                 left[levels]=new_left;width[levels]=overlap;++levels;
                 moving_w=overlap;moving_x=0;direction=1;
-                (void)kode_haptic_play((overlap==width[levels-2])?"success":"click");
-                if(levels>MAX_LEVELS)levels=MAX_LEVELS;
+                if(overlap==width[levels-2])(void)kode_haptic_play("success");
+                if(levels>=MAX_LEVELS){game_over=true;won=true;}
             }
             last=now;
         }

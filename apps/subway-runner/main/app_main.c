@@ -15,7 +15,8 @@ static void draw(char *out,size_t cap,const int obstacle[ROWS][LANES],const bool
  for(int r=0;r<ROWS;r++){for(int l=0;l<LANES;l++){char c='.';
   if(r==PLAYER_ROW&&l==lane)c=jumping?'^':(sliding?'v':'@');
   else if(obstacle[r][l]==BARRIER)c='X';else if(obstacle[r][l]==OVERHEAD)c='T';else if(obstacle[r][l]==GAP)c='_';else if(coin[r][l])c='$';
-  if(p+1U<cap)out[p++]=c;if(l<LANES-1&&p+1U<cap)out[p++]='|';
+  if(p+1U<cap){out[p++]=c;}
+  if(l<LANES-1&&p+1U<cap){out[p++]='|';}
  }if(p+1U<cap)out[p++]='\n';}out[p]='\0';
 }
 static void reset(int obstacle[ROWS][LANES],bool coin[ROWS][LANES],int *lane,int *jump,int *slide,unsigned *score,uint32_t *rng){
@@ -45,9 +46,9 @@ void app_main(void){
     uint32_t roll=next_random(&rng);
     if((roll%100U)<72U){int target=(int)((roll>>8)%LANES);int type=(int)((roll>>16)%3U)+1;obstacle[0][target]=type;if((roll&0x100000U)!=0U)coin[0][(target+1)%LANES]=true;}
     else coin[0][(roll>>12)%LANES]=true;
-    if(coin[PLAYER_ROW][lane]){++score;coin[PLAYER_ROW][lane]=false;}
+    bool collected=coin[PLAYER_ROW][lane];if(collected){++score;coin[PLAYER_ROW][lane]=false;}
     int hit=obstacle[PLAYER_ROW][lane];if((hit==BARRIER||hit==GAP)&&jump==0)game_over=true;if(hit==OVERHEAD&&slide==0)game_over=true;
-    if(game_over){if(score>best)best=score;}else{if(jump>0)--jump;if(slide>0)--slide;if(score>0U&&(score%5U)==0U)(void)kode_haptic_play("success");}
+    if(game_over){if(score>best)best=score;}else{if(jump>0)--jump;if(slide>0)--slide;if(collected&&(score%5U)==0U)(void)kode_haptic_play("success");}
     last=now;
    }
   }
