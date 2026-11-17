@@ -101,6 +101,19 @@ jobs:
           grep -q 'discord-oauth-start' app.js
           grep -q 'users/@me/connections' supabase/functions/discord-oauth-callback/index.ts
           grep -q 'DISCORD_CLIENT_SECRET' supabase/functions/discord-oauth-callback/index.ts
+      - name: Check OAuth and sync safety invariants
+        run: |
+          for provider in google discord; do
+            grep -q 'consume_connector_auth_state' "supabase/functions/${provider}-oauth-callback/index.ts"
+            grep -q 'permission_record_failed' "supabase/functions/${provider}-oauth-callback/index.ts"
+            grep -q 'snapshot_persistence_failed' "supabase/functions/${provider}-oauth-callback/index.ts"
+            grep -q 'retrieved_at' "supabase/functions/${provider}-oauth-callback/index.ts"
+          done
+          grep -q 'steam_account_not_connected' supabase/functions/steam-sync/index.ts
+          grep -q 'snapshot_persistence_failed' supabase/functions/steam-sync/index.ts
+          grep -q 'sync_metadata_persistence_failed' supabase/functions/steam-sync/index.ts
+          ! grep -Eq 'access_token.*(insert|upsert)|refresh_token.*(insert|upsert)' supabase/functions/google-oauth-callback/index.ts
+          ! grep -Eq 'access_token.*(insert|upsert)|refresh_token.*(insert|upsert)' supabase/functions/discord-oauth-callback/index.ts
       - name: Type-check Edge Functions
         run: |
           deno check --config supabase/functions/account-dashboard/deno.json supabase/functions/account-dashboard/index.ts
