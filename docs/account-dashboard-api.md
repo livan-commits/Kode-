@@ -18,3 +18,5 @@ OAuth tokens, encrypted connector secrets and service-role credentials are never
 
 ## Deployment
 JWT verification must remain enabled. Runtime environment must provide `SUPABASE_URL` and either `SUPABASE_ANON_KEY` or `SUPABASE_PUBLISHABLE_KEY`.
+
+The response also includes up to 20 recent `integration_events` for the authenticated user. Each newly created provider snapshot is associated with its `connected_account_id` and includes both `source_timestamp` and `retrieved_at`. This supports account-specific retention and deletion when a connector is revoked. The event payloads contain only provider profile/library metadata selected by the connector; OAuth access and refresh tokens are never included.
