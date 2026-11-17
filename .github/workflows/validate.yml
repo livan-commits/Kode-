@@ -37,3 +37,9 @@ jobs:
           test -f docs/security-review.md
           test -f connectors/README.md
           test -f supabase/migrations/20261117192540_auth_lifecycle_and_initial_catalog.sql
+      - name: Validate Edge Function source
+        run: |
+          test -f supabase/functions/account-dashboard/index.ts
+          test -f supabase/functions/account-dashboard/deno.json
+          grep -q 'supabase.auth.getUser' supabase/functions/account-dashboard/index.ts
+          grep -q 'oauth_tokens_never_returned' supabase/functions/account-dashboard/index.ts
