@@ -52,10 +52,12 @@ jobs:
           test -f supabase/migrations/20261117194058_connector_auth_state_store.sql
           test -f supabase/migrations/20261117194131_connector_auth_state_rpc.sql
           test -f supabase/migrations/20261117194629_revoke_connected_account.sql
+          grep -q 'delete from public.integration_events' supabase/migrations/20261117203142_revoke_connector_snapshots_on_disconnect.sql
           test -f supabase/migrations/20261117195600_explicit_private_auth_state_deny.sql
           test -f supabase/migrations/20261117195700_index_private_auth_state_user.sql
           test -f supabase/migrations/20261117202915_unique_connector_permissions.sql
-          test -f supabase/migrations/20261117204500_integration_events_connected_account.sql
+          test -f supabase/migrations/20261117203104_integration_events_connected_account.sql
+          test -f supabase/migrations/20261117203142_revoke_connector_snapshots_on_disconnect.sql
           test -f supabase/functions/steam-openid-start/index.ts
           test -f supabase/functions/steam-openid-callback/index.ts
           test -f supabase/functions/connector-disconnect/index.ts
