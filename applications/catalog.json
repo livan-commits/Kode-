@@ -416,7 +416,7 @@
       "slug": "reminders",
       "name": "Reminders",
       "category": "life",
-      "description": "Application native Kode Dot Reminders. Liste de rappels prédéfinis utilisable hors ligne; coches conservées uniquement pendant la session. Source ESP-IDF ajoutée; compilation CI et validation matérielle en attente.",
+      "description": "Application native Kode Dot Reminders. Liste de cinq rappels prédéfinis hors ligne; état de complétion persistant dans les réglages Kode. Création/édition de texte et notifications en arrière-plan non implémentées.",
       "lifecycle": "in_development",
       "implementation_status": "source_added",
       "capability_state": "build_pending",
