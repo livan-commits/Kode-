@@ -40,7 +40,7 @@ Deno.serve(async(req:Request)=>{
  const retrievedAt=new Date().toISOString();
  const safeConnections=connections.slice(0,100).map((c:any)=>({id:typeof c.id==="string"?c.id:null,type:typeof c.type==="string"?c.type:null,name:typeof c.name==="string"?c.name:null,verified:c.verified===true,visibility:typeof c.visibility==="number"?c.visibility:null,friend_sync:c.friend_sync===true,show_activity:c.show_activity===true,two_way_link:c.two_way_link===true}));
  const events=[
-  {user_id:userId,provider_slug:"discord",event_type:"discord.profile.snapshot",payload:{id:user.id,username:user.username||null,global_name:user.global_name||null,avatar:user.avatar||null,discriminator:user.discriminator||null,scopes},source_timestamp:retrievedAt,retrieved_at:retrievedAt},
+  {user_id:userId,connected_account_id:account.id,provider_slug:"discord",event_type:"discord.profile.snapshot",payload:{id:user.id,username:user.username||null,global_name:user.global_name||null,avatar:user.avatar||null,discriminator:user.discriminator||null,scopes},source_timestamp:retrievedAt,retrieved_at:retrievedAt},
   {user_id:userId,provider_slug:"discord",event_type:"discord.connections.snapshot",payload:{count:connections.length,returned_count:safeConnections.length,connections:safeConnections},source_timestamp:retrievedAt,retrieved_at:retrievedAt}
  ];
  const {error:eventError}=await admin.from("integration_events").insert(events);
