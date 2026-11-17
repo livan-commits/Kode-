@@ -12,14 +12,28 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Validate JSON contracts
+      - name: Validate catalog JSON
         run: |
-          find packages applications -name '*.json' -print0 | while IFS= read -r -d '' file; do
-            python -m json.tool "$file" >/dev/null
-          done
+          python -m json.tool applications/catalog.json >/dev/null
+          python -m json.tool connectors/providers.json >/dev/null
+      - name: Validate catalog invariants
+        run: |
+          python - <<'PY'
+          import json
+          apps = json.load(open("applications/catalog.json"))["applications"]
+          providers = json.load(open("connectors/providers.json"))["providers"]
+          assert len(apps) == 113, f"Expected 113 apps, got {len(apps)}"
+          assert len({a["code"] for a in apps}) == 113, "Duplicate app codes"
+          assert len({a["slug"] for a in apps}) == 113, "Duplicate app slugs"
+          assert all(a["lifecycle"] == "planned" for a in apps)
+          assert all(p["status"] == "planned" for p in providers)
+          assert len({p["slug"] for p in providers}) == len(providers)
+          print(f"Validated {len(apps)} applications and {len(providers)} planned providers")
+          PY
       - name: Check required project files
         run: |
           test -f README.md
           test -f docs/architecture.md
           test -f docs/security-review.md
           test -f connectors/README.md
+          test -f supabase/migrations/20261117194500_auth_lifecycle_and_initial_catalog.sql
