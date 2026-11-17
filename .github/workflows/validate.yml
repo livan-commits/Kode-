@@ -85,6 +85,7 @@ jobs:
           grep -q 'STEAM_WEB_API_KEY' supabase/functions/steam-sync/index.ts
           grep -q 'steam.library.snapshot' supabase/functions/steam-sync/index.ts
           grep -q 'steam-sync' app.js
+          deno check --config supabase/functions/account-dashboard/deno.json supabase/functions/account-dashboard/index.ts
       - name: Type-check Steam Edge Functions
         run: |
           deno check --config supabase/functions/steam-openid-start/deno.json supabase/functions/steam-openid-start/index.ts
