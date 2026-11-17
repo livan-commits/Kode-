@@ -51,7 +51,7 @@ jobs:
           test -f docs/portal-authentication.md
           test -f supabase/migrations/20261117194058_connector_auth_state_store.sql
           test -f supabase/migrations/20261117194131_connector_auth_state_rpc.sql
-          test -f supabase/migrations/20261117194800_revoke_connected_account.sql
+          test -f supabase/migrations/20261117194629_revoke_connected_account.sql
           test -f supabase/functions/steam-openid-start/index.ts
           test -f supabase/functions/steam-openid-callback/index.ts
           test -f supabase/functions/connector-disconnect/index.ts
@@ -81,7 +81,7 @@ jobs:
           grep -q 'consume_connector_auth_state' supabase/functions/steam-openid-callback/index.ts
           grep -q 'connector-disconnect' app.js
           grep -q 'revoke_connected_account' supabase/functions/connector-disconnect/index.ts
-          grep -q 'revoke_connected_account' supabase/migrations/20261117194800_revoke_connected_account.sql
+          grep -q 'revoke_connected_account' supabase/migrations/20261117194629_revoke_connected_account.sql
           grep -q 'STEAM_WEB_API_KEY' supabase/functions/steam-sync/index.ts
           grep -q 'steam.library.snapshot' supabase/functions/steam-sync/index.ts
           grep -q 'steam-sync' app.js
