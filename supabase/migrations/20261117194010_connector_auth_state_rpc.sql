@@ -1,6 +1,0 @@
-create or replace function public.create_connector_auth_state(p_state_hash text,p_provider_slug text,p_user_id uuid,p_expires_at timestamptz) returns void language sql security definer set search_path='' as $$ insert into private.connector_auth_states(state_hash,provider_slug,user_id,expires_at) values(p_state_hash,p_provider_slug,p_user_id,p_expires_at); $$;
-create or replace function public.consume_connector_auth_state(p_state_hash text,p_provider_slug text) returns uuid language plpgsql security definer set search_path='' as $$ declare v_user_id uuid; begin update private.connector_auth_states set consumed_at=now() where state_hash=p_state_hash and provider_slug=p_provider_slug and consumed_at is null and expires_at>now() returning user_id into v_user_id; return v_user_id; end; $$;
-revoke all on function public.create_connector_auth_state(text,text,uuid,timestamptz) from public,anon,authenticated;
-revoke all on function public.consume_connector_auth_state(text,text) from public,anon,authenticated;
-grant execute on function public.create_connector_auth_state(text,text,uuid,timestamptz) to service_role;
-grant execute on function public.consume_connector_auth_state(text,text) to service_role;
