@@ -61,6 +61,7 @@ jobs:
           test -f supabase/migrations/20261117202915_unique_connector_permissions.sql
           test -f supabase/migrations/20261117203104_integration_events_connected_account.sql
           test -f supabase/migrations/20261117203142_revoke_connector_snapshots_on_disconnect.sql
+          test -f supabase/migrations/20261117203434_prune_connector_auth_states.sql
           test -f supabase/functions/steam-openid-start/index.ts
           test -f supabase/functions/steam-openid-callback/index.ts
           test -f supabase/functions/connector-disconnect/index.ts
