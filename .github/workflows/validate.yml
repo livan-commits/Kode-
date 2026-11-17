@@ -53,6 +53,7 @@ jobs:
           test -f supabase/migrations/20261117194131_connector_auth_state_rpc.sql
           test -f supabase/functions/steam-openid-start/index.ts
           test -f supabase/functions/steam-openid-callback/index.ts
+          test -f supabase/functions/connector-disconnect/index.ts
       - name: Validate portal JavaScript
         run: |
           node --input-type=module --check < app.js
@@ -75,7 +76,10 @@ jobs:
           grep -q 'steamcommunity.com/openid/login' supabase/functions/steam-openid-start/index.ts
           grep -q 'check_authentication' supabase/functions/steam-openid-callback/index.ts
           grep -q 'consume_connector_auth_state' supabase/functions/steam-openid-callback/index.ts
+          grep -q 'connector-disconnect' app.js
+          grep -q 'connection_status:"revoked"' supabase/functions/connector-disconnect/index.ts
       - name: Type-check Steam Edge Functions
         run: |
           deno check --config supabase/functions/steam-openid-start/deno.json supabase/functions/steam-openid-start/index.ts
           deno check --config supabase/functions/steam-openid-callback/deno.json supabase/functions/steam-openid-callback/index.ts
+          deno check --config supabase/functions/connector-disconnect/deno.json supabase/functions/connector-disconnect/index.ts
