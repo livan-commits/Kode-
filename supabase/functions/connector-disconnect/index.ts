@@ -11,16 +11,17 @@ Deno.serve(async(req:Request)=>{
  if(!url||!anon||!service)return json({error:"backend_not_configured"},503);
  const userClient=createClient(url,anon,{auth:{persistSession:false,autoRefreshToken:false}});
  const {data:userData,error:userError}=await userClient.auth.getUser(auth.slice(7));if(userError||!userData.user)return json({error:"invalid_session"},401);
- let body:{provider_slug?:string};try{body=await req.json();}catch{return json({error:"invalid_request"},400);}
- const slug=body.provider_slug;if(typeof slug!=="string"||!/^[a-z0-9-]{2,64}$/.test(slug))return json({error:"invalid_provider"},400);
+ let body:{connected_account_id?:string};try{body=await req.json();}catch{return json({error:"invalid_request"},400);}
+ const accountId=body.connected_account_id;if(typeof accountId!=="string"||!/^[0-9a-f-]{36}$/i.test(accountId))return json({error:"invalid_account"},400);
  const admin=createClient(url,service,{auth:{persistSession:false,autoRefreshToken:false}});
- const {data:provider,error:providerError}=await admin.from("connector_providers").select("id").eq("slug",slug).maybeSingle();
- if(providerError||!provider)return json({error:"provider_not_found"},404);
- const {data:account,error:accountError}=await admin.from("connected_accounts").select("id").eq("user_id",userData.user.id).eq("provider_id",provider.id).maybeSingle();
+ const {data:account,error:accountError}=await admin.from("connected_accounts").select("id,provider_id").eq("id",accountId).eq("user_id",userData.user.id).maybeSingle();
  if(accountError)return json({error:"account_lookup_failed"},503);
  if(!account)return json({error:"account_not_connected"},404);
+ const {data:provider}=await admin.from("connector_providers").select("slug").eq("id",account.provider_id).maybeSingle();
+ const now=new Date().toISOString();
  const {error:updateError}=await admin.from("connected_accounts").update({connection_status:"revoked"}).eq("id",account.id).eq("user_id",userData.user.id);
  if(updateError){console.error("connector disconnect failed",updateError.message);return json({error:"disconnect_failed"},503);}
- await admin.from("audit_log").insert({user_id:userData.user.id,actor_type:"user",action:"connector.disconnected",resource_type:"connector_provider",resource_id:slug,metadata:{connected_account_id:account.id}});
- return json({disconnected:true,provider_slug:slug});
+ await admin.from("connector_permissions").update({revoked_at:now}).eq("connected_account_id",account.id).eq("user_id",userData.user.id);
+ await admin.from("audit_log").insert({user_id:userData.user.id,actor_type:"user",action:"connector.disconnected",resource_type:"connector_provider",resource_id:provider?.slug||"unknown",metadata:{connected_account_id:account.id}});
+ return json({disconnected:true,connected_account_id:account.id});
 });
