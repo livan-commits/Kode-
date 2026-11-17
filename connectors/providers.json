@@ -100,10 +100,17 @@
       "status": "planned",
       "capability_manifest": {
         "state": "planned",
-        "authentication": "to_be_assessed",
-        "capabilities": [],
+        "authentication": "user_supplied_instance_and_long_lived_token_or_supported_remote_auth",
+        "capabilities": [
+          "entity states",
+          "service calls",
+          "event stream via WebSocket"
+        ],
         "limitations": [
-          "API, permissions, quotas and terms must be verified before activation"
+          "A cloud backend cannot directly reach a private LAN instance without a secure relay or public HTTPS endpoint",
+          "Long-lived tokens are sensitive credentials and must be encrypted at rest",
+          "Validate destination hosts and block SSRF, redirects to private metadata endpoints, and arbitrary URL schemes",
+          "Use a local companion/relay for LAN-only installations"
         ]
       }
     },
@@ -115,10 +122,17 @@
       "status": "planned",
       "capability_manifest": {
         "state": "planned",
-        "authentication": "to_be_assessed",
-        "capabilities": [],
+        "authentication": "oauth2_authorization_code",
+        "capabilities": [
+          "profile identity where endpoint access is granted",
+          "user-authorized playback and library endpoints only where available to the approved app"
+        ],
         "limitations": [
-          "API, permissions, quotas and terms must be verified before activation"
+          "Development Mode requires the app owner to have Spotify Premium",
+          "Development Mode is limited to five allowlisted authenticated users",
+          "Some endpoints and fields are restricted by the current Development Mode policy",
+          "Extended Quota Mode requires Spotify review and approval",
+          "Rate limits and quota limits must be handled separately"
         ]
       }
     },
@@ -130,10 +144,17 @@
       "status": "planned",
       "capability_manifest": {
         "state": "planned",
-        "authentication": "to_be_assessed",
-        "capabilities": [],
+        "authentication": "github_app_or_oauth_user_authorization",
+        "capabilities": [
+          "user identity",
+          "repositories and issues within explicitly granted permissions",
+          "workflow and release metadata where granted"
+        ],
         "limitations": [
-          "API, permissions, quotas and terms must be verified before activation"
+          "Prefer GitHub Apps with least-privilege repository permissions",
+          "Private repository access requires explicit installation or user authorization",
+          "Webhook delivery must be signature-verified",
+          "Never request broad repository access by default"
         ]
       }
     },
@@ -145,10 +166,15 @@
       "status": "planned",
       "capability_manifest": {
         "state": "planned",
-        "authentication": "to_be_assessed",
-        "capabilities": [],
+        "authentication": "server_side_api_key",
+        "capabilities": [
+          "current weather",
+          "forecast endpoints available under the selected plan"
+        ],
         "limitations": [
-          "API, permissions, quotas and terms must be verified before activation"
+          "API key is a service credential and must remain server-side",
+          "Endpoint availability, attribution, quotas and commercial terms depend on the selected plan",
+          "Weather location should be user-selected or explicitly authorized"
         ]
       }
     },
@@ -160,10 +186,17 @@
       "status": "planned",
       "capability_manifest": {
         "state": "planned",
-        "authentication": "to_be_assessed",
-        "capabilities": [],
+        "authentication": "oauth2_authorization_code_or_client_credentials",
+        "capabilities": [
+          "public channel and stream metadata where supported",
+          "user profile and email only with the corresponding user authorization scope",
+          "EventSub notifications for explicitly supported events"
+        ],
         "limitations": [
-          "API, permissions, quotas and terms must be verified before activation"
+          "Each API endpoint requires the correct app or user token type",
+          "Request only the minimum required scopes",
+          "User tokens must be validated and refreshed or reauthorized as required",
+          "Chat, moderation and channel actions require separate explicit scopes"
         ]
       }
     },
@@ -175,10 +208,15 @@
       "status": "planned",
       "capability_manifest": {
         "state": "planned",
-        "authentication": "to_be_assessed",
-        "capabilities": [],
+        "authentication": "broker_credentials_or_client_certificate",
+        "capabilities": [
+          "publish and subscribe to explicitly authorized topics"
+        ],
         "limitations": [
-          "API, permissions, quotas and terms must be verified before activation"
+          "Requires network reachability to the broker, normally via a local companion or secure tunnel",
+          "Use TLS, per-device identities and topic-level ACLs",
+          "Never expose broker credentials in the Dot firmware or browser",
+          "Do not accept arbitrary broker URLs without strict SSRF and network policy"
         ]
       }
     },
@@ -190,10 +228,16 @@
       "status": "planned",
       "capability_manifest": {
         "state": "planned",
-        "authentication": "to_be_assessed",
-        "capabilities": [],
+        "authentication": "device_pairing_with_short_lived_one_time_code",
+        "capabilities": [
+          "local PC status and resource telemetry",
+          "user-approved process and media controls",
+          "local network bridge for supported devices"
+        ],
         "limitations": [
-          "API, permissions, quotas and terms must be verified before activation"
+          "Requires a signed local companion service and explicit OS permissions",
+          "Pairing keys must be revocable and device-scoped",
+          "No arbitrary remote shell or command execution"
         ]
       }
     },
@@ -205,10 +249,16 @@
       "status": "planned",
       "capability_manifest": {
         "state": "planned",
-        "authentication": "to_be_assessed",
-        "capabilities": [],
+        "authentication": "device_pairing_with_short_lived_one_time_code",
+        "capabilities": [
+          "local host telemetry",
+          "user-approved media and desktop controls",
+          "local network bridge for supported devices"
+        ],
         "limitations": [
-          "API, permissions, quotas and terms must be verified before activation"
+          "Requires a local companion service with least-privilege OS permissions",
+          "Pairing keys must be revocable and device-scoped",
+          "No arbitrary remote shell or command execution"
         ]
       }
     },
