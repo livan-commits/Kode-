@@ -19,6 +19,6 @@ Deno.serve(async(req:Request)=>{
  const {error}=await admin.rpc("create_connector_auth_state",{p_state_hash:stateHash,p_provider_slug:"steam",p_user_id:userData.user.id,p_expires_at:new Date(Date.now()+600000).toISOString()});
  if(error){console.error("steam state creation failed",error.message);return json({error:"connection_initialization_failed"},503);}
  const returnTo=CALLBACK+"?state="+encodeURIComponent(state);
- const params=new URLSearchParams({"openid.ns":"http://specs.openid.net/auth/2.0","openid.mode":"checkid_setup","openid.return_to":returnTo,"openid.realm":APP_ORIGIN+"/","openid.identity":"http://specs.openid.net/auth/2.0/identifier_select","openid.claimed_id":"http://specs.openid.net/auth/2.0/identifier_select"});
+ const params=new URLSearchParams({"openid.ns":"http://specs.openid.net/auth/2.0","openid.mode":"checkid_setup","openid.return_to":returnTo,"openid.realm":"https://jcfhmqpuuiscnvzmzlie.supabase.co/","openid.identity":"http://specs.openid.net/auth/2.0/identifier_select","openid.claimed_id":"http://specs.openid.net/auth/2.0/identifier_select"});
  return json({authorization_url:"https://steamcommunity.com/openid/login?"+params.toString()});
 });
