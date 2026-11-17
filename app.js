@@ -16,15 +16,6 @@ async function showDashboard(session){$("#auth-panel").hidden=true;$("#user-pane
 function signedOut(){$("#auth-panel").hidden=false;$("#recovery-panel").hidden=true;$("#user-panel").hidden=true;$("#auth-state").textContent="Non connecté";$("#dashboard-content").innerHTML="";}
 function showRecovery(){recoveryMode=true;$("#auth-panel").hidden=true;$("#user-panel").hidden=true;$("#recovery-panel").hidden=false;$("#auth-state").textContent="Réinitialisation du mot de passe";$("#new-password").focus();}
 $("#recovery-form").addEventListener("submit",async e=>{e.preventDefault();const password=$("#new-password").value,confirm=$("#confirm-password").value;if(password.length<8){$("#recovery-message").textContent="Le mot de passe doit contenir au moins 8 caractères.";return;}if(password!==confirm){$("#recovery-message").textContent="Les deux mots de passe ne correspondent pas.";return;}const button=$("#recovery-submit");button.disabled=true;try{const {error}=await db.auth.updateUser({password});if(error)throw error;recoveryMode=false;$("#recovery-panel").hidden=true;$("#new-password").value="";$("#confirm-password").value="";$("#auth-state").textContent="Mot de passe modifié";$("#auth-message").textContent="Votre mot de passe a été modifié. Vous pouvez continuer à utiliser votre compte.";const {data:{session}}=await db.auth.getSession();if(session)await showDashboard(session);else signedOut();
-const callbackUrl=new URL(location.href),steamResult=callbackUrl.searchParams.get("steam");
-if(steamResult==="connected"){dashMsg("Compte Steam lié. Seule l'identité Steam est confirmée pour le moment.");history.replaceState(null,"",location.pathname);}
-else if(steamResult==="error"){dashMsg("La liaison Steam n'a pas abouti. Vérifiez votre compte et réessayez.",true);history.replaceState(null,"",location.pathname);}
-const googleResult=callbackUrl.searchParams.get("google");
-if(googleResult==="connected"){dashMsg("Compte Google lié. Seule l'identité et le profil de base sont enregistrés.");history.replaceState(null,"",location.pathname);}
-else if(googleResult==="error"){dashMsg("La liaison Google n'a pas abouti. Vérifiez la configuration OAuth et réessayez.",true);history.replaceState(null,"",location.pathname);}
-const discordResult=callbackUrl.searchParams.get("discord");
-if(discordResult==="connected"){dashMsg("Compte Discord lié. Profil et comptes associés récupérés selon les autorisations accordées.");history.replaceState(null,"",location.pathname);}
-else if(discordResult==="error"){dashMsg("La liaison Discord n'a pas abouti. Vérifiez la configuration OAuth et réessayez.",true);history.replaceState(null,"",location.pathname);}
 }catch(error){$("#recovery-message").textContent=error.message||"Modification impossible. Demandez un nouveau lien."; }finally{button.disabled=false;}});
 $("#auth-form").addEventListener("submit",async e=>{e.preventDefault();if(busy)return;busy=true;$("#auth-submit").disabled=true;try{const {data,error}=await db.auth.signInWithPassword({email:$("#auth-email").value.trim(),password:$("#auth-password").value});if(error)throw error;await showDashboard(data.session);msg("Connexion réussie.");}catch(e){msg(e.message||"Connexion impossible.",true);}finally{busy=false;$("#auth-submit").disabled=false;}});
 $("#auth-signup").addEventListener("click",async()=>{if(busy)return;const email=$("#auth-email").value.trim(),password=$("#auth-password").value;if(!email||password.length<8){msg("Saisissez un e-mail et un mot de passe de 8 caractères minimum.",true);return;}busy=true;$("#auth-signup").disabled=true;try{const {data,error}=await db.auth.signUp({email,password,options:{emailRedirectTo:location.origin+"/"}});if(error)throw error;if(data.session){await showDashboard(data.session);msg("Compte créé et connecté.");}else msg("Inscription enregistrée. Vérifiez votre e-mail pour confirmer votre adresse avant de vous connecter.");}catch(e){msg(e.message||"Création du compte impossible.",true);}finally{busy=false;$("#auth-signup").disabled=false;}});
@@ -89,3 +80,14 @@ $("#search").addEventListener("input",renderApps);$("#category").addEventListene
 loadCatalog();
 db.auth.onAuthStateChange((event,session)=>{if(event==="PASSWORD_RECOVERY"){showRecovery();return;}if(recoveryMode)return;if(session){$("#auth-panel").hidden=true;$("#recovery-panel").hidden=true;$("#user-panel").hidden=false;$("#auth-state").textContent="Connecté";$("#user-email").textContent=session.user.email||"Compte Kode";}else signedOut();});
 const {data:{session}}=await db.auth.getSession();if(session)await showDashboard(session);else signedOut();
+
+const callbackUrl=new URL(location.href),steamResult=callbackUrl.searchParams.get("steam");
+if(steamResult==="connected"){dashMsg("Compte Steam lié. Seule l'identité Steam est confirmée pour le moment.");history.replaceState(null,"",location.pathname);}
+else if(steamResult==="error"){dashMsg("La liaison Steam n'a pas abouti. Vérifiez votre compte et réessayez.",true);history.replaceState(null,"",location.pathname);}
+const googleResult=callbackUrl.searchParams.get("google");
+if(googleResult==="connected"){dashMsg("Compte Google lié. Seule l'identité et le profil de base sont enregistrés.");history.replaceState(null,"",location.pathname);}
+else if(googleResult==="error"){dashMsg("La liaison Google n'a pas abouti. Vérifiez la configuration OAuth et réessayez.",true);history.replaceState(null,"",location.pathname);}
+const discordResult=callbackUrl.searchParams.get("discord");
+if(discordResult==="connected"){dashMsg("Compte Discord lié. Profil et comptes associés récupérés selon les autorisations accordées.");history.replaceState(null,"",location.pathname);}
+else if(discordResult==="error"){dashMsg("La liaison Discord n'a pas abouti. Vérifiez la configuration OAuth et réessayez.",true);history.replaceState(null,"",location.pathname);}
+
