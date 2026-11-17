@@ -16,3 +16,7 @@ idf.py build
 ```
 
 GitHub Actions builds all three projects from clean checkouts. A green build proves compilation against the pinned SDK, not correct behavior on the physical Dot. Hardware acceptance is still required.
+
+| Dice | `dice/` | Roll button or TOP | Yes |
+| Reaction Test | `reaction-test/` | Start, then press a direction after GO | Yes |
+| Memory | `memory/` | Memorize and repeat the D-pad sequence | Yes |
