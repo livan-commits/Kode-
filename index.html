@@ -23,6 +23,24 @@
       <p>Applications Kode Dot, services connectés et outils du quotidien. Un catalogue unique, conçu pour évoluer avec vos appareils.</p>
       <div class="hero-meta"><span id="app-total">Chargement…</span><span id="provider-total">Services connectables…</span></div>
     </section>
+    <section class="account-section" id="account">
+      <div class="section-heading"><div><div class="eyebrow">ESPACE PERSONNEL</div><h2>Votre compte</h2></div><span class="subtle" id="auth-state">Non connecté</span></div>
+      <div id="auth-panel" class="account-panel">
+        <div class="auth-intro"><h3>Accédez à votre espace Kode</h3><p>Créez un compte ou connectez-vous pour retrouver vos appareils, services associés et notifications.</p></div>
+        <form id="auth-form" class="auth-form">
+          <label>Adresse e-mail<input id="auth-email" type="email" autocomplete="email" required placeholder="vous@exemple.com"></label>
+          <label>Mot de passe<input id="auth-password" type="password" autocomplete="current-password" minlength="8" required placeholder="8 caractères minimum"></label>
+          <div class="auth-actions"><button type="submit" id="auth-submit">Se connecter</button><button type="button" class="secondary" id="auth-signup">Créer un compte</button></div>
+          <button type="button" class="text-button" id="auth-reset">Mot de passe oublié ?</button>
+        </form>
+        <p id="auth-message" class="auth-message" role="status" aria-live="polite">Connexion sécurisée via Supabase Auth.</p>
+      </div>
+      <div id="user-panel" class="account-panel" hidden>
+        <div class="user-head"><div><span class="eyebrow">SESSION ACTIVE</span><h3 id="user-email"></h3><p id="user-since" class="subtle"></p></div><button type="button" class="secondary" id="auth-signout">Se déconnecter</button></div>
+        <div id="dashboard-status" class="auth-message" role="status">Chargement de votre espace…</div>
+        <div id="dashboard-content" class="dashboard-grid"></div>
+      </div>
+    </section>
     <section class="section">
       <div class="section-heading"><div><div class="eyebrow">EXPLORER</div><h2>Applications</h2></div><span class="subtle" id="shown-count"></span></div>
       <div class="toolbar">
