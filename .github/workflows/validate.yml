@@ -55,9 +55,12 @@ jobs:
           grep -q 'signInWithPassword' app.js
           grep -q 'signUp' app.js
           grep -q 'resetPasswordForEmail' app.js
+          grep -q 'PASSWORD_RECOVERY' app.js
+          grep -q 'updateUser({password})' app.js
           ! grep -Eq 'service_role|sb_secret_' app.js
       - name: Check account portal markup
         run: |
           grep -q 'id="auth-form"' index.html
           grep -q 'id="user-panel"' index.html
           grep -q 'id="dashboard-content"' index.html
+          grep -q 'id="recovery-form"' index.html
