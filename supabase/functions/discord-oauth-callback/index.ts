@@ -36,7 +36,7 @@ Deno.serve(async(req:Request)=>{
  if(upsertError||!account){console.error("Discord account link failed",upsertError?.message);return fail("account_link_failed",503);}
  const scopes=(tokens.scope||"identify connections").split(" ").filter(Boolean);
  const {error:permissionError}=await admin.from("connector_permissions").insert({connected_account_id:account.id,user_id:userId,scopes,consented_at:new Date().toISOString()});
- if(permissionError)console.error("Discord permission audit insert failed",permissionError.message);
+ if(permissionError){console.error("Discord permission record failed",permissionError.message);return fail("permission_record_failed",503);}
  const retrievedAt=new Date().toISOString();
  const safeConnections=connections.slice(0,100).map((c:any)=>({id:typeof c.id==="string"?c.id:null,type:typeof c.type==="string"?c.type:null,name:typeof c.name==="string"?c.name:null,verified:c.verified===true,visibility:typeof c.visibility==="number"?c.visibility:null,friend_sync:c.friend_sync===true,show_activity:c.show_activity===true,two_way_link:c.two_way_link===true}));
  const events=[
@@ -44,7 +44,7 @@ Deno.serve(async(req:Request)=>{
   {user_id:userId,provider_slug:"discord",event_type:"discord.connections.snapshot",payload:{count:connections.length,returned_count:safeConnections.length,connections:safeConnections},source_timestamp:retrievedAt,retrieved_at:retrievedAt}
  ];
  const {error:eventError}=await admin.from("integration_events").insert(events);
- if(eventError)console.error("Discord snapshot persistence failed",eventError.message);
+ if(eventError){console.error("Discord snapshot persistence failed",eventError.message);return fail("snapshot_persistence_failed",503);}
  // Tokens are discarded. Presence, friends, messages and activity scopes are not requested.
  return Response.redirect(APP+"?discord=connected",302);
 });
