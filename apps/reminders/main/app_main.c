@@ -2,6 +2,7 @@
 #include <stdbool.h>
 #include <stdint.h>
 #include <stdio.h>
+#include <string.h>
 #include "kode.h"
 
 KODE_APP_MANIFEST("Reminders", "life");
@@ -14,11 +15,16 @@ void app_main(void)
         "Take a screen break", "Prepare for tomorrow"
     };
     bool done[ITEM_COUNT] = { false };
+    const char *saved;
     uint32_t selected = 0U, i, count;
     kode_widget_t current, progress, previous, toggle, next, reset;
     char line[64];
 
     kode_init();
+    saved = kode_setting_get("remindr");
+    if ((strlen(saved) == ITEM_COUNT) && (strspn(saved, "01") == ITEM_COUNT)) {
+        for (i = 0U; i < ITEM_COUNT; ++i) done[i] = (saved[i] == '1');
+    }
     if (!kode_screen_new("Reminders")) { kode_print("screen failed: %s", kode_error()); kode_exit(); }
     current = kode_screen_add_value(items[0], "Selected reminder");
     progress = kode_screen_add_text("0 / 5 completed - session only");
@@ -42,6 +48,10 @@ void app_main(void)
         if (advance) { selected = (selected + 1U) % ITEM_COUNT; changed = true; }
         if (mark) { done[selected] = !done[selected]; changed = true; }
         if (changed) {
+            char persisted[ITEM_COUNT + 1U];
+            for (i = 0U; i < ITEM_COUNT; ++i) persisted[i] = done[i] ? '1' : '0';
+            persisted[ITEM_COUNT] = '\0';
+            if (!kode_setting_set("remindr", persisted)) kode_print("Could not save reminders: %s", kode_error());
             count = 0U;
             for (i = 0U; i < ITEM_COUNT; ++i) if (done[i]) ++count;
             (void)snprintf(line, sizeof(line), "%s %s", done[selected] ? "[x]" : "[ ]", items[selected]);
