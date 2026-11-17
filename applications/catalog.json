@@ -391,12 +391,13 @@
       "slug": "calendar",
       "name": "Calendar",
       "category": "life",
-      "description": "Application Kode Ecosystem : Calendar. Implémentation planifiée; fonctions non disponibles avant validation.",
-      "lifecycle": "planned",
-      "implementation_status": "not_implemented",
-      "capability_state": "planned",
-      "offline_support": "to_be_assessed",
-      "required_permissions": []
+      "description": "Application native Kode Dot : calendrier mensuel hors ligne, basé sur l'horloge locale KodeOS; navigation entre les mois et repère du jour courant. Nécessite une horloge système réglée.",
+      "lifecycle": "in_development",
+      "implementation_status": "source_added",
+      "capability_state": "build_pending",
+      "offline_support": "yes",
+      "required_permissions": [],
+      "source_path": "apps/calendar/"
     },
     {
       "code": "L004",

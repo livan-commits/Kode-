@@ -54,6 +54,7 @@ jobs:
           test -f apps/habit-tracker/main/app_main.c
           test -f apps/alarm/main/app_main.c
           test -f apps/reminders/main/app_main.c
+          test -f apps/calendar/main/app_main.c
           test -f apps/dice/main/app_main.c
           test -f apps/reaction-test/main/app_main.c
           test -f apps/memory/main/app_main.c
@@ -177,7 +178,7 @@ jobs:
 
       - name: Check all native app projects
         run: |
-          for app in stopwatch pomodoro calculator dice reaction-test memory snake pong quiz tasks shopping-list habit-tracker alarm reminders; do
+          for app in stopwatch pomodoro calculator dice reaction-test memory snake pong quiz tasks shopping-list habit-tracker alarm reminders calendar; do
             test -f "apps/$app/CMakeLists.txt"
             test -f "apps/$app/main/app_main.c"
             test -f "apps/$app/main/CMakeLists.txt"
@@ -185,4 +186,4 @@ jobs:
             test -f "apps/$app/sdkconfig.defaults"
           done
           grep -q 'matrix:' .github/workflows/build-native-apps.yml
-          grep -q 'stopwatch, pomodoro, calculator, dice, reaction-test, memory, snake, pong, quiz, tasks, shopping-list, habit-tracker, alarm, reminders' .github/workflows/build-native-apps.yml
+          grep -q 'stopwatch, pomodoro, calculator, dice, reaction-test, memory, snake, pong, quiz, tasks, shopping-list, habit-tracker, alarm, reminders, calendar' .github/workflows/build-native-apps.yml
