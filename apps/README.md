@@ -15,7 +15,7 @@ Build each app from its directory with ESP-IDF v6.1:
 idf.py build
 ```
 
-GitHub Actions builds all three projects from clean checkouts. A green build proves compilation against the pinned SDK, not correct behavior on the physical Dot. Hardware acceptance is still required.
+GitHub Actions builds all 31 projects from clean checkouts. A green build proves compilation against the pinned SDK, not correct behavior on the physical Dot. Hardware acceptance is still required.
 
 | Dice | `dice/` | Roll button or TOP | Yes |
 | Reaction Test | `reaction-test/` | Start, then press a direction after GO | Yes |
