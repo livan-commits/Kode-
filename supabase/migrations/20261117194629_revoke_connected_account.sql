@@ -35,6 +35,26 @@ begin
    where connected_account_id = p_connected_account_id
      and user_id = p_user_id;
 
+  -- Remove snapshots owned by this account. Older snapshots without an account
+  -- link are purged only when no other active account for this provider remains.
+  delete from public.integration_events
+   where connected_account_id = p_connected_account_id
+     and user_id = p_user_id;
+
+  if not exists (
+    select 1
+      from public.connected_accounts ca
+     where ca.user_id = p_user_id
+       and ca.provider_id = (select id from public.connector_providers where slug = v_provider_slug)
+       and ca.id <> p_connected_account_id
+       and ca.connection_status = 'connected'
+  ) then
+    delete from public.integration_events
+     where user_id = p_user_id
+       and provider_slug = v_provider_slug
+       and connected_account_id is null;
+  end if;
+
   delete from private.connector_secrets
    where connected_account_id = p_connected_account_id;
 
