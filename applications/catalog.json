@@ -1401,6 +1401,19 @@
       "offline_support": "yes",
       "required_permissions": [],
       "source_path": "apps/tower-stack/"
+    },
+    {
+      "code": "G022",
+      "slug": "subway-runner",
+      "name": "Subway Runner",
+      "category": "gaming",
+      "description": "Runner infini original en trois voies : changer de voie, sauter, glisser sous les obstacles et ramasser des pièces. Jeu hors ligne inspiré du genre endless runner.",
+      "lifecycle": "in_development",
+      "implementation_status": "source_added",
+      "capability_state": "build_pending",
+      "offline_support": "yes",
+      "required_permissions": [],
+      "source_path": "apps/subway-runner/"
     }
   ]
 }
