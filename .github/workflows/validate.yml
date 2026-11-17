@@ -47,3 +47,17 @@ jobs:
         run: |
           test -f docs/connector-capability-review.md
           test -f docs/account-dashboard-api.md
+      - name: Validate portal JavaScript
+        run: |
+          node --input-type=module --check < app.js
+          grep -q 'supabase-js@2.119.0' app.js
+          grep -q 'functions/v1/account-dashboard' app.js
+          grep -q 'signInWithPassword' app.js
+          grep -q 'signUp' app.js
+          grep -q 'resetPasswordForEmail' app.js
+          ! grep -Eq 'service_role|sb_secret_' app.js
+      - name: Check account portal markup
+        run: |
+          grep -q 'id="auth-form"' index.html
+          grep -q 'id="user-panel"' index.html
+          grep -q 'id="dashboard-content"' index.html
