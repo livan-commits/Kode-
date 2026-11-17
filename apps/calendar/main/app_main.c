@@ -15,22 +15,6 @@ static int64_t days_from_civil(int year, unsigned month, unsigned day)
     return (int64_t)era * 146097 + (int64_t)doe - 719468;
 }
 
-static void civil_from_days(int64_t z, int *year, unsigned *month, unsigned *day)
-{
-    int era;
-    unsigned doe, yoe, doy, mp;
-    z += 719468;
-    era = (int)((z >= 0 ? z : z - 146096) / 146097);
-    doe = (unsigned)(z - (int64_t)era * 146097);
-    yoe = (doe - doe / 1460U + doe / 36524U - doe / 146096U) / 365U;
-    *year = (int)yoe + era * 400;
-    doy = doe - (365U * yoe + yoe / 4U - yoe / 100U);
-    mp = (5U * doy + 2U) / 153U;
-    *day = doy - (153U * mp + 2U) / 5U + 1U;
-    *month = mp + (mp < 10U ? 3U : (unsigned)-9);
-    *year += (*month <= 2U) ? 1 : 0;
-}
-
 static void render_month(kode_widget_t month_widget, kode_widget_t grid_widget,
                          int year, unsigned month, int today_year,
                          unsigned today_month, unsigned today_day)
@@ -58,8 +42,8 @@ static void render_month(kode_widget_t month_widget, kode_widget_t grid_widget,
             if (n > 0) used += (size_t)n;
         }
     }
-    days = (unsigned)(days_from_civil(year, month == 12U ? 2027U : month + 1U, 1U) - first);
     if (month == 12U) days = (unsigned)(days_from_civil(year + 1, 1U, 1U) - first);
+    else days = (unsigned)(days_from_civil(year, month + 1U, 1U) - first);
     for (day = 1U; day <= days; ++day) {
         int n = snprintf(grid + used, sizeof(grid) - used,
                          (year == today_year && month == today_month && day == today_day) ? "%2u* " : "%2u  ", day);

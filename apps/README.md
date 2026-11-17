@@ -34,3 +34,5 @@ GitHub Actions builds all three projects from clean checkouts. A green build pro
 **Alarm limitation:** this app is a foreground countdown. It does not register an operating-system alarm and cannot wake the Dot after the app exits. **Reminders limitation:** the current list is built in; completion state persists in the app settings, but users cannot yet create or edit reminder text or schedule background notifications.
 
 | Calendar | `calendar/` | LEFT/RIGHT previous/next month; TOP today; BOT home | Yes, requires KodeOS clock |
+
+| Compass | `compass/` | TOP calibrates; LEFT clears calibration; BOT home | Yes, needs magnetometer and accelerometer |
