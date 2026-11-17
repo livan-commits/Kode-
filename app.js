@@ -22,6 +22,9 @@ else if(steamResult==="error"){dashMsg("La liaison Steam n'a pas abouti. Vérifi
 const googleResult=callbackUrl.searchParams.get("google");
 if(googleResult==="connected"){dashMsg("Compte Google lié. Seule l'identité et le profil de base sont enregistrés.");history.replaceState(null,"",location.pathname);}
 else if(googleResult==="error"){dashMsg("La liaison Google n'a pas abouti. Vérifiez la configuration OAuth et réessayez.",true);history.replaceState(null,"",location.pathname);}
+const discordResult=callbackUrl.searchParams.get("discord");
+if(discordResult==="connected"){dashMsg("Compte Discord lié. Profil et comptes associés récupérés selon les autorisations accordées.");history.replaceState(null,"",location.pathname);}
+else if(discordResult==="error"){dashMsg("La liaison Discord n'a pas abouti. Vérifiez la configuration OAuth et réessayez.",true);history.replaceState(null,"",location.pathname);}
 }catch(error){$("#recovery-message").textContent=error.message||"Modification impossible. Demandez un nouveau lien."; }finally{button.disabled=false;}});
 $("#auth-form").addEventListener("submit",async e=>{e.preventDefault();if(busy)return;busy=true;$("#auth-submit").disabled=true;try{const {data,error}=await db.auth.signInWithPassword({email:$("#auth-email").value.trim(),password:$("#auth-password").value});if(error)throw error;await showDashboard(data.session);msg("Connexion réussie.");}catch(e){msg(e.message||"Connexion impossible.",true);}finally{busy=false;$("#auth-submit").disabled=false;}});
 $("#auth-signup").addEventListener("click",async()=>{if(busy)return;const email=$("#auth-email").value.trim(),password=$("#auth-password").value;if(!email||password.length<8){msg("Saisissez un e-mail et un mot de passe de 8 caractères minimum.",true);return;}busy=true;$("#auth-signup").disabled=true;try{const {data,error}=await db.auth.signUp({email,password,options:{emailRedirectTo:location.origin+"/"}});if(error)throw error;if(data.session){await showDashboard(data.session);msg("Compte créé et connecté.");}else msg("Inscription enregistrée. Vérifiez votre e-mail pour confirmer votre adresse avant de vous connecter.");}catch(e){msg(e.message||"Création du compte impossible.",true);}finally{busy=false;$("#auth-signup").disabled=false;}});
@@ -47,6 +50,17 @@ $("#dashboard-content").addEventListener("click",async event=>{
  const result=await response.json().catch(()=>({}));if(!response.ok)throw Error("Impossible de dissocier ce service.");
  await showDashboard(session);dashMsg("Service dissocié.");
  }catch(error){dashMsg(error.message||"Erreur lors de la dissociation.",true);button.disabled=false;}
+});
+$("#connect-discord").addEventListener("click",async()=>{
+ const button=$("#connect-discord");button.disabled=true;
+ try{
+  const {data:{session}}=await db.auth.getSession();if(!session)throw Error("Reconnectez-vous avant de lier Discord.");
+  const response=await fetch(URL+"/functions/v1/discord-oauth-start",{method:"POST",headers:{Authorization:"Bearer "+session.access_token,apikey:KEY,"Content-Type":"application/json"},body:"{}"});
+  const result=await response.json().catch(()=>({}));
+  if(!response.ok||typeof result.authorization_url!=="string")throw Error(result.error==="discord_oauth_not_configured"?"La connexion Discord attend encore la configuration des identifiants OAuth côté serveur.":"La liaison Discord n'est pas disponible pour le moment.");
+  const target=new URL(result.authorization_url);if(target.origin!=="https://discord.com"||target.pathname!=="/oauth2/authorize")throw Error("Adresse d'autorisation Discord invalide.");
+  location.assign(target.href);
+ }catch(error){dashMsg(error.message||"Impossible de démarrer la liaison Discord.",true);button.disabled=false;}
 });
 $("#connect-google").addEventListener("click",async()=>{
  const button=$("#connect-google");button.disabled=true;
