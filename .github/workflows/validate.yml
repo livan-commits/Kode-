@@ -57,6 +57,10 @@ jobs:
           test -f supabase/functions/connector-disconnect/index.ts
           test -f supabase/functions/steam-sync/index.ts
           test -f supabase/functions/steam-sync/deno.json
+          test -f supabase/functions/google-oauth-start/index.ts
+          test -f supabase/functions/google-oauth-start/deno.json
+          test -f supabase/functions/google-oauth-callback/index.ts
+          test -f supabase/functions/google-oauth-callback/deno.json
       - name: Validate portal JavaScript
         run: |
           node --input-type=module --check < app.js
@@ -85,6 +89,9 @@ jobs:
           grep -q 'STEAM_WEB_API_KEY' supabase/functions/steam-sync/index.ts
           grep -q 'steam.library.snapshot' supabase/functions/steam-sync/index.ts
           grep -q 'steam-sync' app.js
+          grep -q 'google-oauth-start' app.js
+          grep -q 'google.profile.snapshot' supabase/functions/google-oauth-callback/index.ts
+          grep -q 'GOOGLE_OAUTH_CLIENT_SECRET' supabase/functions/google-oauth-callback/index.ts
       - name: Type-check Edge Functions
         run: |
           deno check --config supabase/functions/account-dashboard/deno.json supabase/functions/account-dashboard/index.ts
@@ -92,3 +99,5 @@ jobs:
           deno check --config supabase/functions/steam-openid-callback/deno.json supabase/functions/steam-openid-callback/index.ts
           deno check --config supabase/functions/connector-disconnect/deno.json supabase/functions/connector-disconnect/index.ts
           deno check --config supabase/functions/steam-sync/deno.json supabase/functions/steam-sync/index.ts
+          deno check --config supabase/functions/google-oauth-start/deno.json supabase/functions/google-oauth-start/index.ts
+          deno check --config supabase/functions/google-oauth-callback/deno.json supabase/functions/google-oauth-callback/index.ts
