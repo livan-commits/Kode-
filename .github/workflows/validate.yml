@@ -75,6 +75,10 @@ jobs:
           test -f supabase/functions/discord-oauth-start/deno.json
           test -f supabase/functions/discord-oauth-callback/index.ts
           test -f supabase/functions/discord-oauth-callback/deno.json
+          test -f supabase/functions/twitch-oauth-start/index.ts
+          test -f supabase/functions/twitch-oauth-start/deno.json
+          test -f supabase/functions/twitch-oauth-callback/index.ts
+          test -f supabase/functions/twitch-oauth-callback/deno.json
       - name: Validate portal JavaScript
         run: |
           node --input-type=module --check < app.js
@@ -111,6 +115,10 @@ jobs:
           grep -q 'discord-oauth-start' app.js
           grep -q 'users/@me/connections' supabase/functions/discord-oauth-callback/index.ts
           grep -q 'DISCORD_CLIENT_SECRET' supabase/functions/discord-oauth-callback/index.ts
+          grep -q 'twitch-oauth-start' app.js
+          grep -q 'oauth2/validate' supabase/functions/twitch-oauth-callback/index.ts
+          grep -q 'helix/users' supabase/functions/twitch-oauth-callback/index.ts
+          grep -q 'id="connect-twitch"' index.html
       - name: Check OAuth and sync safety invariants
         run: |
           for provider in google discord; do
@@ -139,3 +147,5 @@ jobs:
           deno check --config supabase/functions/google-oauth-callback/deno.json supabase/functions/google-oauth-callback/index.ts
           deno check --config supabase/functions/discord-oauth-start/deno.json supabase/functions/discord-oauth-start/index.ts
           deno check --config supabase/functions/discord-oauth-callback/deno.json supabase/functions/discord-oauth-callback/index.ts
+          deno check --config supabase/functions/twitch-oauth-start/deno.json supabase/functions/twitch-oauth-start/index.ts
+          deno check --config supabase/functions/twitch-oauth-callback/deno.json supabase/functions/twitch-oauth-callback/index.ts
