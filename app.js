@@ -42,6 +42,17 @@ $("#dashboard-content").addEventListener("click",async event=>{
  await showDashboard(session);dashMsg("Service dissocié.");
  }catch(error){dashMsg(error.message||"Erreur lors de la dissociation.",true);button.disabled=false;}
 });
+$("#connect-twitch").addEventListener("click",async()=>{
+ const button=$("#connect-twitch");button.disabled=true;
+ try{
+  const {data:{session}}=await db.auth.getSession();if(!session)throw Error("Reconnectez-vous avant de lier Twitch.");
+  const response=await fetch(URL+"/functions/v1/twitch-oauth-start",{method:"POST",headers:{Authorization:"Bearer "+session.access_token,apikey:KEY,"Content-Type":"application/json"},body:"{}"});
+  const result=await response.json().catch(()=>({}));
+  if(!response.ok||typeof result.authorization_url!=="string")throw Error(result.error==="twitch_oauth_not_configured"?"La connexion Twitch attend encore la configuration des identifiants OAuth côté serveur.":"La liaison Twitch n'est pas disponible pour le moment.");
+  const target=new URL(result.authorization_url);if(target.origin!=="https://id.twitch.tv"||target.pathname!=="/oauth2/authorize")throw Error("Adresse d'autorisation Twitch invalide.");
+  location.assign(target.href);
+ }catch(error){dashMsg(error.message||"Impossible de démarrer la liaison Twitch.",true);button.disabled=false;}
+});
 $("#connect-discord").addEventListener("click",async()=>{
  const button=$("#connect-discord");button.disabled=true;
  try{
@@ -87,6 +98,9 @@ else if(steamResult==="error"){dashMsg("La liaison Steam n'a pas abouti. Vérifi
 const googleResult=callbackUrl.searchParams.get("google");
 if(googleResult==="connected"){dashMsg("Compte Google lié. Seule l'identité et le profil de base sont enregistrés.");history.replaceState(null,"",location.pathname);}
 else if(googleResult==="error"){dashMsg("La liaison Google n'a pas abouti. Vérifiez la configuration OAuth et réessayez.",true);history.replaceState(null,"",location.pathname);}
+const twitchResult=callbackUrl.searchParams.get("twitch");
+if(twitchResult==="connected"){dashMsg("Compte Twitch lié. Seule l’identité et le profil public de base sont enregistrés.");history.replaceState(null,"",location.pathname);}
+else if(twitchResult==="error"){dashMsg("La liaison Twitch n’a pas abouti. Vérifiez la configuration OAuth et réessayez.",true);history.replaceState(null,"",location.pathname);}
 const discordResult=callbackUrl.searchParams.get("discord");
 if(discordResult==="connected"){dashMsg("Compte Discord lié. Profil et comptes associés récupérés selon les autorisations accordées.");history.replaceState(null,"",location.pathname);}
 else if(discordResult==="error"){dashMsg("La liaison Discord n'a pas abouti. Vérifiez la configuration OAuth et réessayez.",true);history.replaceState(null,"",location.pathname);}
