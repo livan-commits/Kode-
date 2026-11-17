@@ -21,7 +21,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        app: [stopwatch, pomodoro, calculator]
+        app: [stopwatch, pomodoro, calculator, dice, reaction-test, memory]
     defaults:
       run:
         shell: bash
