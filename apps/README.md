@@ -24,6 +24,7 @@ GitHub Actions builds all three projects from clean checkouts. A green build pro
 | Pong | `pong/` | UP/DOWN moves paddle, TOP pauses, Serve starts | Yes |
 | Quiz | `quiz/` | D-pad selects answers, TOP confirms | Yes |
 | Tower Stack | `tower-stack/` | LEFT/RIGHT reverse the moving block; TOP or Drop places it; LEFT restarts after game over; BOT home | Yes |
+| Subway Runner | `subway-runner/` | LEFT/RIGHT change lanes; TOP jumps; DOWN slides; BOT home; touch Jump/Slide buttons | Yes |
 
 | Tasks | `tasks/` | TOP marks/unmarks; UP/DOWN selects; LEFT resets; BOT home | Yes, session only |
 | Shopping List | `shopping-list/` | TOP toggles item; UP/DOWN selects; LEFT resets; BOT home | Yes, session only |
