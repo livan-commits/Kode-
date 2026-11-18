@@ -97,7 +97,7 @@ function inspectModel(root,animations){
    'Animations : '+animations.length
  ];
  if(animations.length) lines.push(...animations.map(clip=>'• '+(clip.name||'Animation')+' — '+clip.duration.toFixed(2)+' s'));
- details.textContent=lines.join('\\n');
+ details.textContent=lines.join('\n');
 }
 function loadFile(file){
  if(!file||!file.name.toLowerCase().endsWith('.glb')){status.textContent='Choisis un fichier .glb.';return;}
