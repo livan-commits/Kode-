@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Ashwing — Dragon 3D</title>
+  <style>
+    :root{color-scheme:dark;font-family:Inter,system-ui,sans-serif;background:#090e18;color:#edf3ff}
+    *{box-sizing:border-box}body{margin:0;min-height:100vh;background:radial-gradient(ellipse at 50% 20%,#1b2d45 0,#090e18 65%)}
+    header{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px 22px;border-bottom:1px solid #ffffff18}
+    h1{font-size:18px;margin:0;letter-spacing:.08em}header small{color:#91a6c2}
+    main{display:grid;grid-template-columns:minmax(0,1fr) 280px;gap:16px;padding:16px;max-width:1500px;margin:auto}
+    #stage{position:relative;min-height:68vh;border:1px solid #ffffff20;border-radius:18px;overflow:hidden;background:linear-gradient(#142337,#0b111c)}
+    canvas{display:block;width:100%;height:100%;min-height:68vh}
+    aside{padding:18px;border:1px solid #ffffff20;border-radius:18px;background:#101a29}
+    label{display:block;font-size:13px;color:#a9bbd2;margin:16px 0 7px}
+    input,select,button{width:100%;border:1px solid #ffffff24;border-radius:10px;padding:11px;background:#17263a;color:#f4f7ff;font:inherit}
+    button{cursor:pointer;background:#24486a}button:hover{background:#32638e}
+    .actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
+    .hint{font-size:12px;line-height:1.5;color:#8fa4bf;margin-top:16px}
+    #status{font-size:13px;line-height:1.5;color:#c1d5ee;margin-top:12px;overflow-wrap:anywhere}
+    #details{font-size:12px;line-height:1.7;color:#a9bbd2;margin-top:10px;padding:10px;border:1px solid #ffffff18;border-radius:10px;background:#0b1421;white-space:pre-line}
+    #drop{position:absolute;inset:12px;border:2px dashed #8fb8e5;border-radius:14px;display:none;place-items:center;background:#0b1728cc;color:white;font-weight:600;pointer-events:none}
+    #drop.visible{display:grid}
+    @media(max-width:800px){main{grid-template-columns:1fr}#stage,canvas{min-height:55vh}aside{order:-1}}
+  </style>
+</head>
+<body>
+<header><h1>ASHWING <small> / DRAGON 3D</small></h1><small>Visualiseur local GLB · gratuit</small></header>
+<main>
+  <section id="stage"><div id="drop">Dépose ton fichier GLB ici</div></section>
+  <aside>
+    <strong>Modèle original</strong>
+    <label for="file">Charger le fichier .glb</label>
+    <input id="file" type="file" accept=".glb,model/gltf-binary">
+    <label for="animation">Animation intégrée</label>
+    <select id="animation" disabled><option>Aucune animation chargée</option></select>
+    <div class="actions">
+      <button id="play" disabled>▶ Lecture</button>
+      <button id="stop" disabled>Ⅱ Pause</button>
+    </div>
+    <label for="speed">Vitesse d'animation</label>
+    <select id="speed"><option value=".25">0,25×</option><option value=".5">0,5×</option><option value="1" selected>1×</option><option value="1.5">1,5×</option><option value="2">2×</option></select>
+    <label for="exposure">Luminosité</label>
+    <input id="exposure" type="range" min=".5" max="2" step=".05" value="1">
+    <div id="status">Charge Ashwing_Drake_Lite.glb pour afficher le vrai modèle, ses matériaux et les animations contenues dans le fichier.</div>
+    <div id="details">Les caractéristiques du modèle apparaîtront ici après chargement.</div>
+    <p class="hint">Le fichier est lu localement dans ton navigateur : il n'est pas envoyé sur un serveur. Fais glisser le modèle dans la scène ou utilise le bouton de chargement. Souris/doigt : rotation et zoom.</p>
+  </aside>
+</main>
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js"}}</script>
+<script type="module">
+import * as THREE from "three";
+import { OrbitControls } from "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/controls/OrbitControls.js";
+import { GLTFLoader } from "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/loaders/GLTFLoader.js";
+
+const stage=document.querySelector('#stage'), status=document.querySelector('#status'), details=document.querySelector('#details');
+const renderer=new THREE.WebGLRenderer({antialias:true,alpha:false});
+renderer.setPixelRatio(Math.min(devicePixelRatio,2));renderer.setSize(stage.clientWidth,stage.clientHeight);
+renderer.outputColorSpace=THREE.SRGBColorSpace;renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1;
+stage.prepend(renderer.domElement);
+const scene=new THREE.Scene();scene.background=new THREE.Color(0x0d1726);
+const camera=new THREE.PerspectiveCamera(42,stage.clientWidth/stage.clientHeight,.01,10000);camera.position.set(4,2.4,6);
+scene.add(new THREE.HemisphereLight(0xc8ddff,0x263044,2.0));
+const key=new THREE.DirectionalLight(0xffe6c5,3.2);key.position.set(4,8,6);scene.add(key);
+const rim=new THREE.DirectionalLight(0x75aaff,2.1);rim.position.set(-5,3,-4);scene.add(rim);
+const controls=new OrbitControls(camera,renderer.domElement);controls.enableDamping=true;controls.target.set(0,1,0);
+const clock=new THREE.Clock(), loader=new GLTFLoader();
+let mixer=null,activeAction=null,model=null,clips=[];
+const anim=document.querySelector('#animation'),play=document.querySelector('#play'),stop=document.querySelector('#stop');
+function frameObject(obj){
+ const box=new THREE.Box3().setFromObject(obj),size=box.getSize(new THREE.Vector3()),center=box.getCenter(new THREE.Vector3());
+ obj.position.sub(center);
+ const max=Math.max(size.x,size.y,size.z)||1;
+ camera.position.set(max*1.25,max*.65,max*1.7);camera.near=max/1000;camera.far=max*100;camera.updateProjectionMatrix();
+ controls.target.set(0,0,0);controls.update();
+}
+function inspectModel(root,animations){
+ let vertices=0,triangles=0,skinned=0,joints=0,materials=new Set(),textures=new Set();
+ root.traverse(obj=>{
+   if(obj.isMesh){
+     const geometry=obj.geometry;
+     vertices+=geometry?.attributes?.position?.count||0;
+     triangles+=geometry?.index?geometry.index.count/3:(geometry?.attributes?.position?.count||0)/3;
+     if(obj.isSkinnedMesh){skinned++;joints=Math.max(joints,obj.skeleton?.bones?.length||0);}
+     const list=Array.isArray(obj.material)?obj.material:[obj.material];
+     list.filter(Boolean).forEach(mat=>{
+       materials.add(mat.name||'Matériau');
+       ['map','normalMap','metalnessMap','roughnessMap','aoMap','emissiveMap'].forEach(key=>{if(mat[key])textures.add(mat[key].uuid);});
+     });
+   }
+ });
+ const lines=[
+   'Maillage : '+vertices.toLocaleString('fr-FR')+' sommets · '+Math.round(triangles).toLocaleString('fr-FR')+' triangles',
+   'Squelette : '+(skinned?'oui · '+joints+' articulations':'aucun maillage articulé'),
+   'Matériaux : '+materials.size+' · Textures utilisées : '+textures.size,
+   'Animations : '+animations.length
+ ];
+ if(animations.length) lines.push(...animations.map(clip=>'• '+(clip.name||'Animation')+' — '+clip.duration.toFixed(2)+' s'));
+ details.textContent=lines.join('\n');
+}
+function loadFile(file){
+ if(!file||!file.name.toLowerCase().endsWith('.glb')){status.textContent='Choisis un fichier .glb.';return;}
+ status.textContent='Chargement du modèle…';
+ const url=URL.createObjectURL(file);
+ loader.load(url,gltf=>{
+   if(model)scene.remove(model);
+   if(activeAction)activeAction.stop();
+   activeAction=null;
+   model=gltf.scene;scene.add(model);frameObject(model);
+   clips=gltf.animations||[];mixer=clips.length?new THREE.AnimationMixer(model):null;
+   inspectModel(model,clips);
+   anim.innerHTML='';
+   anim.disabled=clips.length===0;
+   play.disabled=clips.length===0;
+   stop.disabled=clips.length===0;
+   if(!clips.length){anim.add(new Option('Aucune animation intégrée',''));status.textContent='Modèle chargé, mais aucun clip d’animation intégré.';}
+   else{
+     clips.forEach((clip,i)=>anim.add(new Option((clip.name||'Animation '+(i+1))+' · '+clip.duration.toFixed(2)+' s',String(i))));
+     anim.disabled=false;play.disabled=false;stop.disabled=false;
+     status.textContent='Modèle chargé : '+file.name+' · '+clips.length+' animation(s) détectée(s).';
+     playClip(0);
+   }
+   URL.revokeObjectURL(url);
+ },undefined,error=>{status.textContent='Erreur de lecture GLB : '+(error?.message||error);URL.revokeObjectURL(url);});
+}
+function playClip(index){
+ if(!mixer||!clips[index])return;
+ if(activeAction)activeAction.stop();
+ activeAction=mixer.clipAction(clips[index]);activeAction.reset();activeAction.timeScale=Number(document.querySelector('#speed').value);activeAction.play();
+}
+document.querySelector('#file').addEventListener('change',e=>loadFile(e.target.files[0]));
+anim.addEventListener('change',()=>playClip(Number(anim.value)));
+play.addEventListener('click',()=>{if(activeAction){activeAction.paused=false;activeAction.play();}});
+stop.addEventListener('click',()=>{if(activeAction)activeAction.paused=true;});
+document.querySelector('#speed').addEventListener('change',e=>{if(activeAction)activeAction.timeScale=Number(e.target.value);});
+document.querySelector('#exposure').addEventListener('input',e=>renderer.toneMappingExposure=Number(e.target.value));
+const drop=document.querySelector('#drop');
+window.addEventListener('dragover',e=>{e.preventDefault();drop.classList.add('visible');});
+window.addEventListener('dragleave',e=>{if(e.relatedTarget===null)drop.classList.remove('visible');});
+window.addEventListener('drop',e=>{e.preventDefault();drop.classList.remove('visible');loadFile(e.dataTransfer.files[0]);});
+new ResizeObserver(()=>{const w=stage.clientWidth,h=stage.clientHeight;camera.aspect=w/h;camera.updateProjectionMatrix();renderer.setSize(w,h);}).observe(stage);
+renderer.setAnimationLoop(()=>{const dt=clock.getDelta();if(mixer)mixer.update(dt);controls.update();renderer.render(scene,camera);});
+</script>
+</body>
+</html>

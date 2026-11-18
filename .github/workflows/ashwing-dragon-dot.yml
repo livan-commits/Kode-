@@ -1,0 +1,42 @@
+name: Build Ashwing Dragon Dot
+
+on:
+  pull_request:
+    paths:
+      - "apps/ashwing-dragon-dot/**"
+      - ".github/workflows/ashwing-dragon-dot.yml"
+  push:
+    branches:
+      - main
+      - feature/ashwing-dragon-3d
+    paths:
+      - "apps/ashwing-dragon-dot/**"
+      - ".github/workflows/ashwing-dragon-dot.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container:
+      image: espressif/idf:v6.1
+    defaults:
+      run:
+        working-directory: apps/ashwing-dragon-dot
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+      - name: Build ESP32-P4 app
+        run: . /opt/esp/idf/export.sh && idf.py build
+      - name: Publish firmware binaries
+        uses: actions/upload-artifact@v4
+        with:
+          name: ashwing-dragon-dot-esp32p4
+          path: |
+            apps/ashwing-dragon-dot/build/*.bin
+            apps/ashwing-dragon-dot/build/bootloader/*.bin
+            apps/ashwing-dragon-dot/build/partition_table/*.bin
+          if-no-files-found: error
+          retention-days: 14
