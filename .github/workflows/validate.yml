@@ -28,7 +28,7 @@ jobs:
           apps = json.load(open("applications/catalog.json"))["applications"]
           providers = json.load(open("connectors/providers.json"))["providers"]
           assert len(apps) == 116, f"Expected 116 apps, got {len(apps)}"
-          assert len({a["code"] for a in apps}) == 115, "Duplicate app codes"
+          assert len({a["code"] for a in apps}) == 116, "Duplicate app codes"
           assert len({a["slug"] for a in apps}) == 116, "Duplicate app slugs"
           for app in apps:
               if app["implementation_status"] == "source_added":
