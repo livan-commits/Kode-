@@ -16,7 +16,7 @@ KODE_APP_MANIFEST("Tamagotchi 3D", "play"); /* low-poly 3D smoke build */
 
 #define PI_F 3.14159265358979323846f
 #define FACE_MAX 2200
-#define SPHERE_RINGS 4
+#define SPHERE_RINGS 3
 #define SPHERE_SLICES 10
 #define CANVAS_W 330U
 #define CANVAS_H 220U
