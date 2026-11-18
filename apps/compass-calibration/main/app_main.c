@@ -10,7 +10,7 @@ static void draw_screen(kode_widget_t *status, kode_widget_t *calibrate,
         kode_print("screen failed: %s", kode_error());
         kode_exit();
     }
-    *status = kode_screen_add_text("%s", message);
+    *status = kode_screen_add_text(message);
     *calibrate = kode_screen_add_button("Calibrate compass");
     if (!*status || !*calibrate) {
         kode_print("widget creation failed: %s", kode_error());
