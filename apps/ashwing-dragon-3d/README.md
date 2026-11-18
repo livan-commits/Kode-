@@ -1,47 +1,56 @@
 # Ashwing — Dragon 3D
 
-This directory is the integration target for the user's Ashwing Drake Lite GLB asset.
+This directory is the integration target for the user's original Ashwing Drake Lite GLB asset.
 
 ## Current status
 
-- [x] Dedicated feature branch created.
-- [x] Native Kode app integration target documented.
-- [x] Confirmed that the public Kode SDK is a C/ESP-IDF SDK for ESP32-P4 and lists LVGL display support.
-- [ ] Obtain the original `Ashwing_Drake_Lite.glb` as a readable file in the current development workspace.
-- [ ] Validate the GLB (mesh, materials, skeleton, animation clips).
-- [ ] Build a desktop 3D preview that uses the original GLB without replacing its rig or animations.
-- [ ] Build a Kode Dot companion app for selecting animation states and controls.
-- [ ] Test the native app on `kode-sim` and measure memory, frame time, and asset limits.
+- [x] Dedicated feature branch and integration target created.
+- [x] Original GLB received and parsed successfully (glTF 2.0 binary).
+- [x] Mesh, skin, material, texture images and animation clips inspected directly from the GLB.
+- [x] Browser-based Three.js viewer implemented; it loads a user-selected local GLB, keeps the embedded materials and animations, and provides orbit/zoom, clip selection, playback speed and exposure controls.
+- [x] Viewer entry point linked from the Kode Ecosystem home page.
+- [x] Public Kode SDK documentation checked for native 3D support.
+- [ ] Runtime-test the viewer in a real browser with the supplied GLB.
+- [ ] Verify the model's license before distributing or committing the binary asset.
+- [ ] Identify a supported native rendering path, or document a clearly labelled 2D/preview fallback if the Kode Dot cannot render this GLB.
+- [ ] Build the Kode Dot companion app and test it on the user's Windows/WSL2 `kode-sim` setup.
 
-## Asset facts to verify
+## Verified GLB facts
 
-The supplied README describes the Lite model as:
+The uploaded `Ashwing_Drake_Lite.glb` was read and parsed directly. It is a glTF 2.0 binary containing:
 
-- 11,992 triangles
-- 61-bone rig
-- Six animation clips: idle, walk, roar, bite, takeoff, fly
-- 30 fps
-- Embedded 2K base-colour, normal and metallic/roughness textures
+- 1 mesh primitive with 9,152 vertices and 35,976 indices (11,992 triangles)
+- 1 skin with 61 joints
+- 1 material named `Ashwing_Drake`, using base-colour, normal and metallic/roughness textures
+- 3 embedded 2048 × 2048 texture images: `Ashwing_BaseColor`, `Ashwing_Normal` and `Ashwing_MetalRough`
+- 6 embedded animation clips, each with 184 animation channels:
+  - `bite` — 1.2 s
+  - `fly_loop` — 0.8 s
+  - `idle_loop` — 3.0 s
+  - `roar` — 2.0 s
+  - `takeoff` — 2.4 s
+  - `walk_loop` — 1.07 s
 
-These are source-description facts, not yet independently verified against the GLB binary. The actual animation names, durations, skeleton and material bindings must be inspected from the file before coding the viewer.
+Durations above are taken from the maximum input keyframe time in each clip. They are clip lengths, not a claim about a fixed playback frame rate.
 
 ## Rendering strategy
 
-The desktop preview is the fidelity target: load the original GLB, preserve its materials and armature, and play the embedded clips.
+The desktop preview is the fidelity target: load the original GLB, preserve its mesh, material, textures and armature, and play the six embedded clips.
 
-The public Kode SDK README documents a C application SDK for ESP32-P4 and an LVGL display example. It does not document a native glTF/GLB skeletal renderer. The existing Kode app in this repository pins SDK components at v0.1.2, so current SDK documentation must not be mistaken for proof that a renderer exists in that pinned version.
+The browser viewer uses Three.js 0.170.0 and reads the selected GLB locally in the browser. It does not upload the model to a server. The binary is deliberately not committed to this repository until its license and redistribution terms are verified.
 
-Therefore, treat the desktop viewer and Kode Dot app as separate deliverables. The Dot app can provide animation selection and controls, but do not claim full 3D on-device until a compatible renderer is identified and measured. If full 3D is not feasible, any reduced on-device representation must be documented as a fallback, never as the original real-time 3D model.
+The public Kode SDK README documents a C application SDK for ESP32-P4 and an LVGL display example. It does not document a native glTF/GLB skeletal renderer. Therefore, the desktop viewer and Kode Dot app remain separate deliverables. The Dot app can provide animation selection and controls, but do not claim full 3D on-device until a compatible renderer is identified, built and measured. If full 3D is not feasible, any reduced on-device representation must be documented as a fallback, never as the original real-time 3D model.
 
 ## Asset and licensing
 
-Do not commit or redistribute the GLB until its included license has been checked. The model may be referenced locally during development, but the repository must not contain the model unless its terms permit that use.
+The GLB has been inspected, but its redistribution license has not yet been verified in this workspace. Do not commit or redistribute the binary until its included license is checked. The model may be used locally for development in the meantime.
 
 ## Acceptance criteria
 
 1. The desktop preview visibly uses the exact Ashwing mesh and textures from the supplied GLB.
-2. The original skeleton is retained.
-3. Every embedded animation clip can be selected and played.
+2. The original 61-joint skin is retained.
+3. All six embedded animation clips can be selected and played.
 4. Missing or unsupported clips are reported rather than replaced with fabricated animation.
-5. The Kode Dot app builds against the repository's pinned Kode SDK and is tested on the user's Windows/WSL2 `kode-sim` setup.
-6. Any reduced on-device representation is documented as a fallback, not described as full 3D.
+5. The viewer is tested in a browser with this exact GLB.
+6. The Kode Dot app builds against the repository's pinned Kode SDK and is tested on the user's Windows/WSL2 `kode-sim` setup.
+7. Any reduced on-device representation is documented as a fallback, not described as full 3D.
