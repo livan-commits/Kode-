@@ -11,7 +11,7 @@
 #include <string.h>
 #include "kode.h"
 
-KODE_APP_MANIFEST("Tamagotchi 3D", "play"); /* PR build smoke target */
+KODE_APP_MANIFEST("Tamagotchi 3D", "play"); /* low-poly 3D smoke build */
 
 #define PI_F 3.14159265358979323846f
 #define FACE_MAX 480
