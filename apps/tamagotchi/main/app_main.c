@@ -8,15 +8,16 @@
 #include <stdbool.h>
 #include <stdint.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include "kode.h"
 
 KODE_APP_MANIFEST("Tamagotchi 3D", "play"); /* low-poly 3D smoke build */
 
 #define PI_F 3.14159265358979323846f
-#define FACE_MAX 480
-#define SPHERE_RINGS 2
-#define SPHERE_SLICES 6
+#define FACE_MAX 2200
+#define SPHERE_RINGS 4
+#define SPHERE_SLICES 10
 #define CANVAS_W 330U
 #define CANVAS_H 220U
 #define CAMERA_Z 6.2f
@@ -126,6 +127,56 @@ static void add_tail(float yaw,float bob,float wag) {
                    i==2?tip:green,yaw,bob);
     }
 }
+static void add_scale_plate(float x,float y,float rx,float ry,
+                             kode_color_t color,float yaw,float bob) {
+    /* Raised diamond-shaped scale sitting on the front of the body ellipsoid. */
+    float q=(x*x)/(0.83f*0.83f)+(y*y)/(0.68f*0.68f);
+    float z=-0.59f*sqrtf(q<0.94f?1.0f-q:0.06f)-0.012f;
+    vec3_t top=world_point(v3(x,y+ry,z),yaw,bob);
+    vec3_t right=world_point(v3(x+rx,y,z-0.006f),yaw,bob);
+    vec3_t bottom=world_point(v3(x,y-ry,z),yaw,bob);
+    vec3_t left=world_point(v3(x-rx,y,z-0.006f),yaw,bob);
+    vec3_t center=world_point(v3(x,y,z-0.018f),yaw,bob);
+    push_face(top,right,center,color);
+    push_face(right,bottom,center,shade(color,0.88f));
+    push_face(bottom,left,center,shade(color,0.94f));
+    push_face(left,top,center,shade(color,1.08f));
+}
+static void add_belly_plates(float yaw,float bob) {
+    const kode_color_t a=kode_rgb(255,224,160);
+    const kode_color_t b=kode_rgb(237,181,111);
+    for(int row=0;row<3;row++) {
+        float y=-0.36f+(float)row*0.19f;
+        for(int col=0;col<3;col++) {
+            float x=-0.20f+(float)col*0.22f+(row%2?0.035f:0.0f);
+            float z=-0.49f-0.19f*sqrtf(0.72f);
+            vec3_t p=world_point(v3(x,y,z-0.014f),yaw,bob);
+            vec3_t l=world_point(v3(x-0.085f,y-0.065f,z),yaw,bob);
+            vec3_t r=world_point(v3(x+0.085f,y-0.065f,z),yaw,bob);
+            vec3_t t=world_point(v3(x,y+0.075f,z),yaw,bob);
+            kode_color_t colr=((row+col)&1)?a:b;
+            push_face(t,r,p,colr); push_face(r,l,p,shade(colr,0.93f));
+            push_face(l,t,p,colr);
+        }
+    }
+}
+static void add_dorsal_spines(float seconds,float yaw,float bob) {
+    const kode_color_t spine=kode_rgb(255,190,83);
+    for(int i=0;i<5;i++) {
+        float x=-0.58f+(float)i*0.27f;
+        float y=0.47f+0.025f*sinf(seconds*2.0f+(float)i);
+        float z=0.30f;
+        vec3_t base1=world_point(v3(x-0.10f,y,z),yaw,bob);
+        vec3_t base2=world_point(v3(x+0.10f,y,z),yaw,bob);
+        vec3_t tip=world_point(v3(x,y+0.24f,z+0.015f),yaw,bob);
+        push_face(base1,base2,tip,spine);
+        push_face(base2,base1,tip,shade(spine,0.78f));
+    }
+}
+static int compare_depth(const void *lhs,const void *rhs) {
+    const face_t *a=(const face_t *)lhs,*b=(const face_t *)rhs;
+    return (a->depth<b->depth)?1:((a->depth>b->depth)?-1:0);
+}
 static void build_dragon(float seconds,bool happy,bool blink) {
     face_count=0;
     float bob=0.055f*sinf(seconds*2.6f);
@@ -143,14 +194,28 @@ static void build_dragon(float seconds,bool happy,bool blink) {
     add_wings(flap,yaw,bob);
     add_tail(yaw,bob,wag);
     /* Four feet, body, belly, neck and expressive head. */
-    add_sphere(v3(-0.48f,-0.63f,0.08f),v3(0.28f,0.20f,0.31f),dark,yaw,bob);
-    add_sphere(v3(0.42f,-0.63f,0.08f),v3(0.28f,0.20f,0.31f),dark,yaw,bob);
+    add_sphere(v3(-0.48f,-0.63f+0.025f*sinf(seconds*3.0f),0.08f),v3(0.28f,0.20f,0.31f),dark,yaw,bob);
+    add_sphere(v3(0.42f,-0.63f-0.025f*sinf(seconds*3.0f),0.08f),v3(0.28f,0.20f,0.31f),dark,yaw,bob);
     add_sphere(v3(-0.68f,-0.48f,-0.08f),v3(0.24f,0.17f,0.25f),green,yaw,bob);
     add_sphere(v3(0.62f,-0.48f,-0.08f),v3(0.24f,0.17f,0.25f),green,yaw,bob);
-    add_sphere(v3(0.0f,-0.12f,0.0f),v3(0.83f,0.68f,0.59f),green,yaw,bob);
+    add_sphere(v3(0.0f,-0.12f,0.0f),v3(0.83f,0.68f+breath,0.59f),green,yaw,bob);
     add_sphere(v3(0.04f,-0.18f,-0.49f),v3(0.56f,0.48f,0.19f),belly,yaw,bob);
+    add_belly_plates(yaw,bob);
+    /* Small overlapping scale plates catch the key light across the shoulders. */
+    for(int row=0;row<3;row++) for(int col=0;col<5;col++) {
+        float x=-0.52f+(float)col*0.25f+(row%2?0.11f:0.0f);
+        float y=0.12f+(float)row*0.17f;
+        add_scale_plate(x,y,0.075f,0.052f,
+            ((row+col)&1)?mint:green,yaw,bob);
+    }
+    add_dorsal_spines(seconds,yaw,bob);
     add_sphere(v3(0.49f,0.43f,0.0f),v3(0.25f,0.43f,0.31f),mint,yaw,bob);
     add_sphere(v3(0.67f,0.74f,-0.01f),v3(0.54f,0.49f,0.47f),green,yaw,bob);
+    /* Cheek tufts and a pair of swept-back crown horns. */
+    add_sphere(v3(0.32f,0.52f,-0.20f),v3(0.18f,0.22f,0.20f),mint,yaw,bob);
+    add_sphere(v3(0.95f,0.53f,-0.18f),v3(0.18f,0.22f,0.20f),mint,yaw,bob);
+    add_sphere(v3(0.27f,1.00f,0.13f),v3(0.10f,0.22f,0.10f),gold,yaw,bob);
+    add_sphere(v3(0.98f,1.02f,0.13f),v3(0.10f,0.22f,0.10f),gold,yaw,bob);
     add_sphere(v3(1.04f,0.49f,-0.12f),v3(0.38f,0.25f,0.34f),mint,yaw,bob);
     /* Horns, eyes, pupils and nostrils. */
     add_sphere(v3(0.39f,1.12f,0.02f),v3(0.12f,0.27f,0.12f),gold,yaw,bob);
@@ -160,8 +225,16 @@ static void build_dragon(float seconds,bool happy,bool blink) {
     if(!blink) {
         add_sphere(v3(0.51f,0.78f,-0.455f),v3(0.055f,0.085f,0.035f),ink,yaw,bob);
         add_sphere(v3(0.86f,0.78f,-0.455f),v3(0.055f,0.085f,0.035f),ink,yaw,bob);
+        add_sphere(v3(0.49f,0.835f,-0.492f),v3(0.025f,0.032f,0.018f),white,yaw,bob);
+        add_sphere(v3(0.84f,0.835f,-0.492f),v3(0.025f,0.032f,0.018f),white,yaw,bob);
     }
     add_sphere(v3(1.15f,0.57f,-0.405f),v3(0.045f,0.035f,0.025f),dark,yaw,bob);
+    add_sphere(v3(1.29f,0.53f,-0.32f),v3(0.035f,0.026f,0.02f),dark,yaw,bob);
+    /* Tiny foreclaws give the feet a readable silhouette. */
+    for(int side=-1;side<=1;side+=2) for(int toe=-1;toe<=1;toe++) {
+        add_sphere(v3((side<0?-0.69f:0.63f)+(float)toe*0.12f,-0.59f,-0.29f),
+                   v3(0.055f,0.07f,0.07f),gold,yaw,bob);
+    }
     if(happy) add_sphere(v3(1.37f,0.37f,-0.06f),v3(0.12f,0.12f,0.12f),
                          kode_rgb(255,126,64),yaw,bob);
 }
@@ -200,12 +273,8 @@ static void raster_triangle(const face_t *f) {
 }
 static void render_frame(float seconds,bool happy,bool blink) {
     build_dragon(seconds,happy,blink);
-    /* Painter's algorithm: distant triangles are painted before near ones. */
-    for(unsigned i=1;i<face_count;i++) {
-        face_t key=faces[i]; unsigned j=i;
-        while(j>0 && faces[j-1].depth<key.depth){faces[j]=faces[j-1];--j;}
-        faces[j]=key;
-    }
+    /* Stable-cost depth ordering keeps the richer mesh affordable. */
+    qsort(faces,face_count,sizeof(faces[0]),compare_depth);
     (void)kode_canvas_fill(canvas,kode_rgb(12,19,36));
     for(unsigned i=0;i<face_count;i++) raster_triangle(&faces[i]);
     /* Ground shadow and a few tiny stars, still part of the 3D scene framing. */
