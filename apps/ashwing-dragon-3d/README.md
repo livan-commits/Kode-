@@ -6,30 +6,32 @@ This directory is the integration target for the user's Ashwing Drake Lite GLB a
 
 - [x] Dedicated feature branch created.
 - [x] Native Kode app integration target documented.
-- [ ] Add the original `Ashwing_Drake_Lite.glb` asset after confirming its redistribution terms.
-- [ ] Validate the GLB (mesh, materials, skeleton, animation clips) with a local GLB inspection tool.
+- [x] Confirmed that the public Kode SDK is a C/ESP-IDF SDK for ESP32-P4 and lists LVGL display support.
+- [ ] Obtain the original `Ashwing_Drake_Lite.glb` as a readable file in the current development workspace.
+- [ ] Validate the GLB (mesh, materials, skeleton, animation clips).
 - [ ] Build a desktop 3D preview that uses the original GLB without replacing its rig or animations.
 - [ ] Build a Kode Dot companion app for selecting animation states and controls.
 - [ ] Test the native app on `kode-sim` and measure memory, frame time, and asset limits.
 
-## Expected animation controls
+## Asset facts to verify
 
-The supplied asset is described in the project conversation as containing these clips:
+The supplied README describes the Lite model as:
 
-- Idle
-- Walk
-- Roar
-- Bite
-- Takeoff
-- Fly
+- 11,992 triangles
+- 61-bone rig
+- Six animation clips: idle, walk, roar, bite, takeoff, fly
+- 30 fps
+- Embedded 2K base-colour, normal and metallic/roughness textures
 
-Clip names and availability must be confirmed from the actual GLB before implementation.
+These are source-description facts, not yet independently verified against the GLB binary. The actual animation names, durations, skeleton and material bindings must be inspected from the file before coding the viewer.
 
 ## Rendering strategy
 
 The desktop preview is the fidelity target: load the original GLB, preserve its materials and armature, and play the embedded clips.
 
-The ESP32-P4 Kode Dot build is a separate constrained target. Do not assume that a full skeletal GLB renderer is available in the current Kode SDK. First establish renderer support and measure the asset's runtime footprint. If full 3D is not feasible on-device, keep the native app as the controller and use a tested lightweight representation on the device; do not silently substitute a different dragon model.
+The public Kode SDK README documents a C application SDK for ESP32-P4 and an LVGL display example. It does not document a native glTF/GLB skeletal renderer. The existing Kode app in this repository pins SDK components at v0.1.2, so current SDK documentation must not be mistaken for proof that a renderer exists in that pinned version.
+
+Therefore, treat the desktop viewer and Kode Dot app as separate deliverables. The Dot app can provide animation selection and controls, but do not claim full 3D on-device until a compatible renderer is identified and measured. If full 3D is not feasible, any reduced on-device representation must be documented as a fallback, never as the original real-time 3D model.
 
 ## Asset and licensing
 
