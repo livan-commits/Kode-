@@ -73,3 +73,5 @@ GitHub Actions builds all three projects from clean checkouts. A green build pro
 | Haptic Studio | `haptic-studio/` | UP/DOWN selects one of six SDK patterns or a custom double pulse; TOP or Play runs it; BOT home | Yes, requires the vibration motor; custom pattern is registered when the app starts |
 
 | Compass Calibration | `compass-calibration/` | Shows calibration state; TOP or tap starts the SDK calibration assistant; BOT home | Yes, requires magnetometer; hold and rotate the Dot through all directions during calibration |
+
+| Digital Clock | `digital-clock/` | Shows local time/date; TOP or tap switches 24-hour/12-hour format; BOT home | Yes, uses the timezone and clock set by KodeOS; shows an unset-clock message until time is available |

@@ -1499,6 +1499,19 @@
         "magnetometer"
       ],
       "source_path": "apps/compass-calibration/"
+    },
+    {
+      "code": "L016",
+      "slug": "digital-clock",
+      "name": "Digital Clock",
+      "category": "life",
+      "description": "Horloge numérique native affichant l'heure locale et la date; bascule 12/24 h et respecte le fuseau horaire configuré dans KodeOS.",
+      "lifecycle": "in_development",
+      "implementation_status": "source_added",
+      "capability_state": "build_pending",
+      "offline_support": "yes",
+      "required_permissions": [],
+      "source_path": "apps/digital-clock/"
     }
   ]
 }
