@@ -64,6 +64,8 @@ GitHub Actions builds all three projects from clean checkouts. A green build pro
 
 | Tamagotchi | `tamagotchi/` | Feed, play and clean Kody the dragon; care stats decay while the app is running; BOT home | Yes, session-only state |
 
+| Ashwing Dragon | `ashwing-dragon-dot/` | Plays the original Ashwing's six pre-rendered 3D-derived animation clips; LEFT/RIGHT or Previous/Next changes clip; TOP or Play/Pause toggles; BOT home | Yes, requires `ashwing/` PNG frames on SD |
+
 | Voice Recorder | `voice-recorder/` | TOP starts/stops recording; Save WAV stores `flash/voice-note.wav`; BOT home | Yes, microphone required; max 30 seconds; app must remain open |
 | WAV Player | `wav-player/` | Plays/stops `flash/voice-note.wav`; compatible WAV format only (48 kHz, mono, 16-bit); BOT home | Yes, requires speaker/audio hardware and an existing compatible file |
 | Metronome | `metronome/` | Tempo 40–240 BPM, first beat accented; UP/DOWN tempo, TOP start/stop, BOT home | Yes, requires speaker/audio hardware |
