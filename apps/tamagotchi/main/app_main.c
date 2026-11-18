@@ -53,7 +53,9 @@ static vec3_t rotate_z(vec3_t p, float a) {
 static kode_color_t shade(kode_color_t rgb, float light) {
     unsigned r=(rgb>>16)&255U,g=(rgb>>8)&255U,b=rgb&255U;
     r=(unsigned)(r*light); g=(unsigned)(g*light); b=(unsigned)(b*light);
-    if(r>255U)r=255U; if(g>255U)g=255U; if(b>255U)b=255U;
+    if(r>255U) r=255U;
+    if(g>255U) g=255U;
+    if(b>255U) b=255U;
     return kode_rgb(r,g,b);
 }
 static vec3_t world_point(vec3_t p, float yaw, float bob) {
@@ -174,7 +176,8 @@ static void raster_triangle(const face_t *f) {
     for(unsigned i=0;i<3;i++) project(f->p[i],&x[i],&y[i]);
     int miny=y[0],maxy=y[0];
     for(unsigned i=1;i<3;i++){if(y[i]<miny)miny=y[i];if(y[i]>maxy)maxy=y[i];}
-    if(miny<0)miny=0; if(maxy>=(int)CANVAS_H)maxy=(int)CANVAS_H-1;
+    if(miny<0) miny=0;
+    if(maxy>=(int)CANVAS_H) maxy=(int)CANVAS_H-1;
     for(int scan=miny;scan<=maxy;scan++) {
         int intersections[3],count=0;
         for(unsigned e=0;e<3;e++) {
@@ -189,7 +192,8 @@ static void raster_triangle(const face_t *f) {
             int left=intersections[0],right=intersections[1];
             if(left>right){int tmp=left;left=right;right=tmp;}
             if(right<0||left>=(int)CANVAS_W)continue;
-            if(left<0)left=0;if(right>=(int)CANVAS_W)right=(int)CANVAS_W-1;
+            if(left<0) left=0;
+            if(right>=(int)CANVAS_W) right=(int)CANVAS_W-1;
             (void)kode_draw_line(canvas,left,scan,right,scan,f->color);
         }
     }
