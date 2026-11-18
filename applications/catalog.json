@@ -1414,6 +1414,19 @@
       "offline_support": "yes",
       "required_permissions": [],
       "source_path": "apps/subway-runner/"
+    },
+    {
+      "code": "P009",
+      "slug": "voice-recorder",
+      "name": "Voice Recorder",
+      "category": "media",
+      "description": "Enregistreur vocal natif : enregistrement micro jusqu'à 30 secondes, arrêt anticipé et sauvegarde WAV dans le stockage flash. Fonctionne pendant que l'application reste ouverte.",
+      "lifecycle": "in_development",
+      "implementation_status": "source_added",
+      "capability_state": "build_pending",
+      "offline_support": "yes",
+      "required_permissions": [],
+      "source_path": "apps/voice-recorder/"
     }
   ]
 }
