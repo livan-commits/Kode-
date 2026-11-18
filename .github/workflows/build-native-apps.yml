@@ -61,7 +61,10 @@ jobs:
       - name: Create app icon
         run: |
           python3 - <<'PY'
-          import struct, zlib\n          w = h = 128\n          rows = []\n          for y in range(h):\n              row = bytearray([0])\n              for x in range(w):\n                  bg = (12, 19, 36, 255)\n                  body = ((x-64)**2/44**2 + (y-76)**2/38**2) <= 1\n                  horns = (abs(x-43) < max(0, 13-abs(y-30)) and y < 48) or (abs(x-84) < max(0, 13-abs(y-27)) and y < 49)\n                  eyes = ((x-53)**2+(y-64)**2 <= 5**2) or ((x-77)**2+(y-64)**2 <= 5**2)\n                  pupils = ((x-54)**2+(y-64)**2 <= 2**2) or ((x-78)**2+(y-64)**2 <= 2**2)\n                  c = (49,190,137,255) if body else ((250,180,64,255) if horns else bg)\n                  if eyes: c = (255,255,244,255)\n                  if pupils: c = (20,35,43,255)\n                  row.extend(c)\n              rows.append(bytes(row))\n          def chunk(tag, data):\n              return struct.pack(">I",len(data))+tag+data+struct.pack(">I",zlib.crc32(tag+data)&0xffffffff)\n          png = b"\\x89PNG\\r\\n\\x1a\\n"+chunk(b"IHDR",struct.pack(">2I5B",w,h,8,6,0,0,0))+chunk(b"IDAT",zlib.compress(b"".join(rows)))+chunk(b"IEND",b"")\n          open("apps/tamagotchi/appdata/icon.png","wb").write(png)
+          import base64
+          png = "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+/pV8AAAAASUVORK5CYII="
+          with open("apps/tamagotchi/appdata/icon.png", "wb") as f:
+              f.write(base64.b64decode(png))
           PY
       - name: Build Tamagotchi 3D WebAssembly package
         shell: bash
