@@ -20,7 +20,7 @@ KODE_APP_MANIFEST("Tamagotchi 3D", "play");
 #define CANVAS_W 330U
 #define CANVAS_H 220U
 #define CAMERA_Z 6.2f
-#define FOCAL 172.0f
+#define FOCAL 300.0f
 
 typedef struct { float x, y, z; } vec3_t;
 typedef struct {
@@ -221,7 +221,7 @@ void app_main(void) {
     kode_widget_t stats,feed,play,clean;
     int hunger=82,happiness=78,cleanliness=86;
     unsigned age=0,care=0;
-    uint32_t last_decay,started;
+    uint32_t last_decay,started,last_stats;
     char text[ KODE_WIDGET_TEXT_MAX ];
     kode_init();
     if(!kode_screen_new("Kody - 3D Dragon")){kode_print("screen failed: %s",kode_error());kode_exit();}
@@ -234,7 +234,7 @@ void app_main(void) {
     (void)kode_widget_set_color(feed,kode_rgb(72,177,125));
     (void)kode_widget_set_color(play,kode_rgb(115,105,205));
     (void)kode_widget_set_color(clean,kode_rgb(65,145,190));
-    started=last_decay=kode_uptime_ms();
+    started=last_decay=last_stats=kode_uptime_ms();
     for(;;) {
         uint32_t now=kode_uptime_ms();
         float seconds=(float)(now-started)/1000.0f;
@@ -250,11 +250,13 @@ void app_main(void) {
             cleanliness=clamp_stat(cleanliness-(int)(elapsed*2U));
             age+=elapsed;last_decay+=elapsed*60000U;changed=true;
         }
-        (void)changed;
         render_frame(seconds,hunger>35&&happiness>55,((unsigned)(seconds*2.0f)%9U)==0U);
-        (void)snprintf(text,sizeof(text),"HUNGER %d  HAPPY %d  CLEAN %d\nAGE %u min  CARE %u  %s",
-                       hunger,happiness,cleanliness,age,care,mood(hunger,happiness,cleanliness));
-        (void)kode_widget_set_text(stats,"%s",text);
+        if(changed || (uint32_t)(now-last_stats)>=1000U) {
+            (void)snprintf(text,sizeof(text),"HUNGER %d  HAPPY %d  CLEAN %d\nAGE %u min  CARE %u  %s",
+                           hunger,happiness,cleanliness,age,care,mood(hunger,happiness,cleanliness));
+            (void)kode_widget_set_text(stats,"%s",text);
+            last_stats=now;
+        }
         kode_delay(100U);
     }
 }
