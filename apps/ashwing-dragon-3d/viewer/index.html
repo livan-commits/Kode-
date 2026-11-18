@@ -46,10 +46,11 @@
     <p class="hint">Le fichier est lu localement dans ton navigateur : il n'est pas envoyé sur un serveur. Fais glisser le modèle dans la scène ou utilise le bouton de chargement. Souris/doigt : rotation et zoom.</p>
   </aside>
 </main>
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js"}}</script>
 <script type="module">
-import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js';
-import { OrbitControls } from 'https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/controls/OrbitControls.js';
-import { GLTFLoader } from 'https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/loaders/GLTFLoader.js';
+import * as THREE from "three";
+import { OrbitControls } from "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/controls/OrbitControls.js";
+import { GLTFLoader } from "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/loaders/GLTFLoader.js";
 
 const stage=document.querySelector('#stage'), status=document.querySelector('#status');
 const renderer=new THREE.WebGLRenderer({antialias:true,alpha:false});
