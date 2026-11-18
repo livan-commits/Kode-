@@ -67,3 +67,5 @@ GitHub Actions builds all three projects from clean checkouts. A green build pro
 | Voice Recorder | `voice-recorder/` | TOP starts/stops recording; Save WAV stores `flash/voice-note.wav`; BOT home | Yes, microphone required; max 30 seconds; app must remain open |
 | WAV Player | `wav-player/` | Plays/stops `flash/voice-note.wav`; compatible WAV format only (48 kHz, mono, 16-bit); BOT home | Yes, requires speaker/audio hardware and an existing compatible file |
 | Metronome | `metronome/` | Tempo 40–240 BPM, first beat accented; UP/DOWN tempo, TOP start/stop, BOT home | Yes, requires speaker/audio hardware |
+
+| Storage Manager | `storage-manager/` | TOP switches flash/SD; UP/DOWN selects, LEFT/RIGHT pages; tap Delete selected twice to delete a file; BOT home | Yes, uses mounted flash/SD; folder deletion is disabled; files are permanently deleted after confirmation |

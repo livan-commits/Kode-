@@ -1454,6 +1454,21 @@
       "offline_support": "yes",
       "required_permissions": [],
       "source_path": "apps/metronome/"
+    },
+    {
+      "code": "M016",
+      "slug": "storage-manager",
+      "name": "Storage Manager",
+      "category": "maker",
+      "description": "Gestionnaire de stockage natif : volumes flash/SD, espace libre, navigation paginée et suppression sécurisée d'un fichier sélectionné avec double confirmation. Aucun effacement récursif.",
+      "lifecycle": "in_development",
+      "implementation_status": "source_added",
+      "capability_state": "build_pending",
+      "offline_support": "yes",
+      "required_permissions": [
+        "storage"
+      ],
+      "source_path": "apps/storage-manager/"
     }
   ]
 }
