@@ -1469,6 +1469,21 @@
         "storage"
       ],
       "source_path": "apps/storage-manager/"
+    },
+    {
+      "code": "M018",
+      "slug": "haptic-studio",
+      "name": "Haptic Studio",
+      "category": "maker",
+      "description": "Studio de vibrations natif : six motifs SDK intégrés et un motif personnalisé double impulsion; lecture à la demande via le moteur haptique du Kode Dot.",
+      "lifecycle": "in_development",
+      "implementation_status": "source_added",
+      "capability_state": "build_pending",
+      "offline_support": "yes",
+      "required_permissions": [
+        "haptics"
+      ],
+      "source_path": "apps/haptic-studio/"
     }
   ]
 }

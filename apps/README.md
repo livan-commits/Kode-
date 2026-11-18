@@ -69,3 +69,5 @@ GitHub Actions builds all three projects from clean checkouts. A green build pro
 | Metronome | `metronome/` | Tempo 40–240 BPM, first beat accented; UP/DOWN tempo, TOP start/stop, BOT home | Yes, requires speaker/audio hardware |
 
 | Storage Manager | `storage-manager/` | TOP switches flash/SD; UP/DOWN selects, LEFT/RIGHT pages; tap Delete selected twice to delete a file; BOT home | Yes, uses mounted flash/SD; folder deletion is disabled; files are permanently deleted after confirmation |
+
+| Haptic Studio | `haptic-studio/` | UP/DOWN selects one of six SDK patterns or a custom double pulse; TOP or Play runs it; BOT home | Yes, requires the vibration motor; custom pattern is registered when the app starts |
