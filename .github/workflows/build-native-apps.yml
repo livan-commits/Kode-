@@ -58,6 +58,8 @@ jobs:
           cd /tmp/kodedot-sim
           source .dotbench-env
           tools/dotbench sdk
+      - name: Install icon generator dependency
+        run: python3 -m pip install --user Pillow
       - name: Create app icon
         run: |
           python3 - <<'PY'
