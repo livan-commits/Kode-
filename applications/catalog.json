@@ -1484,6 +1484,21 @@
         "haptics"
       ],
       "source_path": "apps/haptic-studio/"
+    },
+    {
+      "code": "M019",
+      "slug": "compass-calibration",
+      "name": "Compass Calibration",
+      "category": "maker",
+      "description": "Calibration native du magnétomètre avec l'assistant visuel du SDK Kode; affiche l'état de calibration et relance l'écran après la procédure.",
+      "lifecycle": "in_development",
+      "implementation_status": "source_added",
+      "capability_state": "build_pending",
+      "offline_support": "yes",
+      "required_permissions": [
+        "magnetometer"
+      ],
+      "source_path": "apps/compass-calibration/"
     }
   ]
 }

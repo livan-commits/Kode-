@@ -27,9 +27,9 @@ jobs:
           import json
           apps = json.load(open("applications/catalog.json"))["applications"]
           providers = json.load(open("connectors/providers.json"))["providers"]
-          assert len(apps) == 120, f"Expected 120 apps, got {len(apps)}"
-          assert len({a["code"] for a in apps}) == 120, "Duplicate app codes"
-          assert len({a["slug"] for a in apps}) == 120, "Duplicate app slugs"
+          assert len(apps) == 121, f"Expected 121 apps, got {len(apps)}"
+          assert len({a["code"] for a in apps}) == 121, "Duplicate app codes"
+          assert len({a["slug"] for a in apps}) == 121, "Duplicate app slugs"
           for app in apps:
               if app["implementation_status"] == "source_added":
                   assert app["lifecycle"] == "in_development"
@@ -68,6 +68,7 @@ jobs:
           test -f apps/files/main/app_main.c
           test -f apps/storage-manager/main/app_main.c
           test -f apps/haptic-studio/main/app_main.c
+          test -f apps/compass-calibration/main/app_main.c
           test -f apps/dice/main/app_main.c
           test -f apps/tower-stack/main/app_main.c
           test -f apps/subway-runner/main/app_main.c
@@ -199,7 +200,7 @@ jobs:
 
       - name: Check all native app projects
         run: |
-          for app in stopwatch pomodoro calculator dice reaction-test memory snake pong quiz tasks shopping-list habit-tracker alarm reminders calendar compass level sensor-studio data-logger nfc-studio rfid-studio ir-studio battery-monitor led-studio music-studio files settings device-diagnostics network-monitor wi-fi-analyzer bluetooth-scanner tower-stack subway-runner tamagotchi voice-recorder wav-player metronome storage-manager haptic-studio; do
+          for app in stopwatch pomodoro calculator dice reaction-test memory snake pong quiz tasks shopping-list habit-tracker alarm reminders calendar compass level sensor-studio data-logger nfc-studio rfid-studio ir-studio battery-monitor led-studio music-studio files settings device-diagnostics network-monitor wi-fi-analyzer bluetooth-scanner tower-stack subway-runner tamagotchi voice-recorder wav-player metronome storage-manager haptic-studio compass-calibration; do
             test -f "apps/$app/CMakeLists.txt"
             test -f "apps/$app/main/app_main.c"
             test -f "apps/$app/main/CMakeLists.txt"
@@ -207,4 +208,4 @@ jobs:
             test -f "apps/$app/sdkconfig.defaults"
           done
           grep -q 'matrix:' .github/workflows/build-native-apps.yml
-          grep -q 'stopwatch, pomodoro, calculator, dice, reaction-test, memory, snake, pong, quiz, tasks, shopping-list, habit-tracker, alarm, reminders, calendar, compass, level, sensor-studio, data-logger, nfc-studio, rfid-studio, ir-studio, battery-monitor, led-studio, music-studio, files, settings, device-diagnostics, network-monitor, wi-fi-analyzer, bluetooth-scanner, tower-stack, subway-runner, tamagotchi, voice-recorder, wav-player, metronome, storage-manager, haptic-studio' .github/workflows/build-native-apps.yml
+          grep -q 'stopwatch, pomodoro, calculator, dice, reaction-test, memory, snake, pong, quiz, tasks, shopping-list, habit-tracker, alarm, reminders, calendar, compass, level, sensor-studio, data-logger, nfc-studio, rfid-studio, ir-studio, battery-monitor, led-studio, music-studio, files, settings, device-diagnostics, network-monitor, wi-fi-analyzer, bluetooth-scanner, tower-stack, subway-runner, tamagotchi, voice-recorder, wav-player, metronome, storage-manager, haptic-studio, compass-calibration' .github/workflows/build-native-apps.yml

@@ -71,3 +71,5 @@ GitHub Actions builds all three projects from clean checkouts. A green build pro
 | Storage Manager | `storage-manager/` | TOP switches flash/SD; UP/DOWN selects, LEFT/RIGHT pages; tap Delete selected twice to delete a file; BOT home | Yes, uses mounted flash/SD; folder deletion is disabled; files are permanently deleted after confirmation |
 
 | Haptic Studio | `haptic-studio/` | UP/DOWN selects one of six SDK patterns or a custom double pulse; TOP or Play runs it; BOT home | Yes, requires the vibration motor; custom pattern is registered when the app starts |
+
+| Compass Calibration | `compass-calibration/` | Shows calibration state; TOP or tap starts the SDK calibration assistant; BOT home | Yes, requires magnetometer; hold and rotate the Dot through all directions during calibration |
