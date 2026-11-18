@@ -61,3 +61,6 @@ GitHub Actions builds all three projects from clean checkouts. A green build pro
 **Hardware and radio notes:** Wi-Fi and Bluetooth scans use the shared radio and can be refused while it is busy or disabled in KodeOS. A successful compile does not prove radio hardware availability. Device Diagnostics is read-only. Settings restores the display's previous brightness when it exits, as defined by the SDK; it stores its preferred level separately. Volume and mute last only for the current boot.
 
 **Audio note:** Music Studio is a tone test tool, not a music player. Its selectable frequencies stay within the SDK's documented 400–3400 Hz range.
+
+| Voice Recorder | `voice-recorder/` | Records up to 30 seconds and saves one WAV file to `flash/voice-note.wav`; BOT home | Yes, requires microphone/audio hardware; foreground only |
+| WAV Player | `wav-player/` | Plays/stops `flash/voice-note.wav`; compatible WAV format only (48 kHz, mono, 16-bit); BOT home | Yes, requires speaker/audio hardware and an existing compatible file |
