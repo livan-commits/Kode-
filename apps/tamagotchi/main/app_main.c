@@ -14,8 +14,8 @@
 KODE_APP_MANIFEST("Tamagotchi 3D", "play");
 
 #define PI_F 3.14159265358979323846f
-#define FACE_MAX 420
-#define SPHERE_RINGS 3
+#define FACE_MAX 480
+#define SPHERE_RINGS 2
 #define SPHERE_SLICES 6
 #define CANVAS_W 330U
 #define CANVAS_H 220U
