@@ -40,9 +40,7 @@ jobs:
 
       - name: Set up pinned Dotbench toolchain
         working-directory: .dotbench
-        run: |
-          tools/setup.sh
-          echo "source $GITHUB_WORKSPACE/.dotbench/.dotbench-env" >> "$GITHUB_ENV"
+        run: tools/setup.sh
 
       - name: Precompile pinned Kode SDK for WebAssembly
         working-directory: .dotbench
