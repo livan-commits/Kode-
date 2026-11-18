@@ -183,6 +183,7 @@ static void build_dragon(float seconds,bool happy,bool blink) {
     float yaw=0.20f*sinf(seconds*0.55f);
     float flap=0.42f*sinf(seconds*5.0f);
     float wag=seconds*2.1f;
+    float breath=0.025f*sinf(seconds*2.0f);
     const kode_color_t green=kode_rgb(49,190,137);
     const kode_color_t mint=kode_rgb(103,228,172);
     const kode_color_t dark=kode_rgb(28,125,94);
