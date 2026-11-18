@@ -49,13 +49,13 @@ jobs:
           source .dotbench-env
           tools/dotbench -j 2 sdk
 
-      - name: Build Dice, Snake and Stopwatch as simulator packages
+      - name: Build Dice, Snake, Stopwatch and Tamagotchi as simulator packages
         working-directory: .dotbench
         shell: bash
         run: |
           source .dotbench-env
           mkdir -p "$RUNNER_TEMP/dotbench-packages"
-          for app in dice snake stopwatch; do
+          for app in dice snake stopwatch tamagotchi; do
             echo "::group::Build $app"
             tools/dotbench build "$GITHUB_WORKSPACE/apps/$app" -o "$RUNNER_TEMP/dotbench-packages/$app"
             echo "::endgroup::"
@@ -65,7 +65,7 @@ jobs:
       - name: Upload simulator-ready packages
         uses: actions/upload-artifact@v4
         with:
-          name: kode-dotbench-wasm-smoke
+          name: kode-dotbench-wasm-apps
           path: |
             ${{ runner.temp }}/dotbench-packages/**/*.zip
             ${{ runner.temp }}/dotbench-packages/**/*.dotbench
