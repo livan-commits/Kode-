@@ -1414,6 +1414,19 @@
       "offline_support": "yes",
       "required_permissions": [],
       "source_path": "apps/subway-runner/"
+    },
+    {
+      "code": "P013",
+      "slug": "metronome",
+      "name": "Metronome",
+      "category": "media",
+      "description": "Métronome natif hors ligne : tempo réglable de 40 à 240 BPM, battement accentué sur le premier temps et commande lecture/arrêt. Utilise le haut-parleur Kode Dot.",
+      "lifecycle": "in_development",
+      "implementation_status": "source_added",
+      "capability_state": "build_pending",
+      "offline_support": "yes",
+      "required_permissions": [],
+      "source_path": "apps/metronome/"
     }
   ]
 }

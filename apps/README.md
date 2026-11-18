@@ -61,3 +61,5 @@ GitHub Actions builds all three projects from clean checkouts. A green build pro
 **Hardware and radio notes:** Wi-Fi and Bluetooth scans use the shared radio and can be refused while it is busy or disabled in KodeOS. A successful compile does not prove radio hardware availability. Device Diagnostics is read-only. Settings restores the display's previous brightness when it exits, as defined by the SDK; it stores its preferred level separately. Volume and mute last only for the current boot.
 
 **Audio note:** Music Studio is a tone test tool, not a music player. Its selectable frequencies stay within the SDK's documented 400–3400 Hz range.
+
+| Metronome | `metronome/` | Tempo 40–240 BPM, first beat accented; UP/DOWN tempo, TOP start/stop, BOT home | Yes, requires speaker/audio hardware |
