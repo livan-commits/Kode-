@@ -1527,6 +1527,21 @@
         "nfc"
       ],
       "source_path": "apps/nfc-writer/"
+    },
+    {
+      "code": "M021",
+      "slug": "nfc-share",
+      "name": "NFC Share",
+      "category": "maker",
+      "description": "Émule une étiquette NFC NDEF partageant un message ou une URL de démonstration prédéfinis. Utilise exclusivement les profils text/URI, jamais un UID ou un badge d'accès.",
+      "lifecycle": "in_development",
+      "implementation_status": "source_added",
+      "capability_state": "build_pending",
+      "offline_support": "yes",
+      "required_permissions": [
+        "nfc"
+      ],
+      "source_path": "apps/nfc-share/"
     }
   ]
 }

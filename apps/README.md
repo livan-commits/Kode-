@@ -77,3 +77,5 @@ GitHub Actions builds all three projects from clean checkouts. A green build pro
 | Digital Clock | `digital-clock/` | Shows local time/date; TOP or tap switches 24-hour/12-hour format; BOT home | Yes, uses the timezone and clock set by KodeOS; shows an unset-clock message until time is available |
 
 | NFC Writer | `nfc-writer/` | UP/DOWN selects a preset text or demo URL; TOP/tap twice confirms writing to a compatible NDEF tag; BOT home | Yes, requires NFC; writes text/URI only, never badge IDs or access credentials |
+
+| NFC Share | `nfc-share/` | UP/DOWN selects demo text/link; TOP/tap starts or stops NFC sharing; BOT home | Yes, requires NFC; exposes only benign NDEF text/URI, never UID or access badges |
