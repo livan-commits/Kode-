@@ -75,3 +75,5 @@ GitHub Actions builds all three projects from clean checkouts. A green build pro
 | Compass Calibration | `compass-calibration/` | Shows calibration state; TOP or tap starts the SDK calibration assistant; BOT home | Yes, requires magnetometer; hold and rotate the Dot through all directions during calibration |
 
 | Digital Clock | `digital-clock/` | Shows local time/date; TOP or tap switches 24-hour/12-hour format; BOT home | Yes, uses the timezone and clock set by KodeOS; shows an unset-clock message until time is available |
+
+| NFC Writer | `nfc-writer/` | UP/DOWN selects a preset text or demo URL; TOP/tap twice confirms writing to a compatible NDEF tag; BOT home | Yes, requires NFC; writes text/URI only, never badge IDs or access credentials |

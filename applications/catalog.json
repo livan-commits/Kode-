@@ -1512,6 +1512,21 @@
       "offline_support": "yes",
       "required_permissions": [],
       "source_path": "apps/digital-clock/"
+    },
+    {
+      "code": "M020",
+      "slug": "nfc-writer",
+      "name": "NFC Writer",
+      "category": "maker",
+      "description": "Écrit un message texte ou une URL de démonstration sur une étiquette NFC NDEF compatible. Propose uniquement des contenus prédéfinis bénins; aucune lecture/écriture d'UID ou de badge d'accès.",
+      "lifecycle": "in_development",
+      "implementation_status": "source_added",
+      "capability_state": "build_pending",
+      "offline_support": "yes",
+      "required_permissions": [
+        "nfc"
+      ],
+      "source_path": "apps/nfc-writer/"
     }
   ]
 }
