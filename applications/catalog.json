@@ -1408,7 +1408,7 @@
       "slug": "tamagotchi",
       "name": "Tamagotchi",
       "category": "play",
-      "description": "Animal virtuel natif : nourrir, jouer et nettoyer Kody; jauges de faim, bonheur et propreté diminuent avec le temps. Progression de session.",
+      "description": "Compagnon virtuel avec Kody, dragon low-poly en véritable rendu 3D logiciel : perspective, éclairage par facettes, battements d’ailes, balancement de la queue, mouvement idle et clignements. Actions nourrir/jouer/nettoyer; progression de session.",
       "lifecycle": "in_development",
       "implementation_status": "source_added",
       "capability_state": "build_pending",
