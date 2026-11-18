@@ -1454,6 +1454,21 @@
       "offline_support": "yes",
       "required_permissions": [],
       "source_path": "apps/metronome/"
+    },
+    {
+      "code": "C004",
+      "slug": "presentation-remote",
+      "name": "Presentation Remote",
+      "category": "control",
+      "description": "Télécommande clavier Bluetooth HID pour présentations : précédent/suivant, espace, entrée et Échap. Appairage sécurisé avec un ordinateur; connexion Bluetooth requise.",
+      "lifecycle": "in_development",
+      "implementation_status": "source_added",
+      "capability_state": "build_pending",
+      "offline_support": "no",
+      "required_permissions": [
+        "Bluetooth"
+      ],
+      "source_path": "apps/presentation-remote/"
     }
   ]
 }

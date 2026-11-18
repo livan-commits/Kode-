@@ -25,7 +25,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        app: [stopwatch, pomodoro, calculator, dice, reaction-test, memory, snake, pong, quiz, tasks, shopping-list, habit-tracker, alarm, reminders, calendar, compass, level, sensor-studio, data-logger, nfc-studio, rfid-studio, ir-studio, battery-monitor, led-studio, music-studio, files, settings, device-diagnostics, network-monitor, wi-fi-analyzer, bluetooth-scanner, tower-stack, subway-runner, tamagotchi, voice-recorder, wav-player, metronome]
+        app: [stopwatch, pomodoro, calculator, dice, reaction-test, memory, snake, pong, quiz, tasks, shopping-list, habit-tracker, alarm, reminders, calendar, compass, level, sensor-studio, data-logger, nfc-studio, rfid-studio, ir-studio, battery-monitor, led-studio, music-studio, files, settings, device-diagnostics, network-monitor, wi-fi-analyzer, bluetooth-scanner, tower-stack, subway-runner, tamagotchi, voice-recorder, wav-player, metronome, presentation-remote]
     defaults:
       run:
         shell: bash
