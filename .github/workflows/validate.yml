@@ -27,9 +27,9 @@ jobs:
           import json
           apps = json.load(open("applications/catalog.json"))["applications"]
           providers = json.load(open("connectors/providers.json"))["providers"]
-          assert len(apps) == 119, f"Expected 119 apps, got {len(apps)}"
-          assert len({a["code"] for a in apps}) == 119, "Duplicate app codes"
-          assert len({a["slug"] for a in apps}) == 119, "Duplicate app slugs"
+          assert len(apps) == 118, f"Expected 118 apps, got {len(apps)}"
+          assert len({a["code"] for a in apps}) == 118, "Duplicate app codes"
+          assert len({a["slug"] for a in apps}) == 118, "Duplicate app slugs"
           for app in apps:
               if app["implementation_status"] == "source_added":
                   assert app["lifecycle"] == "in_development"
