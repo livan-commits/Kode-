@@ -79,9 +79,14 @@ function loadFile(file){
  const url=URL.createObjectURL(file);
  loader.load(url,gltf=>{
    if(model)scene.remove(model);
+   if(activeAction)activeAction.stop();
+   activeAction=null;
    model=gltf.scene;scene.add(model);frameObject(model);
    clips=gltf.animations||[];mixer=clips.length?new THREE.AnimationMixer(model):null;
    anim.innerHTML='';
+   anim.disabled=clips.length===0;
+   play.disabled=clips.length===0;
+   stop.disabled=clips.length===0;
    if(!clips.length){anim.add(new Option('Aucune animation intégrée',''));status.textContent='Modèle chargé, mais aucun clip d’animation intégré.';}
    else{
      clips.forEach((clip,i)=>anim.add(new Option(clip.name||'Animation '+(i+1),String(i))));
