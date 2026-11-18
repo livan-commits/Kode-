@@ -73,6 +73,7 @@ jobs:
           test -f apps/metronome/main/app_main.c
           test -f apps/wav-player/main/app_main.c
           test -f apps/voice-recorder/main/app_main.c
+          test -f apps/presentation-remote/main/app_main.c
           test -f apps/wav-player/main/app_main.c
           test -f apps/metronome/main/app_main.c
           test -f apps/reaction-test/main/app_main.c
@@ -197,7 +198,7 @@ jobs:
 
       - name: Check all native app projects
         run: |
-          for app in stopwatch pomodoro calculator dice reaction-test memory snake pong quiz tasks shopping-list habit-tracker alarm reminders calendar compass level sensor-studio data-logger nfc-studio rfid-studio ir-studio battery-monitor led-studio music-studio files settings device-diagnostics network-monitor wi-fi-analyzer bluetooth-scanner tower-stack subway-runner tamagotchi voice-recorder wav-player metronome; do
+          for app in stopwatch pomodoro calculator dice reaction-test memory snake pong quiz tasks shopping-list habit-tracker alarm reminders calendar compass level sensor-studio data-logger nfc-studio rfid-studio ir-studio battery-monitor led-studio music-studio files settings device-diagnostics network-monitor wi-fi-analyzer bluetooth-scanner tower-stack subway-runner tamagotchi voice-recorder wav-player metronome presentation-remote; do
             test -f "apps/$app/CMakeLists.txt"
             test -f "apps/$app/main/app_main.c"
             test -f "apps/$app/main/CMakeLists.txt"
