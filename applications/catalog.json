@@ -1414,6 +1414,19 @@
       "offline_support": "yes",
       "required_permissions": [],
       "source_path": "apps/subway-runner/"
+    },
+    {
+      "code": "P011",
+      "slug": "wav-player",
+      "name": "WAV Player",
+      "category": "media",
+      "description": "Lecteur audio natif pour les fichiers WAV compatibles (48 kHz, mono, 16 bits). Lecture et arrêt du fichier flash/voice-note.wav créé par Voice Recorder; pas de MP3 ni de navigateur de fichiers.",
+      "lifecycle": "in_development",
+      "implementation_status": "source_added",
+      "capability_state": "build_pending",
+      "offline_support": "yes",
+      "required_permissions": [],
+      "source_path": "apps/wav-player/"
     }
   ]
 }
