@@ -1415,6 +1415,45 @@
       "offline_support": "yes",
       "required_permissions": [],
       "source_path": "apps/tamagotchi/"
+    },
+    {
+      "code": "P011",
+      "slug": "voice-recorder",
+      "name": "Voice Recorder",
+      "category": "media",
+      "description": "Enregistreur vocal natif : enregistrement micro jusqu'à 30 secondes, arrêt anticipé et sauvegarde WAV dans le stockage flash. Fonctionne pendant que l'application reste ouverte.",
+      "lifecycle": "in_development",
+      "implementation_status": "source_added",
+      "capability_state": "build_pending",
+      "offline_support": "yes",
+      "required_permissions": [],
+      "source_path": "apps/voice-recorder/"
+    },
+    {
+      "code": "P012",
+      "slug": "wav-player",
+      "name": "WAV Player",
+      "category": "media",
+      "description": "Lecteur audio natif pour les fichiers WAV compatibles (48 kHz, mono, 16 bits). Lecture et arrêt du fichier flash/voice-note.wav créé par Voice Recorder; pas de MP3 ni de navigateur de fichiers.",
+      "lifecycle": "in_development",
+      "implementation_status": "source_added",
+      "capability_state": "build_pending",
+      "offline_support": "yes",
+      "required_permissions": [],
+      "source_path": "apps/wav-player/"
+    },
+    {
+      "code": "P013",
+      "slug": "metronome",
+      "name": "Metronome",
+      "category": "media",
+      "description": "Métronome natif hors ligne : tempo réglable de 40 à 240 BPM, battement accentué sur le premier temps et commande lecture/arrêt. Utilise le haut-parleur Kode Dot.",
+      "lifecycle": "in_development",
+      "implementation_status": "source_added",
+      "capability_state": "build_pending",
+      "offline_support": "yes",
+      "required_permissions": [],
+      "source_path": "apps/metronome/"
     }
   ]
 }
