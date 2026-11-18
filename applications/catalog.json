@@ -1454,6 +1454,94 @@
       "offline_support": "yes",
       "required_permissions": [],
       "source_path": "apps/metronome/"
+    },
+    {
+      "code": "M017",
+      "slug": "storage-manager",
+      "name": "Storage Manager",
+      "category": "maker",
+      "description": "Gestionnaire de stockage natif : volumes flash/SD, espace libre, navigation paginée et suppression sécurisée d'un fichier sélectionné avec double confirmation. Aucun effacement récursif.",
+      "lifecycle": "in_development",
+      "implementation_status": "source_added",
+      "capability_state": "build_pending",
+      "offline_support": "yes",
+      "required_permissions": [
+        "storage"
+      ],
+      "source_path": "apps/storage-manager/"
+    },
+    {
+      "code": "M018",
+      "slug": "haptic-studio",
+      "name": "Haptic Studio",
+      "category": "maker",
+      "description": "Studio de vibrations natif : six motifs SDK intégrés et un motif personnalisé double impulsion; lecture à la demande via le moteur haptique du Kode Dot.",
+      "lifecycle": "in_development",
+      "implementation_status": "source_added",
+      "capability_state": "build_pending",
+      "offline_support": "yes",
+      "required_permissions": [
+        "haptics"
+      ],
+      "source_path": "apps/haptic-studio/"
+    },
+    {
+      "code": "M019",
+      "slug": "compass-calibration",
+      "name": "Compass Calibration",
+      "category": "maker",
+      "description": "Calibration native du magnétomètre avec l'assistant visuel du SDK Kode; affiche l'état de calibration et relance l'écran après la procédure.",
+      "lifecycle": "in_development",
+      "implementation_status": "source_added",
+      "capability_state": "build_pending",
+      "offline_support": "yes",
+      "required_permissions": [
+        "magnetometer"
+      ],
+      "source_path": "apps/compass-calibration/"
+    },
+    {
+      "code": "L016",
+      "slug": "digital-clock",
+      "name": "Digital Clock",
+      "category": "life",
+      "description": "Horloge numérique native affichant l'heure locale et la date; bascule 12/24 h et respecte le fuseau horaire configuré dans KodeOS.",
+      "lifecycle": "in_development",
+      "implementation_status": "source_added",
+      "capability_state": "build_pending",
+      "offline_support": "yes",
+      "required_permissions": [],
+      "source_path": "apps/digital-clock/"
+    },
+    {
+      "code": "M020",
+      "slug": "nfc-writer",
+      "name": "NFC Writer",
+      "category": "maker",
+      "description": "Écrit un message texte ou une URL de démonstration sur une étiquette NFC NDEF compatible. Propose uniquement des contenus prédéfinis bénins; aucune lecture/écriture d'UID ou de badge d'accès.",
+      "lifecycle": "in_development",
+      "implementation_status": "source_added",
+      "capability_state": "build_pending",
+      "offline_support": "yes",
+      "required_permissions": [
+        "nfc"
+      ],
+      "source_path": "apps/nfc-writer/"
+    },
+    {
+      "code": "M021",
+      "slug": "nfc-share",
+      "name": "NFC Share",
+      "category": "maker",
+      "description": "Émule une étiquette NFC NDEF partageant un message ou une URL de démonstration prédéfinis. Utilise exclusivement les profils text/URI, jamais un UID ou un badge d'accès.",
+      "lifecycle": "in_development",
+      "implementation_status": "source_added",
+      "capability_state": "build_pending",
+      "offline_support": "yes",
+      "required_permissions": [
+        "nfc"
+      ],
+      "source_path": "apps/nfc-share/"
     }
   ]
 }

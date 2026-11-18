@@ -67,3 +67,15 @@ GitHub Actions builds all three projects from clean checkouts. A green build pro
 | Voice Recorder | `voice-recorder/` | TOP starts/stops recording; Save WAV stores `flash/voice-note.wav`; BOT home | Yes, microphone required; max 30 seconds; app must remain open |
 | WAV Player | `wav-player/` | Plays/stops `flash/voice-note.wav`; compatible WAV format only (48 kHz, mono, 16-bit); BOT home | Yes, requires speaker/audio hardware and an existing compatible file |
 | Metronome | `metronome/` | Tempo 40–240 BPM, first beat accented; UP/DOWN tempo, TOP start/stop, BOT home | Yes, requires speaker/audio hardware |
+
+| Storage Manager | `storage-manager/` | TOP switches flash/SD; UP/DOWN selects, LEFT/RIGHT pages; tap Delete selected twice to delete a file; BOT home | Yes, uses mounted flash/SD; folder deletion is disabled; files are permanently deleted after confirmation |
+
+| Haptic Studio | `haptic-studio/` | UP/DOWN selects one of six SDK patterns or a custom double pulse; TOP or Play runs it; BOT home | Yes, requires the vibration motor; custom pattern is registered when the app starts |
+
+| Compass Calibration | `compass-calibration/` | Shows calibration state; TOP or tap starts the SDK calibration assistant; BOT home | Yes, requires magnetometer; hold and rotate the Dot through all directions during calibration |
+
+| Digital Clock | `digital-clock/` | Shows local time/date; TOP or tap switches 24-hour/12-hour format; BOT home | Yes, uses the timezone and clock set by KodeOS; shows an unset-clock message until time is available |
+
+| NFC Writer | `nfc-writer/` | UP/DOWN selects a preset text or demo URL; TOP/tap twice confirms writing to a compatible NDEF tag; BOT home | Yes, requires NFC; writes text/URI only, never badge IDs or access credentials |
+
+| NFC Share | `nfc-share/` | UP/DOWN selects demo text/link; TOP/tap starts or stops NFC sharing; BOT home | Yes, requires NFC; exposes only benign NDEF text/URI, never UID or access badges |
