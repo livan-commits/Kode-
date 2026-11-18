@@ -47,7 +47,7 @@ jobs:
         shell: bash
         run: |
           source .dotbench-env
-          tools/dotbench sdk -j 2
+          tools/dotbench -j 2 sdk
 
       - name: Build Dice, Snake and Stopwatch as simulator packages
         working-directory: .dotbench
