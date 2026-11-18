@@ -58,23 +58,10 @@ jobs:
           cd /tmp/kodedot-sim
           source .dotbench-env
           tools/dotbench sdk
-      - name: Install icon generator dependency
-        run: python3 -m pip install --user Pillow
       - name: Create app icon
         run: |
           python3 - <<'PY'
-          from PIL import Image, ImageDraw
-          im = Image.new("RGBA", (128, 128), (12, 19, 36, 255))
-          d = ImageDraw.Draw(im)
-          d.ellipse((20, 35, 108, 112), fill=(49, 190, 137), outline=(178, 244, 207), width=4)
-          d.polygon([(43, 48), (30, 13), (58, 38)], fill=(250, 180, 64))
-          d.polygon([(78, 44), (101, 10), (94, 54)], fill=(250, 180, 64))
-          d.ellipse((48, 58, 59, 70), fill=(255, 255, 244))
-          d.ellipse((75, 58, 86, 70), fill=(255, 255, 244))
-          d.ellipse((53, 62, 57, 68), fill=(20, 35, 43))
-          d.ellipse((80, 62, 84, 68), fill=(20, 35, 43))
-          d.arc((56, 73, 81, 91), 5, 165, fill=(20, 35, 43), width=3)
-          im.save("apps/tamagotchi/appdata/icon.png")
+          import struct, zlib\n          w = h = 128\n          rows = []\n          for y in range(h):\n              row = bytearray([0])\n              for x in range(w):\n                  bg = (12, 19, 36, 255)\n                  body = ((x-64)**2/44**2 + (y-76)**2/38**2) <= 1\n                  horns = (abs(x-43) < max(0, 13-abs(y-30)) and y < 48) or (abs(x-84) < max(0, 13-abs(y-27)) and y < 49)\n                  eyes = ((x-53)**2+(y-64)**2 <= 5**2) or ((x-77)**2+(y-64)**2 <= 5**2)\n                  pupils = ((x-54)**2+(y-64)**2 <= 2**2) or ((x-78)**2+(y-64)**2 <= 2**2)\n                  c = (49,190,137,255) if body else ((250,180,64,255) if horns else bg)\n                  if eyes: c = (255,255,244,255)\n                  if pupils: c = (20,35,43,255)\n                  row.extend(c)\n              rows.append(bytes(row))\n          def chunk(tag, data):\n              return struct.pack(">I",len(data))+tag+data+struct.pack(">I",zlib.crc32(tag+data)&0xffffffff)\n          png = b"\\x89PNG\\r\\n\\x1a\\n"+chunk(b"IHDR",struct.pack(">2I5B",w,h,8,6,0,0,0))+chunk(b"IDAT",zlib.compress(b"".join(rows)))+chunk(b"IEND",b"")\n          open("apps/tamagotchi/appdata/icon.png","wb").write(png)
           PY
       - name: Build Tamagotchi 3D WebAssembly package
         shell: bash
