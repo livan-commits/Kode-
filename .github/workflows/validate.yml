@@ -27,7 +27,7 @@ jobs:
           import json
           apps = json.load(open("applications/catalog.json"))["applications"]
           providers = json.load(open("connectors/providers.json"))["providers"]
-          assert len(apps) == 115, f"Expected 115 apps, got {len(apps)}"
+          assert len(apps) == 116, f"Expected 115 apps, got {len(apps)}"
           assert len({a["code"] for a in apps}) == 115, "Duplicate app codes"
           assert len({a["slug"] for a in apps}) == 115, "Duplicate app slugs"
           for app in apps:
@@ -69,6 +69,7 @@ jobs:
           test -f apps/dice/main/app_main.c
           test -f apps/tower-stack/main/app_main.c
           test -f apps/subway-runner/main/app_main.c
+          test -f apps/tamagotchi/main/app_main.c
           test -f apps/reaction-test/main/app_main.c
           test -f apps/memory/main/app_main.c
           test -f README.md
@@ -191,7 +192,7 @@ jobs:
 
       - name: Check all native app projects
         run: |
-          for app in stopwatch pomodoro calculator dice reaction-test memory snake pong quiz tasks shopping-list habit-tracker alarm reminders calendar compass level sensor-studio data-logger nfc-studio rfid-studio ir-studio battery-monitor led-studio music-studio files settings device-diagnostics network-monitor wi-fi-analyzer bluetooth-scanner tower-stack subway-runner; do
+          for app in stopwatch pomodoro calculator dice reaction-test memory snake pong quiz tasks shopping-list habit-tracker alarm reminders calendar compass level sensor-studio data-logger nfc-studio rfid-studio ir-studio battery-monitor led-studio music-studio files settings device-diagnostics network-monitor wi-fi-analyzer bluetooth-scanner tower-stack subway-runner tamagotchi; do
             test -f "apps/$app/CMakeLists.txt"
             test -f "apps/$app/main/app_main.c"
             test -f "apps/$app/main/CMakeLists.txt"
@@ -199,4 +200,4 @@ jobs:
             test -f "apps/$app/sdkconfig.defaults"
           done
           grep -q 'matrix:' .github/workflows/build-native-apps.yml
-          grep -q 'stopwatch, pomodoro, calculator, dice, reaction-test, memory, snake, pong, quiz, tasks, shopping-list, habit-tracker, alarm, reminders, calendar, compass, level, sensor-studio, data-logger, nfc-studio, rfid-studio, ir-studio, battery-monitor, led-studio, music-studio, files, settings, device-diagnostics, network-monitor, wi-fi-analyzer, bluetooth-scanner, tower-stack, subway-runner' .github/workflows/build-native-apps.yml
+          grep -q 'stopwatch, pomodoro, calculator, dice, reaction-test, memory, snake, pong, quiz, tasks, shopping-list, habit-tracker, alarm, reminders, calendar, compass, level, sensor-studio, data-logger, nfc-studio, rfid-studio, ir-studio, battery-monitor, led-studio, music-studio, files, settings, device-diagnostics, network-monitor, wi-fi-analyzer, bluetooth-scanner, tower-stack, subway-runner, tamagotchi' .github/workflows/build-native-apps.yml

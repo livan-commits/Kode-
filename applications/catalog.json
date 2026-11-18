@@ -1414,6 +1414,19 @@
       "offline_support": "yes",
       "required_permissions": [],
       "source_path": "apps/subway-runner/"
+    },
+    {
+      "code": "P008",
+      "slug": "tamagotchi",
+      "name": "Tamagotchi",
+      "category": "play",
+      "description": "Animal virtuel natif : nourrir, jouer et nettoyer Kody; jauges de faim, bonheur et propreté diminuent avec le temps. Progression de session.",
+      "lifecycle": "in_development",
+      "implementation_status": "source_added",
+      "capability_state": "build_pending",
+      "offline_support": "yes",
+      "required_permissions": [],
+      "source_path": "apps/tamagotchi/"
     }
   ]
 }
