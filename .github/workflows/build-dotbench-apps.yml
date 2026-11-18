@@ -1,0 +1,72 @@
+name: Build Dotbench WASM apps
+
+on:
+  pull_request:
+    paths:
+      - "apps/**"
+      - ".github/workflows/build-dotbench-apps.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  wasm-smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - name: Checkout app catalogue
+        uses: actions/checkout@v4
+
+      - name: Checkout community Dotbench toolchain
+        uses: actions/checkout@v4
+        with:
+          repository: murilogpapa/kodedot-sim
+          ref: main
+          path: .dotbench
+
+      - name: Install Python image dependency
+        run: python3 -m pip install --break-system-packages Pillow
+
+      - name: Cache Dotbench dependencies and SDK build
+        uses: actions/cache@v4
+        with:
+          path: |
+            .dotbench/.deps
+            .dotbench/build
+          key: dotbench-wasm-v1-${{ hashFiles('.dotbench/tools/pins.env') }}
+          restore-keys: |
+            dotbench-wasm-v1-
+
+      - name: Set up pinned Dotbench toolchain
+        working-directory: .dotbench
+        run: tools/setup.sh
+
+      - name: Precompile pinned Kode SDK for WebAssembly
+        working-directory: .dotbench
+        shell: bash
+        run: |
+          source .dotbench-env
+          tools/dotbench -j 2 sdk
+
+      - name: Build Dice, Snake, Stopwatch and Tamagotchi as simulator packages
+        working-directory: .dotbench
+        shell: bash
+        run: |
+          source .dotbench-env
+          mkdir -p "$RUNNER_TEMP/dotbench-packages"
+          for app in dice snake stopwatch tamagotchi; do
+            echo "::group::Build $app"
+            tools/dotbench build "$GITHUB_WORKSPACE/apps/$app" -o "$RUNNER_TEMP/dotbench-packages/$app"
+            echo "::endgroup::"
+          done
+          find "$RUNNER_TEMP/dotbench-packages" -type f \( -name '*.zip' -o -name '*.dotbench' \) -print
+
+      - name: Upload simulator-ready packages
+        uses: actions/upload-artifact@v4
+        with:
+          name: kode-dotbench-wasm-apps
+          path: |
+            ${{ runner.temp }}/dotbench-packages/**/*.zip
+            ${{ runner.temp }}/dotbench-packages/**/*.dotbench
+          if-no-files-found: error
