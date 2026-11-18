@@ -1,0 +1,33 @@
+name: Build Tamagotchi 3D prototype
+
+on:
+  pull_request:
+    paths:
+      - "apps/tamagotchi/**"
+      - ".github/workflows/build-tamagotchi-3d.yml"
+  push:
+    branches: [main]
+    paths:
+      - "apps/tamagotchi/**"
+      - ".github/workflows/build-tamagotchi-3d.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  build-tamagotchi:
+    runs-on: ubuntu-latest
+    container: espressif/idf:v6.1
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build native ESP32-P4 app
+        working-directory: apps/tamagotchi
+        run: |
+          . "$IDF_PATH/export.sh"
+          idf.py build
+      - name: Publish native app binary
+        uses: actions/upload-artifact@v4
+        with:
+          name: kode-tamagotchi-3d-firmware
+          path: apps/tamagotchi/build/*.bin
+          if-no-files-found: error

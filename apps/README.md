@@ -62,7 +62,7 @@ GitHub Actions builds all three projects from clean checkouts. A green build pro
 
 **Audio note:** Music Studio is a tone test tool, not a music player. Its selectable frequencies stay within the SDK's documented 400–3400 Hz range.
 
-| Tamagotchi | `tamagotchi/` | Feed, play and clean Kody the dragon; care stats decay while the app is running; BOT home | Yes, session-only state |
+| Tamagotchi | `tamagotchi/` | Animated low-poly 3D Kody dragon (software perspective renderer, articulated wings, tail sway, idle motion and blinking); Feed/Play/Clean; BOT home | Yes, session-only state |
 
 | Voice Recorder | `voice-recorder/` | TOP starts/stops recording; Save WAV stores `flash/voice-note.wav`; BOT home | Yes, microphone required; max 30 seconds; app must remain open |
 | WAV Player | `wav-player/` | Plays/stops `flash/voice-note.wav`; compatible WAV format only (48 kHz, mono, 16-bit); BOT home | Yes, requires speaker/audio hardware and an existing compatible file |
