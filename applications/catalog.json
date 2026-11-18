@@ -1034,12 +1034,13 @@
       "slug": "pc-remote",
       "name": "PC Remote",
       "category": "control",
-      "description": "Application Kode Ecosystem : PC Remote. Implémentation planifiée; fonctions non disponibles avant validation.",
-      "lifecycle": "planned",
-      "implementation_status": "not_implemented",
-      "capability_state": "planned",
-      "offline_support": "to_be_assessed",
-      "required_permissions": []
+      "description": "Télécommande native pour PC via Bluetooth HID : déplacement de souris, clics, Entrée et Espace. Appairage depuis les réglages Bluetooth du PC; nécessite Bluetooth activé sur le Kode Dot.",
+      "lifecycle": "in_development",
+      "implementation_status": "source_added",
+      "capability_state": "build_pending",
+      "offline_support": "yes",
+      "required_permissions": [],
+      "source_path": "apps/pc-remote/"
     },
     {
       "code": "C003",

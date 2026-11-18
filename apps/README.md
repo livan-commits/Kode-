@@ -63,3 +63,5 @@ GitHub Actions builds all three projects from clean checkouts. A green build pro
 **Audio note:** Music Studio is a tone test tool, not a music player. Its selectable frequencies stay within the SDK's documented 400–3400 Hz range.
 
 | Tamagotchi | `tamagotchi/` | Feed, play and clean Kody the dragon; care stats decay while the app is running; BOT home | Yes, session-only state |
+
+| PC Remote | `pc-remote/` | Bluetooth HID mouse: D-pad moves, TOP left-click; on-screen right-click, Enter and Space; Pair with PC; BOT home | Yes, requires Bluetooth enabled on Dot and PC pairing |
